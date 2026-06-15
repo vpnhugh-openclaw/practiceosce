@@ -1,5 +1,6 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { CASE_INDEX } from "@/data/cases";
+import type { OSCECase } from "@/lib/types";
 import { PageHeader, Section, KV, HiddenReveal } from "@/components/osce/Primitives";
 import {
   CandidateStemCard, ReadingTimeSkeleton, VitalsRevealPanel, ExaminationRevealPanel,
@@ -20,7 +21,7 @@ export const Route = createFileRoute("/cases/$caseId")({
       <Link to="/cases" className="text-sm underline mt-3 inline-block">Back to case bank</Link>
     </div>
   ),
-  loader: ({ params }) => {
+  loader: ({ params }): OSCECase => {
     const c = CASE_INDEX[params.caseId];
     if (!c) throw notFound();
     return c;
@@ -28,7 +29,7 @@ export const Route = createFileRoute("/cases/$caseId")({
 });
 
 function CasePage() {
-  const c = Route.useLoaderData();
+  const c = Route.useLoaderData() as OSCECase;
   const p = c.fakePatientScript;
 
   return (
