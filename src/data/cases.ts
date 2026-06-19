@@ -1121,4 +1121,6 @@ const RAW_CASES: OSCECase[] = [
   ...EXPANSION_CASES,
 ];
 
+export const CASES: OSCECase[] = enrichAll(RAW_CASES);
+
 export const CASE_INDEX = Object.fromEntries(CASES.map((c) => [c.id, c]));
