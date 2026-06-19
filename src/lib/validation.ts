@@ -326,16 +326,30 @@ function checkCardiacMimic(c: OSCECase): CheckResult {
     c.fakePatientScript?.mainComplaint, c.fakePatientScript?.socrates,
     c.fakePatientScript?.volunteer,
   );
-  const looksGIorChest = anyOf(corpus, ["epigastr", "chest", "retrosternal", "heartburn", "indigestion"]);
-  if (!looksGIorChest) return { id: "cardiac-mimic", label: "Cardiac mimics not missed", level: "pass" };
+  // Only trigger when there is a genuine chest/epigastric/retrosternal
+  // complaint OR atypical pain features that could mask ACS. Pure
+  // heartburn/indigestion alone is now a warning, not a critical fail.
+  const hasChestEpigastric = anyOf(corpus, ["chest pain", "retrosternal", "epigastr", "chest tight", "chest heav"]);
+  const hasAtypical = anyOf(corpus, ["radiat", "left arm", "jaw", "diaphor", "exertion"]);
+  const hasHeartburnOnly = anyOf(corpus, ["heartburn", "indigestion"]) && !hasChestEpigastric;
+  if (!hasChestEpigastric && !hasAtypical && !hasHeartburnOnly) {
+    return { id: "cardiac-mimic", label: "Cardiac mimics not missed", level: "pass" };
+  }
   const reasoning = joinLC(c.protocolReasoning, c.clinicalReasoning, c.differentials, c.redFlagsToScreen, c.criticalFails);
-  if (!anyOf(reasoning, ["cardiac", "acs", "angina", "ischaem", "ischem", "myocard", "ekg", "ecg"])) {
+  const considers = anyOf(reasoning, ["cardiac", "acs", "angina", "ischaem", "ischem", "myocard", "ekg", "ecg"]);
+  if (considers) return { id: "cardiac-mimic", label: "Cardiac mimics not missed", level: "pass" };
+
+  // Heartburn-only without chest features: warning, not critical.
+  if (hasHeartburnOnly && !hasChestEpigastric && !hasAtypical) {
     return {
-      id: "cardiac-mimic", label: "Cardiac mimics not missed", level: "fail", critical: true,
-      detail: "Epigastric/chest presentation but cardiac mimic (ACS, angina) is not considered in reasoning, differentials or critical fails.",
+      id: "cardiac-mimic", label: "Cardiac mimics not missed", level: "warning",
+      detail: "Heartburn/indigestion presentation: consider adding cardiac mimic (ACS, angina) to differentials or screening questions.",
     };
   }
-  return { id: "cardiac-mimic", label: "Cardiac mimics not missed", level: "pass" };
+  return {
+    id: "cardiac-mimic", label: "Cardiac mimics not missed", level: "fail", critical: true,
+    detail: "Chest/epigastric or atypical pain features present but cardiac mimic (ACS, angina) is not considered in reasoning, differentials or critical fails.",
+  };
 }
 
 function checkSafetyNetSpecific(c: OSCECase): CheckResult {
