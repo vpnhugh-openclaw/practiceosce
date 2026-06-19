@@ -165,4 +165,30 @@ export interface OSCECase {
   viva?: VivaQA[];
   sbar?: { situation?: string; background?: string; assessment?: string; recommendation?: string };
   defaultTimeMinutes?: number;
+  // ---- v3 sourcing layer (optional) ----
+  sourceTags?: SourceTag[];
+  needsVerification?: boolean;
+  verificationNotes?: string[];
 }
+
+export type ReferenceReliability =
+  | "government-protocol"
+  | "clinical-guideline"
+  | "medicines-reference"
+  | "osce-training"
+  | "patient-education"
+  | "background";
+
+export type ReferenceArea =
+  | "ENT" | "GI" | "Respiratory" | "MSK" | "Skin" | "Women's health"
+  | "Protocol" | "Red flags" | "Examination" | "Medicines"
+  | "Patient counselling" | "OSCE structure";
+
+export interface SourceTag {
+  id: string;
+  title: string;
+  locator?: string;
+  reliability: ReferenceReliability;
+  url?: string;
+}
+
