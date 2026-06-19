@@ -40,9 +40,13 @@ const EMERGENCY_TERMS = [
 ];
 
 function corpusOf(c: OSCECase): string {
+  const fps = c.fakePatientScript;
   return [
     c.candidateStem, c.condition, c.expectedDiagnosis,
     c.clinicalReasoning, c.protocolReasoning, c.referralPlan,
+    fps?.mainComplaint, fps?.openingLine,
+    ...(fps ? Object.values(fps.socrates ?? {}) : []),
+    ...(fps?.volunteer ?? []),
     ...(c.redFlagsPresent ?? []),
     ...(c.criticalFails ?? []),
     ...Object.values(c.vitals ?? {}),
