@@ -367,36 +367,105 @@ function checkCustomViva(c: OSCECase): CheckResult {
   return { id: "viva-custom", label: "Custom viva block exists", level: "warning", detail: `Only ${n} custom viva question(s); generic fillers will be used.` };
 }
 
+/**
+ * Common presenting-complaint vocabulary that may appear in BOTH the brief
+ * and the diagnosis without constituting a leak. A leak requires the brief
+ * to reveal genuinely examiner-only information (final dx, hidden findings,
+ * vitals, management answers), not ordinary symptom or anatomy words.
+ */
+const BRIEF_LEAK_ALLOWLIST = new Set([
+  // anatomy
+  "right", "left", "ear", "ears", "nose", "throat", "chest", "abdomen", "abdominal",
+  "epigastric", "ankle", "knee", "foot", "skin", "head", "back", "stomach",
+  // symptoms
+  "pain", "cough", "fever", "rash", "itch", "itchy", "swelling", "swollen",
+  "nausea", "vomit", "vomiting", "diarrhoea", "diarrhea", "discharge",
+  "headache", "dizzy", "tired", "tiredness", "fatigue", "symptoms", "symptom",
+  "burning", "stinging", "blocked", "runny", "sneeze", "sneezing",
+  "wheeze", "wheezing", "breathless", "breathlessness", "short", "shortness",
+  // context
+  "history", "request", "review", "asks", "asking", "asked", "wants", "needs",
+  "presents", "patient", "today", "yesterday", "morning", "evening",
+  // conditions named in opening complaint (not the diagnostic answer)
+  "asthma", "reflux", "hayfever", "cold", "flu",
+  // device/anatomy commonly named upfront
+  "grommet", "grommets", "tube", "tubes",
+  // medications the patient may name themselves
+  "tramadol", "paracetamol", "ibuprofen", "anticoagulant", "warfarin",
+  // generic descriptors
+  "acute", "chronic", "adult", "child", "mild", "moderate", "severe",
+  "since", "after", "before", "during", "while",
+]);
+
+const LEAK_HARD_TERMS = [
+  // Diagnostic answer language - only flag if the brief contains a multi-word
+  // diagnostic noun phrase from the expected diagnosis.
+];
+
 function checkBriefLeak(c: OSCECase): CheckResult {
   const brief = lc(c.candidateStem);
   if (!brief) {
     return { id: "brief-leak", label: "Hidden findings do not leak into Student Brief", level: "warning", detail: "candidateStem is empty." };
   }
-  const dx = lc(c.expectedDiagnosis);
-  // Strip very short or generic dx tokens before checking.
-  const dxTokens = dx.split(/[^a-z]+/).filter((t) => t.length >= 5 && !["acute", "chronic", "adult", "child", "mild", "moderate", "severe"].includes(t));
-  for (const t of dxTokens) {
-    if (brief.includes(t)) {
+
+  // 1. Hard fail: hidden findings (hiddenAnswers / hiddenFromBrief / vitals / exam
+  // findings) appear in the brief.
+  const hiddenStrings = [
+    ...Object.values(c.fakePatientScript?.hiddenAnswers ?? {}),
+    ...(c.hiddenFromBrief ?? []),
+    ...Object.values(c.examinationFindings ?? {}),
+    ...Object.values(c.vitals ?? {}),
+  ];
+  for (const h of hiddenStrings) {
+    if (!h) continue;
+    const snippet = lc(h).trim();
+    if (snippet.length >= 20 && brief.includes(snippet.slice(0, 25))) {
       return {
         id: "brief-leak", label: "Hidden findings do not leak into Student Brief", level: "fail", critical: true,
-        detail: `Student brief mentions "${t}" which appears in the expected diagnosis.`,
+        detail: "An examiner-only finding (hidden answer, examination finding, or vitals reading) appears in the student brief.",
       };
     }
   }
-  // Examination findings should not appear verbatim in brief
-  const exam = joinLC(c.examinationFindings);
-  if (exam && exam.length > 30) {
-    const examFragments = Object.values(c.examinationFindings).filter((v) => v && v.length > 25);
-    for (const frag of examFragments) {
-      const snippet = lc(frag).slice(0, 40);
-      if (brief.includes(snippet)) {
+
+  // 2. Multi-word diagnostic phrase appears in brief.
+  const dx = lc(c.expectedDiagnosis);
+  if (dx) {
+    // Build candidate noun phrases: any consecutive pair of significant
+    // (non-allowlisted, >=4 char) tokens from the diagnosis.
+    const tokens = dx.split(/[^a-z]+/).filter(Boolean);
+    const significant = tokens.filter((t) => t.length >= 4 && !BRIEF_LEAK_ALLOWLIST.has(t));
+    for (let i = 0; i < significant.length - 1; i++) {
+      const phrase = `${significant[i]} ${significant[i + 1]}`;
+      if (brief.includes(phrase)) {
         return {
           id: "brief-leak", label: "Hidden findings do not leak into Student Brief", level: "fail", critical: true,
-          detail: "An examination finding appears verbatim in the student brief.",
+          detail: `Student brief contains the diagnostic phrase "${phrase}".`,
+        };
+      }
+    }
+
+    // 3. Soft warning: a single highly specific (>=8 char, not allowlisted)
+    // diagnostic noun appears in the brief. Suggestive but plausible.
+    const suggestive = significant.filter((t) => t.length >= 9 && !BRIEF_LEAK_ALLOWLIST.has(t));
+    for (const t of suggestive) {
+      if (brief.includes(t)) {
+        return {
+          id: "brief-leak", label: "Hidden findings do not leak into Student Brief", level: "warning",
+          detail: `Student brief mentions "${t}", which appears in the expected diagnosis. May be acceptable as part of the presenting complaint; review wording.`,
         };
       }
     }
   }
+
+  // 4. Management or referral classification language in the brief.
+  const referralLeak = /\b(refer to (gp|ed)|emergency referral|prescribe \w+|administer \w+)\b/i.test(c.candidateStem);
+  if (referralLeak) {
+    return {
+      id: "brief-leak", label: "Hidden findings do not leak into Student Brief", level: "fail", critical: true,
+      detail: "Student brief reveals management/referral decision that should remain examiner-only.",
+    };
+  }
+
   return { id: "brief-leak", label: "Hidden findings do not leak into Student Brief", level: "pass" };
 }
 
