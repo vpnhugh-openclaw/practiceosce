@@ -211,9 +211,16 @@
 }
 
 @media print {
+  @page { margin: 14mm; }
   .no-print { display: none !important; }
+  aside, header, footer { display: none !important; }
+  main { padding: 0 !important; max-width: none !important; }
+  body, html { background: white !important; }
+  .handbook-card { box-shadow: none !important; border-color: #ccc !important; break-inside: avoid; }
   .print-foldline {
     border-top: 2px dashed #888;
     margin: 2rem 0;
+    page-break-after: always;
   }
+  h1, h2, h3 { color: #000 !important; }
 }

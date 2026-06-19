@@ -37,6 +37,14 @@ function PracticePage() {
         eyebrow="Real OSCE Practice"
         title="20-minute timed station."
         subtitle="Default and recommended OSCE station time is 20 minutes. The countdown is sticky — start it, work the case, then reveal the model answer."
+        actions={
+          <button
+            onClick={() => window.print()}
+            className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-sm no-print"
+          >
+            Print / Save PDF
+          </button>
+        }
       />
 
       <div className="handbook-card p-4 mb-4 flex items-center gap-3 flex-wrap">

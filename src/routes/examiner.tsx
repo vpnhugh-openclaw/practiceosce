@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { CASES, CASE_INDEX } from "@/data/cases";
 import { PageHeader, Section } from "@/components/osce/Primitives";
@@ -12,6 +12,8 @@ import {
   CaseRedFlags,
 } from "@/components/osce/CaseParts";
 import { CountdownTimer } from "@/components/osce/CountdownTimer";
+import { logAttempt } from "@/lib/performance";
+import { Printer, Save, Check } from "lucide-react";
 
 export const Route = createFileRoute("/examiner")({
   head: () => ({ meta: [{ title: "Examiner Mode — 20-minute Real OSCE — Hugh's OSCE Case Generator" }] }),
@@ -27,6 +29,7 @@ function ExaminerPage() {
   const [crit, setCrit] = useState<Record<number, boolean>>({});
   const [feedback, setFeedback] = useState("");
   const [finalised, setFinalised] = useState(false);
+  const [logged, setLogged] = useState(false);
 
   const score = useMemo(() => {
     let earned = 0;
@@ -61,6 +64,14 @@ function ExaminerPage() {
         eyebrow="Examiner Mode"
         title="Mark a 20-minute OSCE station."
         subtitle="Sticky 20-minute countdown above the rubric. Score and comment live; the timer prompts you to finalise at 0:00."
+        actions={
+          <button
+            onClick={() => window.print()}
+            className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-sm no-print"
+          >
+            <Printer className="h-4 w-4" /> Print / Save PDF
+          </button>
+        }
       />
 
       <select
@@ -168,13 +179,49 @@ function ExaminerPage() {
           />
         </Section>
 
-        <div className="handbook-card p-5 sticky bottom-4 bg-navy text-navy-foreground flex items-center justify-between gap-4 flex-wrap">
+        <div className="handbook-card p-5 sticky bottom-4 bg-navy text-navy-foreground flex items-center justify-between gap-4 flex-wrap no-print">
           <div>
             <p className="text-[11px] uppercase tracking-wide opacity-70">Result</p>
             <p className="font-display text-2xl">{result}</p>
           </div>
-          <div className="font-mono text-2xl">
-            {score.earned.toFixed(1)} / {score.max} ({pct}%)
+          <div className="flex items-center gap-4 flex-wrap">
+            <div className="font-mono text-2xl">
+              {score.earned.toFixed(1)} / {score.max} ({pct}%)
+            </div>
+            <button
+              onClick={() => {
+                const missedRubric = c.markingRubric
+                  .map((r, i) => ({ r, m: marks[i] ?? "not" }))
+                  .filter(({ m }) => m !== "done")
+                  .map(({ r }) => `${r.domain}: ${r.item}`);
+                logAttempt({
+                  caseId: c.id,
+                  caseTitle: c.title,
+                  category: c.category,
+                  condition: c.condition,
+                  scopeExpected: c.scopeDecision,
+                  earned: score.earned,
+                  max: score.max,
+                  pct,
+                  result: result as "Pass" | "Borderline" | "Fail" | "Fail (critical fail triggered)",
+                  criticalFail: anyCrit,
+                  missedRubric,
+                  notes: feedback,
+                });
+                setLogged(true);
+                setTimeout(() => setLogged(false), 2200);
+              }}
+              className="inline-flex items-center gap-2 rounded-md bg-card text-foreground px-3 py-2 text-sm"
+            >
+              {logged ? <Check className="h-4 w-4" /> : <Save className="h-4 w-4" />}
+              {logged ? "Logged" : "Log attempt"}
+            </button>
+            <Link
+              to="/performance"
+              className="text-xs underline opacity-90 hover:opacity-100"
+            >
+              View history →
+            </Link>
           </div>
         </div>
       </div>

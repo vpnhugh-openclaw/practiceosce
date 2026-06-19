@@ -15,6 +15,7 @@ import {
   BarChart3,
   Library,
   BookMarked,
+  MessageCircleQuestion,
   Menu,
   X,
 } from "lucide-react";
@@ -25,6 +26,7 @@ const NAV = [
   { to: "/practice", label: "Practice Exam Mode", icon: Timer },
   { to: "/patient", label: "Fake Patient Mode", icon: UserRound },
   { to: "/examiner", label: "Examiner Mode", icon: ClipboardCheck },
+  { to: "/viva", label: "Viva Mode", icon: MessageCircleQuestion },
   { to: "/scope", label: "Scope Checker", icon: ShieldCheck },
   { to: "/redflags", label: "Red Flag Library", icon: Flag },
   { to: "/examination", label: "Examination Skills", icon: Stethoscope },

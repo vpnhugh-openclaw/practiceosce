@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VivaRouteImport } from './routes/viva'
 import { Route as ScopeRouteImport } from './routes/scope'
 import { Route as SafetynetRouteImport } from './routes/safetynet'
 import { Route as ReferencesRouteImport } from './routes/references'
@@ -26,6 +27,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CasesIndexRouteImport } from './routes/cases.index'
 import { Route as CasesCaseIdRouteImport } from './routes/cases.$caseId'
 
+const VivaRoute = VivaRouteImport.update({
+  id: '/viva',
+  path: '/viva',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ScopeRoute = ScopeRouteImport.update({
   id: '/scope',
   path: '/scope',
@@ -122,6 +128,7 @@ export interface FileRoutesByFullPath {
   '/references': typeof ReferencesRoute
   '/safetynet': typeof SafetynetRoute
   '/scope': typeof ScopeRoute
+  '/viva': typeof VivaRoute
   '/cases/$caseId': typeof CasesCaseIdRoute
   '/cases/': typeof CasesIndexRoute
 }
@@ -139,6 +146,7 @@ export interface FileRoutesByTo {
   '/references': typeof ReferencesRoute
   '/safetynet': typeof SafetynetRoute
   '/scope': typeof ScopeRoute
+  '/viva': typeof VivaRoute
   '/cases/$caseId': typeof CasesCaseIdRoute
   '/cases': typeof CasesIndexRoute
 }
@@ -158,6 +166,7 @@ export interface FileRoutesById {
   '/references': typeof ReferencesRoute
   '/safetynet': typeof SafetynetRoute
   '/scope': typeof ScopeRoute
+  '/viva': typeof VivaRoute
   '/cases/$caseId': typeof CasesCaseIdRoute
   '/cases/': typeof CasesIndexRoute
 }
@@ -178,6 +187,7 @@ export interface FileRouteTypes {
     | '/references'
     | '/safetynet'
     | '/scope'
+    | '/viva'
     | '/cases/$caseId'
     | '/cases/'
   fileRoutesByTo: FileRoutesByTo
@@ -195,6 +205,7 @@ export interface FileRouteTypes {
     | '/references'
     | '/safetynet'
     | '/scope'
+    | '/viva'
     | '/cases/$caseId'
     | '/cases'
   id:
@@ -213,6 +224,7 @@ export interface FileRouteTypes {
     | '/references'
     | '/safetynet'
     | '/scope'
+    | '/viva'
     | '/cases/$caseId'
     | '/cases/'
   fileRoutesById: FileRoutesById
@@ -232,10 +244,18 @@ export interface RootRouteChildren {
   ReferencesRoute: typeof ReferencesRoute
   SafetynetRoute: typeof SafetynetRoute
   ScopeRoute: typeof ScopeRoute
+  VivaRoute: typeof VivaRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/viva': {
+      id: '/viva'
+      path: '/viva'
+      fullPath: '/viva'
+      preLoaderRoute: typeof VivaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/scope': {
       id: '/scope'
       path: '/scope'
@@ -378,6 +398,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReferencesRoute: ReferencesRoute,
   SafetynetRoute: SafetynetRoute,
   ScopeRoute: ScopeRoute,
+  VivaRoute: VivaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
