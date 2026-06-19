@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { Trash2, Timer } from "lucide-react";
 
 export const Route = createFileRoute("/performance")({
-  head: () => ({ meta: [{ title: "My Performance — Hugh's OSCE Case Generator" }] }),
+  head: () => ({ meta: [{ title: "My Performance: Hugh's OSCE Case Generator" }] }),
   component: PerformancePage,
 });
 

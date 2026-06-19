@@ -2,7 +2,7 @@ export const EXAMINATION_SKILLS = [
   {
     id: "gals",
     name: "GALS / Musculoskeletal",
-    intro: "Gait, Arms, Legs, Spine — focused screen for MSK presentations.",
+    intro: "Gait, Arms, Legs, Spine: focused screen for MSK presentations.",
     sections: [
       {
         heading: "Preparation",
@@ -14,7 +14,7 @@ export const EXAMINATION_SKILLS = [
       },
       {
         heading: "Gait",
-        steps: ["Observe walking — symmetry, stride length, arm swing, antalgic gait", "Turn 180° — smoothness, balance"],
+        steps: ["Observe walking: symmetry, stride length, arm swing, antalgic gait", "Turn 180°: smoothness, balance"],
       },
       {
         heading: "Standing observation",
@@ -22,7 +22,7 @@ export const EXAMINATION_SKILLS = [
       },
       {
         heading: "Spine",
-        steps: ["Palpate spinous processes, paraspinal muscles", "Lumbar flexion — touch toes; observe lumbar curve", "Cervical lateral flexion (ear to shoulder)"],
+        steps: ["Palpate spinous processes, paraspinal muscles", "Lumbar flexion: touch toes; observe lumbar curve", "Cervical lateral flexion (ear to shoulder)"],
       },
       {
         heading: "Arms",
@@ -30,7 +30,7 @@ export const EXAMINATION_SKILLS = [
       },
       {
         heading: "Legs",
-        steps: ["Internal/external rotation of hips", "Patella tap for effusion", "Crepitus on knee flexion", "Inspect feet — calluses, deformity"],
+        steps: ["Internal/external rotation of hips", "Patella tap for effusion", "Crepitus on knee flexion", "Inspect feet: calluses, deformity"],
       },
       {
         heading: "Conclude",
@@ -53,7 +53,7 @@ export const EXAMINATION_SKILLS = [
       },
       {
         heading: "Head and neck",
-        steps: ["Eyes — pallor", "Mouth — central cyanosis, thrush (ICS use)", "Tracheal position"],
+        steps: ["Eyes: pallor", "Mouth: central cyanosis, thrush (ICS use)", "Tracheal position"],
       },
       {
         heading: "Hands",
@@ -61,7 +61,7 @@ export const EXAMINATION_SKILLS = [
       },
       {
         heading: "Chest",
-        steps: ["Chest expansion (symmetry)", "Percussion (anterior + posterior)", "Auscultation — wheeze, crackles, vocal resonance 'would do if time'", "Anterior repeat 'would do if time'"],
+        steps: ["Chest expansion (symmetry)", "Percussion (anterior + posterior)", "Auscultation: wheeze, crackles, vocal resonance 'would do if time'", "Anterior repeat 'would do if time'"],
       },
       {
         heading: "Feet",
@@ -88,11 +88,11 @@ export const EXAMINATION_SKILLS = [
       },
       {
         heading: "Nose and sinuses",
-        steps: ["Inspect external nose", "Palpate frontal and maxillary sinuses", "Anterior rhinoscopy — turbinates, discharge, polyps"],
+        steps: ["Inspect external nose", "Palpate frontal and maxillary sinuses", "Anterior rhinoscopy: turbinates, discharge, polyps"],
       },
       {
         heading: "Mouth / throat",
-        steps: ["Dentition, oral mucosa, tongue", "Tonsils, pharynx — cobblestoning"],
+        steps: ["Dentition, oral mucosa, tongue", "Tonsils, pharynx: cobblestoning"],
       },
       {
         heading: "Neck",
@@ -100,7 +100,7 @@ export const EXAMINATION_SKILLS = [
       },
       {
         heading: "Hearing",
-        steps: ["Whisper test at 60 cm — 'say 99'"],
+        steps: ["Whisper test at 60 cm: 'say 99'"],
       },
       {
         heading: "Ears",
@@ -119,7 +119,7 @@ export const EXAMINATION_SKILLS = [
       },
       {
         heading: "Hands and face",
-        steps: ["Clubbing, leuconychia, palmar erythema", "Eyes — jaundice, pallor", "Mouth — hydration, dentition"],
+        steps: ["Clubbing, leuconychia, palmar erythema", "Eyes: jaundice, pallor", "Mouth: hydration, dentition"],
       },
       {
         heading: "Hydration",
@@ -127,7 +127,7 @@ export const EXAMINATION_SKILLS = [
       },
       {
         heading: "Abdomen",
-        steps: ["Inspect — distension, scars, masses", "9-region superficial palpation", "9-region deep palpation", "Liver palpation", "Splenic palpation", "Ascites — shifting dullness", "Bowel sounds"],
+        steps: ["Inspect: distension, scars, masses", "9-region superficial palpation", "9-region deep palpation", "Liver palpation", "Splenic palpation", "Ascites: shifting dullness", "Bowel sounds"],
       },
       {
         heading: "Reasoning",

@@ -13,9 +13,10 @@ import {
   SafetyNetCard,
 } from "@/components/osce/CaseParts";
 import { CountdownTimer } from "@/components/osce/CountdownTimer";
+import { PageSourcesDrawer } from "@/components/osce/PageSourcesDrawer";
 
 export const Route = createFileRoute("/practice")({
-  head: () => ({ meta: [{ title: "20-minute Real OSCE Practice — Hugh's OSCE Case Generator" }] }),
+  head: () => ({ meta: [{ title: "20-minute Real OSCE Practice: Hugh's OSCE Case Generator" }] }),
   component: PracticePage,
 });
 
@@ -36,7 +37,7 @@ function PracticePage() {
       <PageHeader
         eyebrow="Real OSCE Practice"
         title="20-minute timed station."
-        subtitle="Default and recommended OSCE station time is 20 minutes. The countdown is sticky — start it, work the case, then reveal the model answer."
+        subtitle="Default and recommended OSCE station time is 20 minutes. The countdown is sticky: start it, work the case, then reveal the model answer."
         actions={
           <button
             onClick={() => window.print()}
@@ -66,10 +67,10 @@ function PracticePage() {
       <div className="grid lg:grid-cols-[1fr_360px] gap-5 mt-5">
         <div className="space-y-4">
           <CandidateStemCard c={c} />
-          <Section title="Vitals — request and interpret">
+          <Section title="Vitals: request and interpret">
             <VitalsRevealPanel vitals={c.vitals} />
           </Section>
-          <Section title="Examination — verbalise and reveal">
+          <Section title="Examination: verbalise and reveal">
             <ExaminationRevealPanel findings={c.examinationFindings} />
           </Section>
         </div>
@@ -103,6 +104,11 @@ function PracticePage() {
           <Link to="/cases/$caseId" params={{ caseId: c.id }} className="inline-block text-sm underline">
             Open full case →
           </Link>
+          <PageSourcesDrawer
+            sources={c.sourceTags}
+            needsVerification={c.needsVerification}
+            verificationNotes={c.verificationNotes}
+          />
         </div>
       )}
     </div>

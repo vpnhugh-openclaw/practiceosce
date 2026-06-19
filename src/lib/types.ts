@@ -1,4 +1,4 @@
-// Hugh's OSCE Case Generator — core types
+// Hugh's OSCE Case Generator: core types
 
 export type ScopeStatus =
   | "in-scope"
@@ -158,11 +158,37 @@ export interface OSCECase {
   redFlagsToScreen: string[];
   protocolConfidence: ProtocolConfidence;
   sourceNotes: string;
-  // ---- v2 additive fields (optional — old cases continue to render) ----
+  // ---- v2 additive fields (optional: old cases continue to render) ----
   ice?: { ideas?: string; concerns?: string; expectations?: string };
   hiddenFromBrief?: string[];
   referralClassification?: ReferralClassification;
   viva?: VivaQA[];
   sbar?: { situation?: string; background?: string; assessment?: string; recommendation?: string };
   defaultTimeMinutes?: number;
+  // ---- v3 sourcing layer (optional) ----
+  sourceTags?: SourceTag[];
+  needsVerification?: boolean;
+  verificationNotes?: string[];
 }
+
+export type ReferenceReliability =
+  | "government-protocol"
+  | "clinical-guideline"
+  | "medicines-reference"
+  | "osce-training"
+  | "patient-education"
+  | "background";
+
+export type ReferenceArea =
+  | "ENT" | "GI" | "Respiratory" | "MSK" | "Skin" | "Women's health"
+  | "Protocol" | "Red flags" | "Examination" | "Medicines"
+  | "Patient counselling" | "OSCE structure";
+
+export interface SourceTag {
+  id: string;
+  title: string;
+  locator?: string;
+  reliability: ReferenceReliability;
+  url?: string;
+}
+

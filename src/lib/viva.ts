@@ -1,4 +1,4 @@
-// Viva helpers — guarantees every case exposes at least 5 viva-style Q&A blocks.
+// Viva helpers: guarantees every case exposes at least 5 viva-style Q&A blocks.
 import type { OSCECase, VivaQA } from "./types";
 
 function genericViva(c: OSCECase): VivaQA[] {
@@ -13,7 +13,7 @@ function genericViva(c: OSCECase): VivaQA[] {
     },
     {
       question: `Justify your scope decision against the Queensland Health pharmacist prescribing protocol.`,
-      modelAnswer: `Scope: ${c.scopeDecision}. ${c.protocolReasoning} Confirm against the current protocol — this app does not substitute for the live document.`,
+      modelAnswer: `Scope: ${c.scopeDecision}. ${c.protocolReasoning} Confirm against the current protocol: this app does not substitute for the live document.`,
     },
     {
       question: `Outline your safety-net and the timeframe for review.`,

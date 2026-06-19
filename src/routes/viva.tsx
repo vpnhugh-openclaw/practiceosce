@@ -3,10 +3,11 @@ import { useMemo, useState } from "react";
 import { CASES, CASE_INDEX } from "@/data/cases";
 import { PageHeader, Section, HiddenReveal } from "@/components/osce/Primitives";
 import { getViva } from "@/lib/viva";
+import { PageSourcesDrawer } from "@/components/osce/PageSourcesDrawer";
 import { Printer } from "lucide-react";
 
 export const Route = createFileRoute("/viva")({
-  head: () => ({ meta: [{ title: "Viva Mode — Hugh's OSCE Case Generator" }] }),
+  head: () => ({ meta: [{ title: "Viva Mode: Hugh's OSCE Case Generator" }] }),
   component: VivaPage,
 });
 
@@ -65,9 +66,15 @@ function VivaPage() {
       </Section>
 
       <p className="text-xs text-muted-foreground italic mt-5">
-        Model answers are training scaffolds — verify any prescribing detail against the current
+        Model answers are training scaffolds. Verify any prescribing detail against the current
         Queensland Health pharmacist prescribing protocol.
       </p>
+
+      <PageSourcesDrawer
+        sources={c.sourceTags}
+        needsVerification={c.needsVerification ?? true}
+        verificationNotes={c.verificationNotes ?? ["Viva model answers must be checked against the current Queensland Health protocol before use as clinical guidance."]}
+      />
     </div>
   );
 }

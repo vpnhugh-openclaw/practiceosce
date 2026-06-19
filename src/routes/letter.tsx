@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { PageHeader, Section } from "@/components/osce/Primitives";
+import { PageSourcesDrawer } from "@/components/osce/PageSourcesDrawer";
 
 export const Route = createFileRoute("/letter")({
-  head: () => ({ meta: [{ title: "GP Letter Generator — Hugh's OSCE Case Generator" }] }),
+  head: () => ({ meta: [{ title: "GP Letter Generator: Hugh's OSCE Case Generator" }] }),
   component: LetterPage,
 });
 
@@ -74,6 +75,12 @@ ${pharmacist}`, [type, name, presenting, history, vitals, exam, dx, tx, reason, 
           <button onClick={() => navigator.clipboard.writeText(letter)} className="mt-3 rounded-md bg-navy text-navy-foreground px-3 py-2 text-sm">Copy to clipboard</button>
         </Section>
       </div>
+      <PageSourcesDrawer
+        label="Letter framework"
+        sources={[
+          { id: "isbar", title: "ISBAR clinical handover framework (ACSQHC)", reliability: "clinical-guideline", url: "https://www.safetyandquality.gov.au/our-work/clinical-communications/clinical-handover" },
+        ]}
+      />
     </div>
   );
 }

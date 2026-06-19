@@ -2,9 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { ACRONYMS, RED_FLAGS } from "@/data/redflags";
 import { PageHeader, Section } from "@/components/osce/Primitives";
+import { PageSourcesDrawer } from "@/components/osce/PageSourcesDrawer";
 
 export const Route = createFileRoute("/redflags")({
-  head: () => ({ meta: [{ title: "Red Flag Library — Hugh's OSCE Case Generator" }] }),
+  head: () => ({ meta: [{ title: "Red Flag Library: Hugh's OSCE Case Generator" }] }),
   component: RedFlagsPage,
 });
 
@@ -32,7 +33,7 @@ function RedFlagsPage() {
               <p className="font-display text-lg text-navy">{a.name}</p>
               <p className="text-xs text-muted-foreground mb-2">{a.domain}</p>
               <ul className="text-sm space-y-0.5">
-                {a.items.map((i, idx) => <li key={idx}><span className="font-mono text-navy">{i.letter}</span> — {i.flag}</li>)}
+                {a.items.map((i, idx) => <li key={idx}><span className="font-mono text-navy">{i.letter}</span>: {i.flag}</li>)}
               </ul>
             </div>
           ))}
@@ -53,6 +54,13 @@ function RedFlagsPage() {
           </div>
         ))}
       </div>
+
+      <PageSourcesDrawer
+        needsVerification
+        verificationNotes={[
+          "Red flags here are training prompts compiled from Queensland Health protocols and the imported OSCE study PDFs. Always cross-check against the current protocol for the specific presentation.",
+        ]}
+      />
     </div>
   );
 }

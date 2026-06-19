@@ -2,9 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PROTOCOLS } from "@/data/protocols";
 import { PageHeader, Section, KV } from "@/components/osce/Primitives";
 import { ProtocolConfidenceBadge } from "@/components/osce/ScopeBadges";
+import { PageSourcesDrawer } from "@/components/osce/PageSourcesDrawer";
 
 export const Route = createFileRoute("/protocols")({
-  head: () => ({ meta: [{ title: "Condition Protocol Cards — Hugh's OSCE Case Generator" }] }),
+  head: () => ({ meta: [{ title: "Condition Protocol Cards: Hugh's OSCE Case Generator" }] }),
   component: ProtocolsPage,
 });
 
@@ -45,13 +46,21 @@ function ProtocolsPage() {
               <div className="md:col-span-2">
                 <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-1">Non-pharmacological advice</p>
                 <ul className="mb-2 columns-2">{p.nonPharmacologicalAdvice.map((s) => <li key={s}>• {s}</li>)}</ul>
-                <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-1">Pharmacological options (class only — verify dose)</p>
+                <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-1">Pharmacological options (class only: verify dose)</p>
                 <ul className="mb-2">{p.pharmacologicalOptions.map((s) => <li key={s}>• {s}</li>)}</ul>
                 <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-1">Common OSCE traps</p>
                 <ul>{p.commonTraps.map((s) => <li key={s}>• {s}</li>)}</ul>
               </div>
             </div>
             <p className="text-xs text-muted-foreground italic mt-3">Source: {p.protocolSource} · Version: {p.protocolVersion}</p>
+            <PageSourcesDrawer
+              needsVerification={p.protocolConfidence !== "high"}
+              verificationNotes={
+                p.protocolConfidence !== "high"
+                  ? ["Confirm dose, eligibility and exclusion criteria against the current Queensland Health pharmacist prescribing protocol before clinical use."]
+                  : undefined
+              }
+            />
           </Section>
         ))}
       </div>

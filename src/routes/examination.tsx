@@ -4,7 +4,7 @@ import { PageHeader, Section } from "@/components/osce/Primitives";
 import { AbdominalMap } from "@/components/osce/AbdominalMap";
 
 export const Route = createFileRoute("/examination")({
-  head: () => ({ meta: [{ title: "Examination Skills — Hugh's OSCE Case Generator" }] }),
+  head: () => ({ meta: [{ title: "Examination Skills: Hugh's OSCE Case Generator" }] }),
   component: ExaminationPage,
 });
 
@@ -14,7 +14,7 @@ function ExaminationPage() {
       <PageHeader
         eyebrow="Examination Skills"
         title="OSCE-ready examination checklists."
-        subtitle="GALS, respiratory, ENT, abdominal and cardiovascular — what to say, what to do, what it means."
+        subtitle="GALS, respiratory, ENT, abdominal and cardiovascular: what to say, what to do, what it means."
       />
 
       <Section title="Nine-region abdominal map" defaultOpen>
