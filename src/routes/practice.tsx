@@ -117,43 +117,48 @@ function PracticePage() {
                 <ExaminationRevealPanel findings={c.examinationFindings} />
               </Section>
             </div>
-        <div>
-          <Section title="Notes pad" defaultOpen>
-            <textarea
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              className="w-full h-64 rounded-md border border-input bg-card px-3 py-2 text-sm font-mono"
-              placeholder="Plan your station: focused Qs, red flags, scope decision, plan, safety-net…"
-            />
-          </Section>
-          <div className="mt-4">
-            <button
-              onClick={() => setReveal((r) => !r)}
-              className="w-full inline-flex items-center justify-center rounded-md bg-navy text-navy-foreground px-4 py-2 text-sm"
-            >
-              {reveal ? "Hide answer" : "Reveal answer"}
-            </button>
+            <div>
+              <Section title="Notes pad" defaultOpen>
+                <textarea
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  className="w-full h-64 rounded-md border border-input bg-card px-3 py-2 text-sm font-mono"
+                  placeholder="Plan your station: focused Qs, red flags, scope decision, plan, safety-net…"
+                />
+              </Section>
+              <div className="mt-4">
+                <button
+                  onClick={() => setReveal((r) => !r)}
+                  className="w-full inline-flex items-center justify-center rounded-md bg-navy text-navy-foreground px-4 py-2 text-sm"
+                >
+                  {reveal ? "Hide answer" : "Reveal answer"}
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      {reveal && (
-        <div className="mt-6 space-y-4">
-          <ScopeSummary c={c} />
-          <ClinicalReasoningPanel c={c} />
-          <TreatmentPlanCard c={c} />
-          <NonPharmCard c={c} />
-          <SafetyNetCard c={c} />
-          <Link to="/cases/$caseId" params={{ caseId: c.id }} className="inline-block text-sm underline">
-            Open full case →
-          </Link>
-          <PageSourcesDrawer
-            sources={c.sourceTags}
-            needsVerification={c.needsVerification}
-            verificationNotes={c.verificationNotes}
-          />
-        </div>
+          {reveal && (
+            <div className="mt-6 space-y-4">
+              <ScopeSummary c={c} />
+              <ClinicalReasoningPanel c={c} />
+              <TreatmentPlanCard c={c} />
+              <NonPharmCard c={c} />
+              <SafetyNetCard c={c} />
+              <Link to="/cases/$caseId" params={{ caseId: c.id }} className="inline-block text-sm underline">
+                Open full case →
+              </Link>
+              <PageSourcesDrawer
+                sources={c.sourceTags}
+                needsVerification={c.needsVerification}
+                verificationNotes={c.verificationNotes}
+              />
+            </div>
+          )}
+
+          <div className="mt-4"><QAChecklist case={c} /></div>
+        </>
       )}
     </div>
   );
 }
+

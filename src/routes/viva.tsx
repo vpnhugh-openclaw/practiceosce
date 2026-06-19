@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { CASES, CASE_INDEX } from "@/data/cases";
 import { PageHeader, Section, HiddenReveal } from "@/components/osce/Primitives";
-import { getViva } from "@/lib/viva";
+import { getViva, hasCustomViva } from "@/lib/viva";
 import { PageSourcesDrawer } from "@/components/osce/PageSourcesDrawer";
-import { Printer } from "lucide-react";
+import { Printer, AlertTriangle } from "lucide-react";
 
 export const Route = createFileRoute("/viva")({
   head: () => ({ meta: [{ title: "Viva Mode: Hugh's OSCE Case Generator" }] }),
