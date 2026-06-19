@@ -89,10 +89,7 @@ function PerformancePage() {
                 <div key={w.category} className="flex items-center gap-3">
                   <p className="text-sm w-40">{w.category}</p>
                   <div className="flex-1 h-2 rounded-full bg-muted overflow-hidden">
-                    <div
-                      className="h-full bg-navy"
-                      style={{ width: `${Math.max(4, w.avg)}%` }}
-                    />
+                    <div className="h-full bg-navy" style={{ width: `${Math.max(4, w.avg)}%` }} />
                   </div>
                   <p className="text-xs font-mono text-muted-foreground w-20 text-right">
                     {w.avg}% · n={w.n}
@@ -137,8 +134,8 @@ function PerformancePage() {
                         a.criticalFail
                           ? "text-destructive"
                           : a.result === "Pass"
-                          ? "text-emerald-700"
-                          : "text-muted-foreground"
+                            ? "text-emerald-700"
+                            : "text-muted-foreground"
                       }`}
                     >
                       {a.result}

@@ -11,7 +11,12 @@ const REGIONS: Region[] = [
   {
     id: "RUQ",
     label: "Right upper quadrant",
-    differentials: ["Cholecystitis", "Hepatitis", "Hepatic congestion", "Right lower lobe pneumonia"],
+    differentials: [
+      "Cholecystitis",
+      "Hepatitis",
+      "Hepatic congestion",
+      "Right lower lobe pneumonia",
+    ],
     examFocus: "Murphy's sign, hepatomegaly, jaundice screen.",
   },
   {
@@ -35,7 +40,12 @@ const REGIONS: Region[] = [
   {
     id: "UMB",
     label: "Umbilical / central",
-    differentials: ["Early appendicitis", "Small-bowel obstruction", "AAA (older adults)", "Mesenteric ischaemia"],
+    differentials: [
+      "Early appendicitis",
+      "Small-bowel obstruction",
+      "AAA (older adults)",
+      "Mesenteric ischaemia",
+    ],
     examFocus: "Pulsatile mass, bowel sounds, urgent referral if AAA suspected.",
   },
   {

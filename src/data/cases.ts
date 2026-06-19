@@ -44,7 +44,8 @@ export const std = (overrides: Partial<OSCECase>): OSCECase => ({
   protocolReasoning: "",
   clinicalReasoning: "",
   treatmentPlanClass: [],
-  treatmentPlanNotes: "Protocol check required: verify medicine and dose against the current Queensland Health clinical practice guideline before prescribing.",
+  treatmentPlanNotes:
+    "Protocol check required: verify medicine and dose against the current Queensland Health clinical practice guideline before prescribing.",
   nonPharmPlan: [],
   safetyNet: [],
   reviewTime: "",
@@ -55,26 +56,106 @@ export const std = (overrides: Partial<OSCECase>): OSCECase => ({
   redFlagsPresent: [],
   redFlagsToScreen: [],
   protocolConfidence: "needs-review",
-  sourceNotes: "Adapted from IPA Practice Exams.pdf: verify all prescribing against current Queensland Health protocol.",
+  sourceNotes:
+    "Adapted from IPA Practice Exams.pdf: verify all prescribing against current Queensland Health protocol.",
   ...overrides,
 });
 
 export const rubricStandard = (_extra: Partial<{ critical: string[] }> = {}) => [
-  { domain: "Opening", item: "Introduces self, role, consent, hand hygiene", maxMarks: 2, feedbackIfMissed: "Always introduce yourself, confirm patient, gain consent." },
-  { domain: "Information gathering", item: "Takes focused presenting history (SOCRATES where pain)", maxMarks: 4, feedbackIfMissed: "Use SOCRATES for any pain/symptom." },
-  { domain: "Red flags", item: "Screens for condition-specific red flags", maxMarks: 4, critical: true, feedbackIfMissed: "Missing red flags is a critical fail." },
-  { domain: "Past history", item: "Medical, medication, allergy, pregnancy/breastfeeding history", maxMarks: 3, feedbackIfMissed: "Always ask PMHx/meds/allergies." },
-  { domain: "SNAP", item: "Smoking, Nutrition, Alcohol, Physical activity", maxMarks: 2, feedbackIfMissed: "SNAP framework is expected in chronic and lifestyle cases." },
-  { domain: "Vitals", item: "Requests relevant vitals and interprets correctly", maxMarks: 3, feedbackIfMissed: "Justify each vital you request." },
-  { domain: "Examination", item: "Performs / verbalises relevant examination", maxMarks: 4, feedbackIfMissed: "Use the relevant examination framework (GALS, respiratory, ENT, abdominal, CV)." },
-  { domain: "Scope decision", item: "Correct scope decision with protocol-based reasoning", maxMarks: 4, critical: true, feedbackIfMissed: "Wrong scope decision is a critical fail." },
-  { domain: "Clinical reasoning", item: "Articulates working diagnosis and differentials", maxMarks: 3, feedbackIfMissed: "Use: 'I think this is X because… I'm concerned about Y so…'" },
-  { domain: "Pharmacological plan", item: "Protocol-consistent medicine class, age, allergy, pregnancy safe", maxMarks: 3, critical: true, feedbackIfMissed: "Prescribing outside protocol is a critical fail." },
-  { domain: "Non-pharmacological plan", item: "Patient-specific lifestyle and trigger advice", maxMarks: 2, feedbackIfMissed: "Tailor non-pharm advice to this patient's triggers." },
-  { domain: "Safety net", item: "Specific return-sooner advice + review timeframe", maxMarks: 3, feedbackIfMissed: "Always close with safety-net + review." },
-  { domain: "Communication", item: "Patient-centred language, empathy, checks understanding", maxMarks: 2, feedbackIfMissed: "Use teach-back; acknowledge emotional impact." },
-  { domain: "GP communication", item: "Offers / drafts GP letter where treat-and-refer", maxMarks: 2, feedbackIfMissed: "Offer ISBAR-structured letter for any referral." },
-  { domain: "Professional close", item: "Summarises plan, invites questions, closes professionally", maxMarks: 1, feedbackIfMissed: "Close with a clear summary." },
+  {
+    domain: "Opening",
+    item: "Introduces self, role, consent, hand hygiene",
+    maxMarks: 2,
+    feedbackIfMissed: "Always introduce yourself, confirm patient, gain consent.",
+  },
+  {
+    domain: "Information gathering",
+    item: "Takes focused presenting history (SOCRATES where pain)",
+    maxMarks: 4,
+    feedbackIfMissed: "Use SOCRATES for any pain/symptom.",
+  },
+  {
+    domain: "Red flags",
+    item: "Screens for condition-specific red flags",
+    maxMarks: 4,
+    critical: true,
+    feedbackIfMissed: "Missing red flags is a critical fail.",
+  },
+  {
+    domain: "Past history",
+    item: "Medical, medication, allergy, pregnancy/breastfeeding history",
+    maxMarks: 3,
+    feedbackIfMissed: "Always ask PMHx/meds/allergies.",
+  },
+  {
+    domain: "SNAP",
+    item: "Smoking, Nutrition, Alcohol, Physical activity",
+    maxMarks: 2,
+    feedbackIfMissed: "SNAP framework is expected in chronic and lifestyle cases.",
+  },
+  {
+    domain: "Vitals",
+    item: "Requests relevant vitals and interprets correctly",
+    maxMarks: 3,
+    feedbackIfMissed: "Justify each vital you request.",
+  },
+  {
+    domain: "Examination",
+    item: "Performs / verbalises relevant examination",
+    maxMarks: 4,
+    feedbackIfMissed:
+      "Use the relevant examination framework (GALS, respiratory, ENT, abdominal, CV).",
+  },
+  {
+    domain: "Scope decision",
+    item: "Correct scope decision with protocol-based reasoning",
+    maxMarks: 4,
+    critical: true,
+    feedbackIfMissed: "Wrong scope decision is a critical fail.",
+  },
+  {
+    domain: "Clinical reasoning",
+    item: "Articulates working diagnosis and differentials",
+    maxMarks: 3,
+    feedbackIfMissed: "Use: 'I think this is X because… I'm concerned about Y so…'",
+  },
+  {
+    domain: "Pharmacological plan",
+    item: "Protocol-consistent medicine class, age, allergy, pregnancy safe",
+    maxMarks: 3,
+    critical: true,
+    feedbackIfMissed: "Prescribing outside protocol is a critical fail.",
+  },
+  {
+    domain: "Non-pharmacological plan",
+    item: "Patient-specific lifestyle and trigger advice",
+    maxMarks: 2,
+    feedbackIfMissed: "Tailor non-pharm advice to this patient's triggers.",
+  },
+  {
+    domain: "Safety net",
+    item: "Specific return-sooner advice + review timeframe",
+    maxMarks: 3,
+    feedbackIfMissed: "Always close with safety-net + review.",
+  },
+  {
+    domain: "Communication",
+    item: "Patient-centred language, empathy, checks understanding",
+    maxMarks: 2,
+    feedbackIfMissed: "Use teach-back; acknowledge emotional impact.",
+  },
+  {
+    domain: "GP communication",
+    item: "Offers / drafts GP letter where treat-and-refer",
+    maxMarks: 2,
+    feedbackIfMissed: "Offer ISBAR-structured letter for any referral.",
+  },
+  {
+    domain: "Professional close",
+    item: "Summarises plan, invites questions, closes professionally",
+    maxMarks: 1,
+    feedbackIfMissed: "Close with a clear summary.",
+  },
 ];
 
 const RAW_CASES: OSCECase[] = [
@@ -84,8 +165,14 @@ const RAW_CASES: OSCECase[] = [
     condition: "Acute gastroenteritis",
     category: "Gastrointestinal",
     caseType: ["In-scope routine", "Safety-netting heavy"],
-    candidateStem: "You are a prescribing pharmacist in a Queensland community pharmacy. Sarah, a 28-year-old office worker, presents with 12 hours of nausea and diarrhoea. Take a focused history, assess hydration and scope, and provide a management plan with safety-netting.",
-    patientProfile: { name: "Sarah Mitchell", age: 28, gender: "Female", occupation: "Office worker" },
+    candidateStem:
+      "You are a prescribing pharmacist in a Queensland community pharmacy. Sarah, a 28-year-old office worker, presents with 12 hours of nausea and diarrhoea. Take a focused history, assess hydration and scope, and provide a management plan with safety-netting.",
+    patientProfile: {
+      name: "Sarah Mitchell",
+      age: 28,
+      gender: "Female",
+      occupation: "Office worker",
+    },
     fakePatientScript: {
       openingLine: "I've been throwing up and going to the toilet all morning, I feel awful.",
       mainComplaint: "Nausea, vomiting and diarrhoea since ~2am",
@@ -97,8 +184,9 @@ const RAW_CASES: OSCECase[] = [
         Severity: "Pain 5/10",
       },
       hiddenAnswers: {
-        "Food in last 48 hours": "Had cheap sushi at lunch yesterday; flatmate had the same and is also unwell",
-        "Travel": "No recent travel",
+        "Food in last 48 hours":
+          "Had cheap sushi at lunch yesterday; flatmate had the same and is also unwell",
+        Travel: "No recent travel",
         "Blood in stool": "No blood, no black stools",
         "Urine output": "Last passed urine 5 hours ago, smaller volume, darker",
       },
@@ -127,22 +215,58 @@ const RAW_CASES: OSCECase[] = [
       Hydration: "Dry mucous membranes, capillary refill <2s, mild skin tenting",
       Abdomen: "Soft, generalised mild tenderness, no guarding, bowel sounds active",
     },
-    expectedDiagnosis: "Acute infective gastroenteritis, likely food-related (shared meal with affected contact)",
-    differentials: ["Viral gastroenteritis", "Bacterial food poisoning", "Alcohol-related gastritis"],
+    expectedDiagnosis:
+      "Acute infective gastroenteritis, likely food-related (shared meal with affected contact)",
+    differentials: [
+      "Viral gastroenteritis",
+      "Bacterial food poisoning",
+      "Alcohol-related gastritis",
+    ],
     scopeDecision: "in-scope",
-    protocolReasoning: "Adult, mild:moderate gastroenteritis, no red flags, mild dehydration only: supportive management within scope. Counsel that OCP efficacy may be reduced by vomiting/diarrhoea; recommend backup contraception per local guidance.",
-    clinicalReasoning: "Acute infective gastroenteritis is most likely given onset overnight, shared food exposure, affected contact, and supportive examination findings. No red flags for invasive infection. Mild dehydration is treatable with oral rehydration.",
-    treatmentPlanClass: ["Oral rehydration solution", "Antiemetic (class) per protocol if eligible", "Simple analgesia for cramping (class)"],
-    treatmentPlanNotes: "Protocol check required: verify any antiemetic and dose against current Queensland Health protocol before supplying.",
-    nonPharmPlan: ["Small frequent sips of ORS", "Bland diet as tolerated", "Hand hygiene", "Stay home from work until 48 h symptom-free", "Backup contraception during illness and per OCP instructions"],
-    safetyNet: ["Return / seek urgent care if blood in stool, persistent vomiting >24 h, severe abdominal pain, reduced urine output, dizziness on standing, fever >38.5°C", "Consider public health notification if cluster of cases"],
+    protocolReasoning:
+      "Adult, mild:moderate gastroenteritis, no red flags, mild dehydration only: supportive management within scope. Counsel that OCP efficacy may be reduced by vomiting/diarrhoea; recommend backup contraception per local guidance.",
+    clinicalReasoning:
+      "Acute infective gastroenteritis is most likely given onset overnight, shared food exposure, affected contact, and supportive examination findings. No red flags for invasive infection. Mild dehydration is treatable with oral rehydration.",
+    treatmentPlanClass: [
+      "Oral rehydration solution",
+      "Antiemetic (class) per protocol if eligible",
+      "Simple analgesia for cramping (class)",
+    ],
+    treatmentPlanNotes:
+      "Protocol check required: verify any antiemetic and dose against current Queensland Health protocol before supplying.",
+    nonPharmPlan: [
+      "Small frequent sips of ORS",
+      "Bland diet as tolerated",
+      "Hand hygiene",
+      "Stay home from work until 48 h symptom-free",
+      "Backup contraception during illness and per OCP instructions",
+    ],
+    safetyNet: [
+      "Return / seek urgent care if blood in stool, persistent vomiting >24 h, severe abdominal pain, reduced urine output, dizziness on standing, fever >38.5°C",
+      "Consider public health notification if cluster of cases",
+    ],
     reviewTime: "Refer if not improving in 1:2 days",
     referralPlan: "GP if symptoms persist >48 h, dehydration worsens, or red flags develop",
     markingRubric: rubricStandard(),
-    criticalFails: ["Missed dehydration assessment", "Missed OCP interaction counselling", "Missed red-flag screening"],
-    learningPoints: ["Always assess hydration with vitals and examination", "Consider OCP backup with vomiting/diarrhoea", "Public health notification for clusters"],
+    criticalFails: [
+      "Missed dehydration assessment",
+      "Missed OCP interaction counselling",
+      "Missed red-flag screening",
+    ],
+    learningPoints: [
+      "Always assess hydration with vitals and examination",
+      "Consider OCP backup with vomiting/diarrhoea",
+      "Public health notification for clusters",
+    ],
     redFlagsPresent: [],
-    redFlagsToScreen: ["Blood in stool", "Persistent vomiting", "Severe pain", "Reduced urine output", "High fever", "Recent travel"],
+    redFlagsToScreen: [
+      "Blood in stool",
+      "Persistent vomiting",
+      "Severe pain",
+      "Reduced urine output",
+      "High fever",
+      "Recent travel",
+    ],
   }),
 
   std({
@@ -151,10 +275,12 @@ const RAW_CASES: OSCECase[] = [
     condition: "GORD with PUD features",
     category: "Gastrointestinal",
     caseType: ["Treat and refer", "Protocol trap"],
-    candidateStem: "James, a 42-year-old lawyer, presents asking for 'something stronger for his reflux'. Take a focused history, examine appropriately, decide your scope and provide a management plan.",
+    candidateStem:
+      "James, a 42-year-old lawyer, presents asking for 'something stronger for his reflux'. Take a focused history, examine appropriately, decide your scope and provide a management plan.",
     patientProfile: { name: "James O'Connor", age: 42, gender: "Male", occupation: "Lawyer" },
     fakePatientScript: {
-      openingLine: "I've been getting bad heartburn 3:4 times a week, the over-the-counter stuff isn't cutting it.",
+      openingLine:
+        "I've been getting bad heartburn 3:4 times a week, the over-the-counter stuff isn't cutting it.",
       mainComplaint: "Recurrent heartburn and reflux for 3 months",
       socrates: {
         Site: "Burning in epigastrium and behind sternum",
@@ -166,10 +292,10 @@ const RAW_CASES: OSCECase[] = [
       },
       hiddenAnswers: {
         "NSAID use": "Takes ibuprofen most days for back pain",
-        "Weight": "Has put on 8 kg in last year",
-        "Alcohol": "5:6 standard drinks 4 nights a week",
-        "Smoking": "10 cigarettes/day for 20 years",
-        "Stress": "Major court case ongoing",
+        Weight: "Has put on 8 kg in last year",
+        Alcohol: "5:6 standard drinks 4 nights a week",
+        Smoking: "10 cigarettes/day for 20 years",
+        Stress: "Major court case ongoing",
         "Weight loss / dysphagia / haematemesis / melaena": "No (CANVASSHU negative)",
         "Prior PPI trial": "Tried OTC PPI 2 weeks, partial improvement",
       },
@@ -189,7 +315,13 @@ const RAW_CASES: OSCECase[] = [
       emotionalImpact: "Frustrated, worried about work performance",
       dayToDayImpact: "Sleep loss affecting work",
       volunteer: ["Wakes at night with symptoms", "Tried OTC PPI"],
-      onlyIfAsked: ["Daily NSAID use", "Father had peptic ulcer", "Significant alcohol", "Smoking", "Weight gain"],
+      onlyIfAsked: [
+        "Daily NSAID use",
+        "Father had peptic ulcer",
+        "Significant alcohol",
+        "Smoking",
+        "Weight gain",
+      ],
       challengePrompts: ["Can I just have a stronger PPI?", "Why are you examining my abdomen?"],
     },
     vitals: { BP: "138/86", HR: "78", RR: "14", Temp: "36.8°C", "Pain score": "6/10", BMI: "29" },
@@ -199,22 +331,56 @@ const RAW_CASES: OSCECase[] = [
       Mouth: "Mild dental erosion",
       Abdomen: "Soft, mild epigastric tenderness, no guarding, no masses, bowel sounds normal",
     },
-    expectedDiagnosis: "GORD with features raising concern for peptic ulcer disease (NSAID use, epigastric tenderness, family history)",
+    expectedDiagnosis:
+      "GORD with features raising concern for peptic ulcer disease (NSAID use, epigastric tenderness, family history)",
     differentials: ["GORD", "Peptic ulcer disease", "Functional dyspepsia", "Cardiac chest pain"],
     scopeDecision: "treat-and-refer",
-    protocolReasoning: "Adult with typical GORD symptoms BUT epigastric tenderness on examination, daily NSAID use, family history of PUD, sleep disruption and inadequate response to OTC PPI: treat-and-refer to GP for assessment ± endoscopy.",
-    clinicalReasoning: "I think this is GORD, likely complicated by NSAID-related gastritis or peptic ulcer disease, because of typical heartburn, daily NSAID use, epigastric tenderness on exam, family history of PUD and failure of OTC PPI. I am concerned about PUD so my scope decision is treat-and-refer.",
+    protocolReasoning:
+      "Adult with typical GORD symptoms BUT epigastric tenderness on examination, daily NSAID use, family history of PUD, sleep disruption and inadequate response to OTC PPI: treat-and-refer to GP for assessment ± endoscopy.",
+    clinicalReasoning:
+      "I think this is GORD, likely complicated by NSAID-related gastritis or peptic ulcer disease, because of typical heartburn, daily NSAID use, epigastric tenderness on exam, family history of PUD and failure of OTC PPI. I am concerned about PUD so my scope decision is treat-and-refer.",
     treatmentPlanClass: ["Proton pump inhibitor (class) per protocol"],
-    treatmentPlanNotes: "Protocol check required: verify PPI choice, dose and duration against current Queensland Health GORD protocol before prescribing.",
-    nonPharmPlan: ["Stop / minimise NSAIDs; discuss alternatives with GP", "Smaller, earlier meals; avoid eating <3 h before bed", "Elevate head of bed", "Reduce alcohol", "Smoking cessation discussion", "Weight reduction plan", "Stress management"],
-    safetyNet: ["Return immediately for vomiting blood, black stools, swallowing difficulty, severe chest pain, unintentional weight loss", "GP review within 1:2 weeks for ongoing assessment"],
+    treatmentPlanNotes:
+      "Protocol check required: verify PPI choice, dose and duration against current Queensland Health GORD protocol before prescribing.",
+    nonPharmPlan: [
+      "Stop / minimise NSAIDs; discuss alternatives with GP",
+      "Smaller, earlier meals; avoid eating <3 h before bed",
+      "Elevate head of bed",
+      "Reduce alcohol",
+      "Smoking cessation discussion",
+      "Weight reduction plan",
+      "Stress management",
+    ],
+    safetyNet: [
+      "Return immediately for vomiting blood, black stools, swallowing difficulty, severe chest pain, unintentional weight loss",
+      "GP review within 1:2 weeks for ongoing assessment",
+    ],
     reviewTime: "4:8 weeks",
-    referralPlan: "Routine GP referral with ISBAR letter: epigastric tenderness, NSAID use, FHx PUD, partial PPI response; request consideration of endoscopy and H. pylori testing.",
+    referralPlan:
+      "Routine GP referral with ISBAR letter: epigastric tenderness, NSAID use, FHx PUD, partial PPI response; request consideration of endoscopy and H. pylori testing.",
     markingRubric: rubricStandard(),
-    criticalFails: ["Treating as routine GORD and missing PUD risk", "Missing NSAID use", "Missing red-flag screen (CANVASSHU)"],
-    learningPoints: ["CANVASSHU acronym for GORD red flags", "Epigastric tenderness changes scope", "Always ask about NSAIDs in reflux"],
+    criticalFails: [
+      "Treating as routine GORD and missing PUD risk",
+      "Missing NSAID use",
+      "Missing red-flag screen (CANVASSHU)",
+    ],
+    learningPoints: [
+      "CANVASSHU acronym for GORD red flags",
+      "Epigastric tenderness changes scope",
+      "Always ask about NSAIDs in reflux",
+    ],
     redFlagsPresent: ["NSAID use", "FHx PUD", "Epigastric tenderness", "Sleep disruption"],
-    redFlagsToScreen: ["Cough", "Anaemia", "Nausea/vomiting", "Vomiting blood", "Anorexia", "Swallowing difficulty", "Symptoms >8 weeks", "Hoarseness", "Unintentional weight loss"],
+    redFlagsToScreen: [
+      "Cough",
+      "Anaemia",
+      "Nausea/vomiting",
+      "Vomiting blood",
+      "Anorexia",
+      "Swallowing difficulty",
+      "Symptoms >8 weeks",
+      "Hoarseness",
+      "Unintentional weight loss",
+    ],
   }),
 
   std({
@@ -223,8 +389,14 @@ const RAW_CASES: OSCECase[] = [
     condition: "Acute otitis media",
     category: "ENT",
     caseType: ["Examination heavy", "Diagnostic uncertainty"],
-    candidateStem: "Liam, a 22-year-old university student, presents with a painful right ear for 2 days. Take a focused history, perform an ENT examination and decide your management.",
-    patientProfile: { name: "Liam Park", age: 22, gender: "Male", occupation: "University student" },
+    candidateStem:
+      "Liam, a 22-year-old university student, presents with a painful right ear for 2 days. Take a focused history, perform an ENT examination and decide your management.",
+    patientProfile: {
+      name: "Liam Park",
+      age: 22,
+      gender: "Male",
+      occupation: "University student",
+    },
     fakePatientScript: {
       openingLine: "My right ear has been killing me for 2 days, can you have a look?",
       mainComplaint: "Right-sided otalgia 2 days",
@@ -239,9 +411,9 @@ const RAW_CASES: OSCECase[] = [
       },
       hiddenAnswers: {
         "Recent URTI": "Yes, finishing a cold",
-        "Swimming": "No",
+        Swimming: "No",
         "Trauma / foreign body": "No",
-        "Discharge": "No discharge from canal",
+        Discharge: "No discharge from canal",
         "Pinna pain on movement": "No (helps rule out AOE)",
         "Fever / systemic": "Felt warm yesterday, no rigors",
         "Vertigo / facial weakness / neck stiffness": "No (red flags negative)",
@@ -277,19 +449,38 @@ const RAW_CASES: OSCECase[] = [
     expectedDiagnosis: "Acute otitis media (right), uncomplicated",
     differentials: ["AOM", "Otitis externa", "Referred dental/TMJ pain"],
     scopeDecision: "in-scope",
-    protocolReasoning: "Adult, uncomplicated AOM without red flags (no mastoid tenderness, no facial weakness, no meningism). Pinna non-tender rules out otitis externa. Within protocol scope for management.",
-    clinicalReasoning: "I think this is uncomplicated acute otitis media because of preceding URTI, throbbing deep otalgia, bulging red TM with loss of cone of light, and absence of pinna tenderness or mastoid involvement. No red flags so my scope decision is in scope.",
+    protocolReasoning:
+      "Adult, uncomplicated AOM without red flags (no mastoid tenderness, no facial weakness, no meningism). Pinna non-tender rules out otitis externa. Within protocol scope for management.",
+    clinicalReasoning:
+      "I think this is uncomplicated acute otitis media because of preceding URTI, throbbing deep otalgia, bulging red TM with loss of cone of light, and absence of pinna tenderness or mastoid involvement. No red flags so my scope decision is in scope.",
     treatmentPlanClass: ["Simple analgesia (class)", "Antibiotic per protocol criteria only"],
-    treatmentPlanNotes: "Protocol check required: verify analgesia and any antibiotic against current Queensland Health AOM protocol.",
+    treatmentPlanNotes:
+      "Protocol check required: verify analgesia and any antibiotic against current Queensland Health AOM protocol.",
     nonPharmPlan: ["Keep ear dry", "Adequate fluids and rest", "Warm compress for comfort"],
-    safetyNet: ["Return if worsening pain, fever, discharge, hearing not recovering, behaviour change, neck stiffness, facial weakness, vertigo"],
+    safetyNet: [
+      "Return if worsening pain, fever, discharge, hearing not recovering, behaviour change, neck stiffness, facial weakness, vertigo",
+    ],
     reviewTime: "Perforation check ~6 weeks if perforation develops",
     referralPlan: "GP if no improvement, recurrent infection, or red flags develop",
     markingRubric: rubricStandard(),
-    criticalFails: ["Failing to examine pinna/mastoid and missing complications", "Treating AOE as AOM", "Missing red-flag screen"],
-    learningPoints: ["Pinna tenderness suggests AOE", "Always palpate mastoid", "Otoscopy findings: bulging, colour, cone of light"],
+    criticalFails: [
+      "Failing to examine pinna/mastoid and missing complications",
+      "Treating AOE as AOM",
+      "Missing red-flag screen",
+    ],
+    learningPoints: [
+      "Pinna tenderness suggests AOE",
+      "Always palpate mastoid",
+      "Otoscopy findings: bulging, colour, cone of light",
+    ],
     redFlagsPresent: [],
-    redFlagsToScreen: ["Mastoid tenderness", "Facial nerve weakness", "Meningism", "Severe vertigo", "Sudden hearing loss"],
+    redFlagsToScreen: [
+      "Mastoid tenderness",
+      "Facial nerve weakness",
+      "Meningism",
+      "Severe vertigo",
+      "Sudden hearing loss",
+    ],
   }),
 
   std({
@@ -298,7 +489,8 @@ const RAW_CASES: OSCECase[] = [
     condition: "Allergic rhinitis",
     category: "ENT",
     caseType: ["Treat and refer", "Marked emotional impact"],
-    candidateStem: "Margaret, a 50-year-old gardener, presents with persistent runny nose and itchy eyes. Take a focused history, examine appropriately and provide a management plan.",
+    candidateStem:
+      "Margaret, a 50-year-old gardener, presents with persistent runny nose and itchy eyes. Take a focused history, examine appropriately and provide a management plan.",
     patientProfile: { name: "Margaret Doyle", age: 50, gender: "Female", occupation: "Gardener" },
     fakePatientScript: {
       openingLine: "My nose has been streaming for weeks, it's driving me mad.",
@@ -312,10 +504,10 @@ const RAW_CASES: OSCECase[] = [
       },
       hiddenAnswers: {
         "Sleep impact": "Wakes 3:4x/night blowing nose; exhausted",
-        "Mood": "Feeling low and irritable, snapping at family",
+        Mood: "Feeling low and irritable, snapping at family",
         "Work impact": "Can barely work in the garden",
         "Previous treatment": "Tried OTC loratadine: partial help only",
-        "Atopy": "Childhood eczema, mild asthma",
+        Atopy: "Childhood eczema, mild asthma",
       },
       medicalHistory: "Mild asthma (well controlled)",
       medications: "Salbutamol PRN, loratadine OTC",
@@ -346,19 +538,47 @@ const RAW_CASES: OSCECase[] = [
     expectedDiagnosis: "Allergic rhinitis with marked emotional and functional impact",
     differentials: ["Allergic rhinitis", "Non-allergic rhinitis", "Chronic sinusitis"],
     scopeDecision: "treat-and-refer",
-    protocolReasoning: "Allergic rhinitis is in scope, but marked emotional and functional impact (sleep loss, mood change, work disruption) triggers treat-and-refer per protocol: initiate intranasal corticosteroid and refer to GP for review.",
-    clinicalReasoning: "I think this is allergic rhinitis because of seasonal pattern, clear rhinorrhoea, allergic shiners, cobblestone throat and atopic background. I am concerned about the marked emotional and sleep impact, so my scope decision is treat-and-refer.",
-    treatmentPlanClass: ["Intranasal corticosteroid (class)", "Non-sedating oral antihistamine (class)", "Saline irrigation"],
-    treatmentPlanNotes: "Protocol check required: verify intranasal corticosteroid choice and duration against current Queensland Health rhinitis protocol.",
-    nonPharmPlan: ["Avoid outdoor activity on high-pollen / windy days", "Shower and change clothes after gardening", "Wear wraparound sunglasses outside", "HEPA filter / wash bedding regularly"],
-    safetyNet: ["Return if facial pain, fever, unilateral symptoms, worsening despite 2 weeks of treatment, asthma worsening"],
+    protocolReasoning:
+      "Allergic rhinitis is in scope, but marked emotional and functional impact (sleep loss, mood change, work disruption) triggers treat-and-refer per protocol: initiate intranasal corticosteroid and refer to GP for review.",
+    clinicalReasoning:
+      "I think this is allergic rhinitis because of seasonal pattern, clear rhinorrhoea, allergic shiners, cobblestone throat and atopic background. I am concerned about the marked emotional and sleep impact, so my scope decision is treat-and-refer.",
+    treatmentPlanClass: [
+      "Intranasal corticosteroid (class)",
+      "Non-sedating oral antihistamine (class)",
+      "Saline irrigation",
+    ],
+    treatmentPlanNotes:
+      "Protocol check required: verify intranasal corticosteroid choice and duration against current Queensland Health rhinitis protocol.",
+    nonPharmPlan: [
+      "Avoid outdoor activity on high-pollen / windy days",
+      "Shower and change clothes after gardening",
+      "Wear wraparound sunglasses outside",
+      "HEPA filter / wash bedding regularly",
+    ],
+    safetyNet: [
+      "Return if facial pain, fever, unilateral symptoms, worsening despite 2 weeks of treatment, asthma worsening",
+    ],
     reviewTime: "4 weeks if intranasal corticosteroid prescribed",
-    referralPlan: "GP referral with ISBAR letter highlighting marked emotional impact and sleep loss; consider allergy testing/specialist if persistent.",
+    referralPlan:
+      "GP referral with ISBAR letter highlighting marked emotional impact and sleep loss; consider allergy testing/specialist if persistent.",
     markingRubric: rubricStandard(),
-    criticalFails: ["Missing marked emotional impact", "Missing asthma comorbidity", "Mistaking clear otorrhoea for infection"],
-    learningPoints: ["Marked emotional impact changes scope to treat-and-refer", "Clear otorrhoea can occur in allergic presentations", "Always check asthma control in atopic patients"],
+    criticalFails: [
+      "Missing marked emotional impact",
+      "Missing asthma comorbidity",
+      "Mistaking clear otorrhoea for infection",
+    ],
+    learningPoints: [
+      "Marked emotional impact changes scope to treat-and-refer",
+      "Clear otorrhoea can occur in allergic presentations",
+      "Always check asthma control in atopic patients",
+    ],
     redFlagsPresent: ["Marked emotional impact", "Sleep disruption"],
-    redFlagsToScreen: ["Unilateral purulent discharge", "Facial pain/fever", "Epistaxis", "Anosmia"],
+    redFlagsToScreen: [
+      "Unilateral purulent discharge",
+      "Facial pain/fever",
+      "Epistaxis",
+      "Anosmia",
+    ],
   }),
 
   std({
@@ -367,7 +587,8 @@ const RAW_CASES: OSCECase[] = [
     condition: "Mechanical back pain",
     category: "Musculoskeletal",
     caseType: ["Treat and refer", "Examination heavy"],
-    candidateStem: "Aunty Joy, a 50-year-old Aboriginal woman, presents with lower back pain. Take a focused history, perform a GALS assessment, decide your scope and provide a management plan.",
+    candidateStem:
+      "Aunty Joy, a 50-year-old Aboriginal woman, presents with lower back pain. Take a focused history, perform a GALS assessment, decide your scope and provide a management plan.",
     patientProfile: { name: "Joy Williams", age: 50, gender: "Female", ethnicity: "Aboriginal" },
     fakePatientScript: {
       openingLine: "My back's been giving me grief for a couple of weeks now.",
@@ -417,22 +638,58 @@ const RAW_CASES: OSCECase[] = [
       Arms: "Normal",
       Legs: "Normal patella tap, full ROM hip/knee",
     },
-    expectedDiagnosis: "Mechanical lower back pain with marked functional impact, no neurological red flags",
-    differentials: ["Mechanical back pain", "Radiculopathy", "Inflammatory back pain", "Vertebral compression"],
+    expectedDiagnosis:
+      "Mechanical lower back pain with marked functional impact, no neurological red flags",
+    differentials: [
+      "Mechanical back pain",
+      "Radiculopathy",
+      "Inflammatory back pain",
+      "Vertebral compression",
+    ],
     scopeDecision: "treat-and-refer",
-    protocolReasoning: "Mechanical back pain without red flags is generally manageable, but marked functional impact (caregiving, sleep) and comorbidities (T2DM, HTN, BMI 30) warrant treat-and-refer for GP review and physiotherapy referral.",
-    clinicalReasoning: "I think this is mechanical lower back pain because of gradual onset after activity, no radicular symptoms, normal neurological screen, and reproducible paraspinal tenderness. I am concerned about marked functional impact so my scope decision is treat-and-refer.",
+    protocolReasoning:
+      "Mechanical back pain without red flags is generally manageable, but marked functional impact (caregiving, sleep) and comorbidities (T2DM, HTN, BMI 30) warrant treat-and-refer for GP review and physiotherapy referral.",
+    clinicalReasoning:
+      "I think this is mechanical lower back pain because of gradual onset after activity, no radicular symptoms, normal neurological screen, and reproducible paraspinal tenderness. I am concerned about marked functional impact so my scope decision is treat-and-refer.",
     treatmentPlanClass: ["Simple analgesia (class)", "Topical NSAID (class) per protocol"],
-    treatmentPlanNotes: "Protocol check required: verify analgesia against current Queensland Health MSK pain protocol; check NSAID suitability with HTN and T2DM.",
-    nonPharmPlan: ["Stay active within tolerance: avoid bed rest", "Heat packs for relief", "Gentle stretching", "Posture / lifting advice", "Physiotherapy referral", "Address sleep position"],
-    safetyNet: ["Return urgently for bladder/bowel changes, saddle anaesthesia, leg weakness, fever, night pain, weight loss, trauma"],
+    treatmentPlanNotes:
+      "Protocol check required: verify analgesia against current Queensland Health MSK pain protocol; check NSAID suitability with HTN and T2DM.",
+    nonPharmPlan: [
+      "Stay active within tolerance: avoid bed rest",
+      "Heat packs for relief",
+      "Gentle stretching",
+      "Posture / lifting advice",
+      "Physiotherapy referral",
+      "Address sleep position",
+    ],
+    safetyNet: [
+      "Return urgently for bladder/bowel changes, saddle anaesthesia, leg weakness, fever, night pain, weight loss, trauma",
+    ],
     reviewTime: "Refer to GP/physio; return if not improving in 1:2 weeks",
-    referralPlan: "GP for review and physiotherapy referral; ISBAR letter noting functional impact and comorbidities.",
+    referralPlan:
+      "GP for review and physiotherapy referral; ISBAR letter noting functional impact and comorbidities.",
     markingRubric: rubricStandard(),
-    criticalFails: ["Failing to screen cauda equina red flags", "Prescribing NSAID without checking HTN/renal/T2DM", "Missing functional impact"],
-    learningPoints: ["GALS screen for MSK", "Cauda equina red flags are critical", "Functional impact changes scope"],
+    criticalFails: [
+      "Failing to screen cauda equina red flags",
+      "Prescribing NSAID without checking HTN/renal/T2DM",
+      "Missing functional impact",
+    ],
+    learningPoints: [
+      "GALS screen for MSK",
+      "Cauda equina red flags are critical",
+      "Functional impact changes scope",
+    ],
     redFlagsPresent: ["Marked functional impact"],
-    redFlagsToScreen: ["Bladder/bowel dysfunction", "Saddle anaesthesia", "Leg weakness", "Fever", "Night pain", "Weight loss", "Trauma", "Age <20 or >50 new pain"],
+    redFlagsToScreen: [
+      "Bladder/bowel dysfunction",
+      "Saddle anaesthesia",
+      "Leg weakness",
+      "Fever",
+      "Night pain",
+      "Weight loss",
+      "Trauma",
+      "Age <20 or >50 new pain",
+    ],
   }),
 
   std({
@@ -441,8 +698,14 @@ const RAW_CASES: OSCECase[] = [
     condition: "Acute ankle sprain",
     category: "Musculoskeletal",
     caseType: ["Treat and refer", "Examination heavy"],
-    candidateStem: "Tom, a 20-year-old footballer, rolled his ankle during a match yesterday. Take a focused history, perform a focused MSK examination and provide a management plan.",
-    patientProfile: { name: "Tom Reilly", age: 20, gender: "Male", occupation: "Student / footballer" },
+    candidateStem:
+      "Tom, a 20-year-old footballer, rolled his ankle during a match yesterday. Take a focused history, perform a focused MSK examination and provide a management plan.",
+    patientProfile: {
+      name: "Tom Reilly",
+      age: 20,
+      gender: "Male",
+      occupation: "Student / footballer",
+    },
     fakePatientScript: {
       openingLine: "I rolled my ankle at footy yesterday, it's pretty swollen.",
       mainComplaint: "Right ankle pain and swelling after inversion injury",
@@ -489,21 +752,49 @@ const RAW_CASES: OSCECase[] = [
       "Knee / hip / spine": "Normal",
     },
     expectedDiagnosis: "Grade II lateral ankle sprain; consider Ottawa rules for imaging",
-    differentials: ["Lateral ligament sprain", "Lateral malleolus fracture", "Peroneal tendon injury"],
+    differentials: [
+      "Lateral ligament sprain",
+      "Lateral malleolus fracture",
+      "Peroneal tendon injury",
+    ],
     scopeDecision: "treat-and-refer",
-    protocolReasoning: "Acute soft-tissue injury with significant swelling and lateral malleolus tenderness: Ottawa ankle rules positive; refer for imaging assessment alongside conservative management.",
-    clinicalReasoning: "I think this is a lateral ankle sprain because of typical inversion mechanism, lateral swelling and ATFL tenderness. I am concerned about possible malleolar fracture given Ottawa rules tenderness, so my scope decision is treat-and-refer.",
+    protocolReasoning:
+      "Acute soft-tissue injury with significant swelling and lateral malleolus tenderness: Ottawa ankle rules positive; refer for imaging assessment alongside conservative management.",
+    clinicalReasoning:
+      "I think this is a lateral ankle sprain because of typical inversion mechanism, lateral swelling and ATFL tenderness. I am concerned about possible malleolar fracture given Ottawa rules tenderness, so my scope decision is treat-and-refer.",
     treatmentPlanClass: ["Simple analgesia (class)", "Topical NSAID (class) per protocol"],
-    treatmentPlanNotes: "Protocol check required: verify analgesia choice and any NSAID/oral options against current Queensland Health protocol.",
-    nonPharmPlan: ["RICE: relative rest, ice, compression, elevation", "Protective weight bearing as tolerated", "Early active range of motion", "Avoid HARM (heat, alcohol, running, massage) first 48 h", "Physiotherapy referral"],
-    safetyNet: ["Return / GP if unable to weight bear, increasing pain/swelling, numbness/discoloration, signs of infection"],
+    treatmentPlanNotes:
+      "Protocol check required: verify analgesia choice and any NSAID/oral options against current Queensland Health protocol.",
+    nonPharmPlan: [
+      "RICE: relative rest, ice, compression, elevation",
+      "Protective weight bearing as tolerated",
+      "Early active range of motion",
+      "Avoid HARM (heat, alcohol, running, massage) first 48 h",
+      "Physiotherapy referral",
+    ],
+    safetyNet: [
+      "Return / GP if unable to weight bear, increasing pain/swelling, numbness/discoloration, signs of infection",
+    ],
     reviewTime: "Refer if not improving in 1:2 weeks",
     referralPlan: "Same-day GP / urgent care for X-ray per Ottawa rules; physio follow-up.",
     markingRubric: rubricStandard(),
-    criticalFails: ["Failing to apply Ottawa ankle rules", "Missing fracture risk", "Inappropriate NSAID choice"],
-    learningPoints: ["Ottawa ankle rules", "RICE / HARM principles", "Early mobilisation reduces stiffness"],
+    criticalFails: [
+      "Failing to apply Ottawa ankle rules",
+      "Missing fracture risk",
+      "Inappropriate NSAID choice",
+    ],
+    learningPoints: [
+      "Ottawa ankle rules",
+      "RICE / HARM principles",
+      "Early mobilisation reduces stiffness",
+    ],
     redFlagsPresent: ["Ottawa rules tenderness"],
-    redFlagsToScreen: ["Inability to weight bear", "Bony tenderness lateral/medial malleolus 6 cm", "Neurovascular compromise", "Open injury"],
+    redFlagsToScreen: [
+      "Inability to weight bear",
+      "Bony tenderness lateral/medial malleolus 6 cm",
+      "Neurovascular compromise",
+      "Open injury",
+    ],
   }),
 
   std({
@@ -512,7 +803,8 @@ const RAW_CASES: OSCECase[] = [
     condition: "Asthma exacerbation",
     category: "Respiratory",
     caseType: ["Treat and refer", "Marked emotional impact"],
-    candidateStem: "Anna, a 50-year-old with known asthma, presents using her blue puffer more often after visiting her sister's cat. Take a focused history, examine and manage.",
+    candidateStem:
+      "Anna, a 50-year-old with known asthma, presents using her blue puffer more often after visiting her sister's cat. Take a focused history, examine and manage.",
     patientProfile: { name: "Anna Petrov", age: 50, gender: "Female" },
     fakePatientScript: {
       openingLine: "I've been using my blue puffer way too much this week.",
@@ -528,9 +820,9 @@ const RAW_CASES: OSCECase[] = [
         "SABA use": "10+ puffs/day in last 5 days",
         "Action plan": "Has one but not used",
         "ICS adherence": "Often misses preventer",
-        "Vaccinations": "Flu yes, COVID overdue, pneumococcal unsure",
-        "Smoking": "Non-smoker",
-        "CHUPO": "Can speak in sentences, no cyanosis, mild tachycardia",
+        Vaccinations: "Flu yes, COVID overdue, pneumococcal unsure",
+        Smoking: "Non-smoker",
+        CHUPO: "Can speak in sentences, no cyanosis, mild tachycardia",
       },
       medicalHistory: "Childhood asthma, hayfever",
       medications: "Salbutamol PRN, fluticasone (often forgets)",
@@ -559,22 +851,54 @@ const RAW_CASES: OSCECase[] = [
       Auscultation: "Bilateral expiratory wheeze, no crackles",
       Accessory: "No accessory muscle use at rest",
     },
-    expectedDiagnosis: "Moderate asthma exacerbation triggered by allergen exposure with poor preventer adherence",
+    expectedDiagnosis:
+      "Moderate asthma exacerbation triggered by allergen exposure with poor preventer adherence",
     differentials: ["Asthma exacerbation", "Viral trigger", "Anaphylaxis (not supported)"],
     scopeDecision: "treat-and-refer",
-    protocolReasoning: "Known asthma with SABA overuse, night waking, functional impact, peak flow 70%: beyond routine management; treat-and-refer for action plan update, preventer optimisation and review.",
-    clinicalReasoning: "I think this is a moderate asthma exacerbation because of allergen trigger, increased SABA use, night waking, wheeze on examination and reduced peak flow. I am concerned about SABA overuse and poor preventer adherence so my scope decision is treat-and-refer.",
-    treatmentPlanClass: ["Short-acting β2 agonist via spacer (class)", "Inhaled corticosteroid (class): review preventer", "Consider ICS-LABA per protocol"],
-    treatmentPlanNotes: "Protocol check required: verify preventer step-up against current Queensland Health asthma protocol and current national asthma guideline.",
-    nonPharmPlan: ["Update written asthma action plan", "Inhaler technique check with spacer", "Avoid cat exposure / allergen reduction strategies", "Vaccination prompts: COVID overdue, pneumococcal check", "Smoking cessation if relevant"],
-    safetyNet: ["Call 000 if severe breathlessness, blue lips, unable to speak in sentences, no relief from reliever, drowsiness"],
+    protocolReasoning:
+      "Known asthma with SABA overuse, night waking, functional impact, peak flow 70%: beyond routine management; treat-and-refer for action plan update, preventer optimisation and review.",
+    clinicalReasoning:
+      "I think this is a moderate asthma exacerbation because of allergen trigger, increased SABA use, night waking, wheeze on examination and reduced peak flow. I am concerned about SABA overuse and poor preventer adherence so my scope decision is treat-and-refer.",
+    treatmentPlanClass: [
+      "Short-acting β2 agonist via spacer (class)",
+      "Inhaled corticosteroid (class): review preventer",
+      "Consider ICS-LABA per protocol",
+    ],
+    treatmentPlanNotes:
+      "Protocol check required: verify preventer step-up against current Queensland Health asthma protocol and current national asthma guideline.",
+    nonPharmPlan: [
+      "Update written asthma action plan",
+      "Inhaler technique check with spacer",
+      "Avoid cat exposure / allergen reduction strategies",
+      "Vaccination prompts: COVID overdue, pneumococcal check",
+      "Smoking cessation if relevant",
+    ],
+    safetyNet: [
+      "Call 000 if severe breathlessness, blue lips, unable to speak in sentences, no relief from reliever, drowsiness",
+    ],
     reviewTime: "2:3 months after step-up; sooner if flare",
     referralPlan: "GP within 1 week for action plan and preventer review; ISBAR letter.",
     markingRubric: rubricStandard(),
-    criticalFails: ["Missing CHUPO assessment", "Missing SABA overuse", "Failing to update action plan"],
-    learningPoints: ["CHUPO red-flag acronym", "SABA overuse signals poor control", "Always check inhaler technique"],
+    criticalFails: [
+      "Missing CHUPO assessment",
+      "Missing SABA overuse",
+      "Failing to update action plan",
+    ],
+    learningPoints: [
+      "CHUPO red-flag acronym",
+      "SABA overuse signals poor control",
+      "Always check inhaler technique",
+    ],
     redFlagsPresent: ["SABA overuse", "Night waking", "Peak flow 70%"],
-    redFlagsToScreen: ["Cyanosis", "Hypoxia", "Unable full sentence", "Pulse markedly elevated", "O₂ sats low", "Silent chest", "Exhaustion"],
+    redFlagsToScreen: [
+      "Cyanosis",
+      "Hypoxia",
+      "Unable full sentence",
+      "Pulse markedly elevated",
+      "O₂ sats low",
+      "Silent chest",
+      "Exhaustion",
+    ],
   }),
 
   std({
@@ -583,7 +907,8 @@ const RAW_CASES: OSCECase[] = [
     condition: "COPD exacerbation",
     category: "Respiratory",
     caseType: ["Emergency referral", "Protocol trap"],
-    candidateStem: "Frank, a 68-year-old smoker with COPD, presents with worsening shortness of breath, productive cough and fever for 3 days. Take a focused history, examine and decide your management.",
+    candidateStem:
+      "Frank, a 68-year-old smoker with COPD, presents with worsening shortness of breath, productive cough and fever for 3 days. Take a focused history, examine and decide your management.",
     patientProfile: { name: "Frank Murphy", age: 68, gender: "Male" },
     fakePatientScript: {
       openingLine: "I'm really short of breath and bringing up yellow stuff.",
@@ -596,10 +921,10 @@ const RAW_CASES: OSCECase[] = [
         Severity: "Cannot walk to bathroom without stopping",
       },
       hiddenAnswers: {
-        "Smoking": "Smokes 20/day for 40 years",
-        "Confusion": "Daughter says he's been muddled today",
+        Smoking: "Smokes 20/day for 40 years",
+        Confusion: "Daughter says he's been muddled today",
         "Recent antibiotics": "None recent",
-        "Vaccinations": "Flu and COVID up to date",
+        Vaccinations: "Flu and COVID up to date",
       },
       medicalHistory: "COPD, hypertension",
       medications: "Tiotropium, salbutamol, perindopril",
@@ -628,22 +953,50 @@ const RAW_CASES: OSCECase[] = [
       Auscultation: "Bilateral wheeze and right basal crackles",
       Peripheral: "Mild ankle oedema",
     },
-    expectedDiagnosis: "Severe COPD exacerbation with likely infective component and hypoxia: emergency referral",
-    differentials: ["COPD exacerbation with infection", "Community-acquired pneumonia", "Cor pulmonale / heart failure", "Pulmonary embolism"],
+    expectedDiagnosis:
+      "Severe COPD exacerbation with likely infective component and hypoxia: emergency referral",
+    differentials: [
+      "COPD exacerbation with infection",
+      "Community-acquired pneumonia",
+      "Cor pulmonale / heart failure",
+      "Pulmonary embolism",
+    ],
     scopeDecision: "emergency",
-    protocolReasoning: "SpO₂ 89%, RR 26, HR 112, fever 38.4°C, confusion: multiple red flags including hypoxia, tachypnoea, tachycardia and altered mental state. Outside pharmacist prescribing scope; immediate hospital escalation required.",
-    clinicalReasoning: "I think this is a severe COPD exacerbation with infection because of productive purulent cough, fever, increased dyspnoea, wheeze and crackles. I am concerned about hypoxia and confusion so my scope decision is emergency referral.",
+    protocolReasoning:
+      "SpO₂ 89%, RR 26, HR 112, fever 38.4°C, confusion: multiple red flags including hypoxia, tachypnoea, tachycardia and altered mental state. Outside pharmacist prescribing scope; immediate hospital escalation required.",
+    clinicalReasoning:
+      "I think this is a severe COPD exacerbation with infection because of productive purulent cough, fever, increased dyspnoea, wheeze and crackles. I am concerned about hypoxia and confusion so my scope decision is emergency referral.",
     treatmentPlanClass: [],
-    treatmentPlanNotes: "Do NOT prescribe in pharmacy. Arrange emergency transfer. Supportive measures while awaiting ambulance only.",
-    nonPharmPlan: ["Sit patient up, reassure", "Continuous SpO₂ monitoring if possible", "Spacer-delivered SABA while awaiting ambulance per usual practice"],
+    treatmentPlanNotes:
+      "Do NOT prescribe in pharmacy. Arrange emergency transfer. Supportive measures while awaiting ambulance only.",
+    nonPharmPlan: [
+      "Sit patient up, reassure",
+      "Continuous SpO₂ monitoring if possible",
+      "Spacer-delivered SABA while awaiting ambulance per usual practice",
+    ],
     safetyNet: ["Call 000 immediately. Do not allow patient to leave or drive himself."],
     reviewTime: "Hospital escalation",
-    referralPlan: "Call 000. ISBAR handover to ambulance: COPD exacerbation, SpO₂ 89%, RR 26, HR 112, fever, confusion, on tiotropium/salbutamol.",
+    referralPlan:
+      "Call 000. ISBAR handover to ambulance: COPD exacerbation, SpO₂ 89%, RR 26, HR 112, fever, confusion, on tiotropium/salbutamol.",
     markingRubric: rubricStandard(),
-    criticalFails: ["Treating as routine COPD exacerbation", "Missing hypoxia and confusion", "Failing to escalate to 000"],
-    learningPoints: ["SpO₂ <92% in COPD with infection signs needs hospital", "Confusion is a critical red flag", "ISBAR handover to paramedics"],
+    criticalFails: [
+      "Treating as routine COPD exacerbation",
+      "Missing hypoxia and confusion",
+      "Failing to escalate to 000",
+    ],
+    learningPoints: [
+      "SpO₂ <92% in COPD with infection signs needs hospital",
+      "Confusion is a critical red flag",
+      "ISBAR handover to paramedics",
+    ],
     redFlagsPresent: ["SpO₂ 89%", "RR 26", "HR 112", "Fever", "Confusion", "Peripheral cyanosis"],
-    redFlagsToScreen: ["Hypoxia below baseline", "Confusion", "Cyanosis", "Tachycardia/tachypnoea with infection", "Cor pulmonale"],
+    redFlagsToScreen: [
+      "Hypoxia below baseline",
+      "Confusion",
+      "Cyanosis",
+      "Tachycardia/tachypnoea with infection",
+      "Cor pulmonale",
+    ],
   }),
 
   std({
@@ -652,7 +1005,8 @@ const RAW_CASES: OSCECase[] = [
     condition: "Impetigo",
     category: "Dermatology",
     caseType: ["In-scope routine", "Paediatric"],
-    candidateStem: "A parent presents with their 6-year-old child, Mia, who has red sores around her nose and mouth. Take a focused history, examine and manage.",
+    candidateStem:
+      "A parent presents with their 6-year-old child, Mia, who has red sores around her nose and mouth. Take a focused history, examine and manage.",
     patientProfile: { name: "Mia Chen", age: 6, gender: "Female" },
     fakePatientScript: {
       openingLine: "Mia's got these crusty sores around her nose, school sent her home.",
@@ -668,7 +1022,7 @@ const RAW_CASES: OSCECase[] = [
         "Lesion count": "5 lesions, all around nose/mouth",
         "Systemic features": "No fever, alert, well",
         "Other children affected": "Younger brother now has 1 spot",
-        "Allergies": "NKDA",
+        Allergies: "NKDA",
         "Skin conditions": "Mild eczema previously",
       },
       medicalHistory: "Mild eczema",
@@ -695,24 +1049,56 @@ const RAW_CASES: OSCECase[] = [
       "End-of-bed": "Well child, alert, playing",
       Skin: "5 lesions around nose and upper lip, honey-coloured crusts on erythematous base, no periorbital involvement",
       Lymph: "Small soft submandibular nodes",
-      "Systemic": "No cellulitis, no spreading erythema",
+      Systemic: "No cellulitis, no spreading erythema",
     },
     expectedDiagnosis: "Non-bullous impetigo, limited lesions",
-    differentials: ["Impetigo", "Herpes simplex", "Contact dermatitis", "Eczema with secondary infection"],
+    differentials: [
+      "Impetigo",
+      "Herpes simplex",
+      "Contact dermatitis",
+      "Eczema with secondary infection",
+    ],
     scopeDecision: "in-scope",
-    protocolReasoning: "Limited lesion count, no systemic features, no immunocompromise, no periorbital involvement: within pharmacist prescribing scope per protocol.",
-    clinicalReasoning: "I think this is non-bullous impetigo because of characteristic honey-coloured crusts in a typical distribution, contagious spread to sibling, and absence of systemic features. No red flags so my scope decision is in scope.",
-    treatmentPlanClass: ["Topical antibiotic (class) per protocol: NOT combined with oral antibiotic unless protocol specifies"],
-    treatmentPlanNotes: "Protocol check required: verify topical agent and duration against current Queensland Health impetigo protocol. Do not combine topical and oral antibiotics.",
-    nonPharmPlan: ["Wash and gently remove crusts with warm water before applying treatment", "Hand hygiene", "Cover lesions where possible", "Don't share towels/linen", "School exclusion until 24 h after treatment commenced or lesions covered (per local guidance)", "Treat sibling if affected: assess separately"],
-    safetyNet: ["Return if spreading erythema, fever, lethargy, periorbital involvement, no improvement in 7 days"],
+    protocolReasoning:
+      "Limited lesion count, no systemic features, no immunocompromise, no periorbital involvement: within pharmacist prescribing scope per protocol.",
+    clinicalReasoning:
+      "I think this is non-bullous impetigo because of characteristic honey-coloured crusts in a typical distribution, contagious spread to sibling, and absence of systemic features. No red flags so my scope decision is in scope.",
+    treatmentPlanClass: [
+      "Topical antibiotic (class) per protocol: NOT combined with oral antibiotic unless protocol specifies",
+    ],
+    treatmentPlanNotes:
+      "Protocol check required: verify topical agent and duration against current Queensland Health impetigo protocol. Do not combine topical and oral antibiotics.",
+    nonPharmPlan: [
+      "Wash and gently remove crusts with warm water before applying treatment",
+      "Hand hygiene",
+      "Cover lesions where possible",
+      "Don't share towels/linen",
+      "School exclusion until 24 h after treatment commenced or lesions covered (per local guidance)",
+      "Treat sibling if affected: assess separately",
+    ],
+    safetyNet: [
+      "Return if spreading erythema, fever, lethargy, periorbital involvement, no improvement in 7 days",
+    ],
     reviewTime: "No routine review if well; return if not improving",
     referralPlan: "GP if extensive, recurrent, systemic features or no improvement",
     markingRubric: rubricStandard(),
-    criticalFails: ["Combining topical and oral antibiotics", "Missing periorbital involvement", "Failing to advise school exclusion"],
-    learningPoints: ["Honey-coloured crusts are typical of impetigo", "Lesion count threshold drives oral vs topical", "Hygiene and exclusion advice are critical"],
+    criticalFails: [
+      "Combining topical and oral antibiotics",
+      "Missing periorbital involvement",
+      "Failing to advise school exclusion",
+    ],
+    learningPoints: [
+      "Honey-coloured crusts are typical of impetigo",
+      "Lesion count threshold drives oral vs topical",
+      "Hygiene and exclusion advice are critical",
+    ],
     redFlagsPresent: [],
-    redFlagsToScreen: ["Periorbital involvement", "Spreading cellulitis", "Fever / systemic features", "Immunocompromise"],
+    redFlagsToScreen: [
+      "Periorbital involvement",
+      "Spreading cellulitis",
+      "Fever / systemic features",
+      "Immunocompromise",
+    ],
   }),
 
   std({
@@ -722,7 +1108,8 @@ const RAW_CASES: OSCECase[] = [
     category: "Dermatology",
     caseType: ["Treat and refer", "Protocol trap"],
     timeMinutes: 10,
-    candidateStem: "Ravi, a 62-year-old with T2DM and hypertension, presents with a painful rash on his right torso for 2 days. Take a focused history, examine and manage.",
+    candidateStem:
+      "Ravi, a 62-year-old with T2DM and hypertension, presents with a painful rash on his right torso for 2 days. Take a focused history, examine and manage.",
     patientProfile: { name: "Ravi Singh", age: 62, gender: "Male" },
     fakePatientScript: {
       openingLine: "I've got this burning rash on my side, hurts like anything.",
@@ -740,7 +1127,7 @@ const RAW_CASES: OSCECase[] = [
         "Eye symptoms / nose-tip vesicle (Hutchinson)": "No",
         "Ear symptoms / facial weakness (Ramsay Hunt)": "No",
         "Multidermatomal / disseminated": "No",
-        "Immunocompromise": "T2DM only, not on immunosuppressants",
+        Immunocompromise: "T2DM only, not on immunosuppressants",
         "Timing window for antiviral": "Within 72 h of rash onset",
       },
       medicalHistory: "T2DM, hypertension",
@@ -769,22 +1156,51 @@ const RAW_CASES: OSCECase[] = [
       "Cranial nerves": "Intact, no facial weakness",
       Eyes: "Normal: no V1 involvement",
     },
-    expectedDiagnosis: "Herpes zoster (shingles), thoracic dermatome, within antiviral timing window",
+    expectedDiagnosis:
+      "Herpes zoster (shingles), thoracic dermatome, within antiviral timing window",
     differentials: ["Herpes zoster", "HSV", "Contact dermatitis", "Cellulitis"],
     scopeDecision: "treat-and-refer",
-    protocolReasoning: "Typical unilateral dermatomal rash within timing window, no ophthalmic / otic involvement, not disseminated. T2DM is not strict exclusion but warrants GP follow-up for monitoring and post-herpetic neuralgia risk; treat and refer.",
-    clinicalReasoning: "I think this is herpes zoster because of unilateral dermatomal vesicular rash preceded by burning pain that does not cross the midline. I am concerned about post-herpetic neuralgia and comorbidities so my scope decision is treat-and-refer.",
-    treatmentPlanClass: ["Antiviral (class) within 72 h of rash onset, per protocol", "Analgesia (class)"],
-    treatmentPlanNotes: "Protocol check required: verify antiviral agent, dose and duration against current Queensland Health shingles protocol; check renal dose adjustment given T2DM.",
-    nonPharmPlan: ["Keep lesions clean and covered", "Avoid contact with pregnant women, newborns and immunocompromised until lesions crusted", "Cool compresses for comfort", "Offer zoster vaccine after recovery (per eligibility)"],
-    safetyNet: ["Return urgently for eye symptoms, ear/facial weakness, severe pain, new dermatomes involved, no improvement"],
+    protocolReasoning:
+      "Typical unilateral dermatomal rash within timing window, no ophthalmic / otic involvement, not disseminated. T2DM is not strict exclusion but warrants GP follow-up for monitoring and post-herpetic neuralgia risk; treat and refer.",
+    clinicalReasoning:
+      "I think this is herpes zoster because of unilateral dermatomal vesicular rash preceded by burning pain that does not cross the midline. I am concerned about post-herpetic neuralgia and comorbidities so my scope decision is treat-and-refer.",
+    treatmentPlanClass: [
+      "Antiviral (class) within 72 h of rash onset, per protocol",
+      "Analgesia (class)",
+    ],
+    treatmentPlanNotes:
+      "Protocol check required: verify antiviral agent, dose and duration against current Queensland Health shingles protocol; check renal dose adjustment given T2DM.",
+    nonPharmPlan: [
+      "Keep lesions clean and covered",
+      "Avoid contact with pregnant women, newborns and immunocompromised until lesions crusted",
+      "Cool compresses for comfort",
+      "Offer zoster vaccine after recovery (per eligibility)",
+    ],
+    safetyNet: [
+      "Return urgently for eye symptoms, ear/facial weakness, severe pain, new dermatomes involved, no improvement",
+    ],
     reviewTime: "GP follow-up; refer if no improvement",
-    referralPlan: "GP follow-up within 1 week; ISBAR letter for analgesia escalation and PHN monitoring.",
+    referralPlan:
+      "GP follow-up within 1 week; ISBAR letter for analgesia escalation and PHN monitoring.",
     markingRubric: rubricStandard(),
-    criticalFails: ["Missing ophthalmic / Ramsay Hunt screen", "Prescribing antiviral outside timing window", "Missing infectivity advice (pregnant contact)"],
-    learningPoints: ["Hutchinson sign indicates V1 involvement", "Timing window matters for antiviral", "Infectivity to pregnant/immunocompromised"],
+    criticalFails: [
+      "Missing ophthalmic / Ramsay Hunt screen",
+      "Prescribing antiviral outside timing window",
+      "Missing infectivity advice (pregnant contact)",
+    ],
+    learningPoints: [
+      "Hutchinson sign indicates V1 involvement",
+      "Timing window matters for antiviral",
+      "Infectivity to pregnant/immunocompromised",
+    ],
     redFlagsPresent: ["Comorbid T2DM", "Significant pain"],
-    redFlagsToScreen: ["Eye involvement", "Ear involvement / facial palsy", "Crosses midline", "Disseminated lesions", "Immunocompromise"],
+    redFlagsToScreen: [
+      "Eye involvement",
+      "Ear involvement / facial palsy",
+      "Crosses midline",
+      "Disseminated lesions",
+      "Immunocompromise",
+    ],
   }),
 
   std({
@@ -793,7 +1209,8 @@ const RAW_CASES: OSCECase[] = [
     condition: "Plaque psoriasis",
     category: "Dermatology",
     caseType: ["Treat and refer", "Marked emotional impact"],
-    candidateStem: "Olivia, a 29-year-old with known mild plaque psoriasis, presents with worsening scaly plaques on her elbows and knees. Take a focused history, examine and manage.",
+    candidateStem:
+      "Olivia, a 29-year-old with known mild plaque psoriasis, presents with worsening scaly plaques on her elbows and knees. Take a focused history, examine and manage.",
     patientProfile: { name: "Olivia Brown", age: 29, gender: "Female" },
     fakePatientScript: {
       openingLine: "My psoriasis has flared up again, it's really getting me down.",
@@ -811,7 +1228,7 @@ const RAW_CASES: OSCECase[] = [
         "Pustular / erythrodermic features": "No",
         "Infection over plaques": "No",
         "Previous treatments": "Topical corticosteroid worked previously",
-        "Triggers": "Stress, dry weather",
+        Triggers: "Stress, dry weather",
       },
       medicalHistory: "Mild plaque psoriasis diagnosed age 22",
       medications: "Emollients, previous topical corticosteroid",
@@ -837,24 +1254,57 @@ const RAW_CASES: OSCECase[] = [
       Skin: "Well-demarcated erythematous plaques with silvery scale on elbows, knees, scalp; ~5% BSA",
       Nails: "Mild pitting bilateral fingernails",
       Joints: "No swelling/tenderness",
-      "No": "pustules, no erythroderma, no infection",
+      No: "pustules, no erythroderma, no infection",
     },
     expectedDiagnosis: "Flare of mild plaque psoriasis with marked psychosocial impact",
-    differentials: ["Plaque psoriasis flare", "Eczema", "Tinea (uncommon distribution)", "Seborrhoeic dermatitis (scalp)"],
+    differentials: [
+      "Plaque psoriasis flare",
+      "Eczema",
+      "Tinea (uncommon distribution)",
+      "Seborrhoeic dermatitis (scalp)",
+    ],
     scopeDecision: "treat-and-refer",
-    protocolReasoning: "Known mild plaque psoriasis (previous diagnosis required), within scope for managing flare with topical therapy. Marked emotional impact and sleep disturbance warrant treat-and-refer for GP review and DLQI/PASI consideration.",
-    clinicalReasoning: "I think this is a flare of known mild plaque psoriasis because of typical well-demarcated plaques with silvery scale, nail pitting and triggers. I am concerned about marked emotional impact so my scope decision is treat-and-refer.",
-    treatmentPlanClass: ["Topical corticosteroid (class) per protocol", "Emollients", "Vitamin D analogue (class) per protocol"],
-    treatmentPlanNotes: "Protocol check required: verify topical corticosteroid potency, site-specific use and duration against current Queensland Health psoriasis protocol.",
-    nonPharmPlan: ["Regular emollients", "Avoid known triggers (stress, dry skin)", "Gentle skincare, lukewarm showers", "Stress management strategies", "Patient education on chronic relapsing course"],
-    safetyNet: ["Return if pustules, widespread redness, joint pain, signs of infection, mental-health deterioration"],
+    protocolReasoning:
+      "Known mild plaque psoriasis (previous diagnosis required), within scope for managing flare with topical therapy. Marked emotional impact and sleep disturbance warrant treat-and-refer for GP review and DLQI/PASI consideration.",
+    clinicalReasoning:
+      "I think this is a flare of known mild plaque psoriasis because of typical well-demarcated plaques with silvery scale, nail pitting and triggers. I am concerned about marked emotional impact so my scope decision is treat-and-refer.",
+    treatmentPlanClass: [
+      "Topical corticosteroid (class) per protocol",
+      "Emollients",
+      "Vitamin D analogue (class) per protocol",
+    ],
+    treatmentPlanNotes:
+      "Protocol check required: verify topical corticosteroid potency, site-specific use and duration against current Queensland Health psoriasis protocol.",
+    nonPharmPlan: [
+      "Regular emollients",
+      "Avoid known triggers (stress, dry skin)",
+      "Gentle skincare, lukewarm showers",
+      "Stress management strategies",
+      "Patient education on chronic relapsing course",
+    ],
+    safetyNet: [
+      "Return if pustules, widespread redness, joint pain, signs of infection, mental-health deterioration",
+    ],
     reviewTime: "2:4 weeks",
-    referralPlan: "GP for review of severity, DLQI, mood, and consideration of escalation if no improvement.",
+    referralPlan:
+      "GP for review of severity, DLQI, mood, and consideration of escalation if no improvement.",
     markingRubric: rubricStandard(),
-    criticalFails: ["Missing joint screen (psoriatic arthritis)", "Treating without previous diagnosis", "Missing mood/sleep impact"],
-    learningPoints: ["Previous diagnosis required for flare management", "Always screen for psoriatic arthritis", "DLQI captures psychosocial impact"],
+    criticalFails: [
+      "Missing joint screen (psoriatic arthritis)",
+      "Treating without previous diagnosis",
+      "Missing mood/sleep impact",
+    ],
+    learningPoints: [
+      "Previous diagnosis required for flare management",
+      "Always screen for psoriatic arthritis",
+      "DLQI captures psychosocial impact",
+    ],
     redFlagsPresent: ["Marked emotional impact"],
-    redFlagsToScreen: ["Pustular / erythrodermic features", "Joint pain (psoriatic arthritis)", "Signs of infection"],
+    redFlagsToScreen: [
+      "Pustular / erythrodermic features",
+      "Joint pain (psoriatic arthritis)",
+      "Signs of infection",
+    ],
   }),
 
   std({
@@ -863,7 +1313,8 @@ const RAW_CASES: OSCECase[] = [
     condition: "Acne vulgaris",
     category: "Dermatology",
     caseType: ["Refer only", "Pregnancy/breastfeeding trap"],
-    candidateStem: "Priya, 32, currently 22 weeks pregnant, asks for help with worsening acne on her face and back. Take a focused history, examine and manage.",
+    candidateStem:
+      "Priya, 32, currently 22 weeks pregnant, asks for help with worsening acne on her face and back. Take a focused history, examine and manage.",
     patientProfile: { name: "Priya Patel", age: 32, gender: "Female", pregnancy: "G2P1, 22 weeks" },
     fakePatientScript: {
       openingLine: "My acne has gone crazy since I got pregnant.",
@@ -907,19 +1358,43 @@ const RAW_CASES: OSCECase[] = [
     expectedDiagnosis: "Moderate inflammatory acne in pregnancy",
     differentials: ["Acne vulgaris", "Rosacea", "Folliculitis"],
     scopeDecision: "refer-only",
-    protocolReasoning: "Pregnancy is an exclusion under most pharmacist prescribing acne pathways given teratogenicity concerns with many systemic agents. Refer to GP for safe pregnancy-compatible management.",
-    clinicalReasoning: "I think this is moderate inflammatory acne worsened by pregnancy. Pregnancy is an exclusion for pharmacist prescribing of most acne treatments, so my scope decision is refer.",
+    protocolReasoning:
+      "Pregnancy is an exclusion under most pharmacist prescribing acne pathways given teratogenicity concerns with many systemic agents. Refer to GP for safe pregnancy-compatible management.",
+    clinicalReasoning:
+      "I think this is moderate inflammatory acne worsened by pregnancy. Pregnancy is an exclusion for pharmacist prescribing of most acne treatments, so my scope decision is refer.",
     treatmentPlanClass: [],
-    treatmentPlanNotes: "Do not initiate prescribed acne therapy in pregnancy. Refer to GP for pregnancy-compatible options. Provide skincare advice only.",
-    nonPharmPlan: ["Gentle non-comedogenic cleanser, avoid scrubbing", "Avoid picking lesions", "Use non-comedogenic moisturisers and sunscreen", "Reassure that pregnancy-related acne often improves postpartum", "Confirm whooping cough booster and flu vaccination"],
-    safetyNet: ["Return if widespread cystic acne, scarring, signs of infection, or distress affecting mood"],
+    treatmentPlanNotes:
+      "Do not initiate prescribed acne therapy in pregnancy. Refer to GP for pregnancy-compatible options. Provide skincare advice only.",
+    nonPharmPlan: [
+      "Gentle non-comedogenic cleanser, avoid scrubbing",
+      "Avoid picking lesions",
+      "Use non-comedogenic moisturisers and sunscreen",
+      "Reassure that pregnancy-related acne often improves postpartum",
+      "Confirm whooping cough booster and flu vaccination",
+    ],
+    safetyNet: [
+      "Return if widespread cystic acne, scarring, signs of infection, or distress affecting mood",
+    ],
     reviewTime: "GP referral",
     referralPlan: "GP referral with ISBAR letter; consider obstetric input.",
     markingRubric: rubricStandard(),
-    criticalFails: ["Prescribing acne therapy in pregnancy", "Missing pregnancy on history", "Missing vaccination prompts"],
-    learningPoints: ["Pregnancy is exclusion in most acne protocols", "Always ask pregnancy status", "Use vaccination prompts as part of antenatal care"],
+    criticalFails: [
+      "Prescribing acne therapy in pregnancy",
+      "Missing pregnancy on history",
+      "Missing vaccination prompts",
+    ],
+    learningPoints: [
+      "Pregnancy is exclusion in most acne protocols",
+      "Always ask pregnancy status",
+      "Use vaccination prompts as part of antenatal care",
+    ],
     redFlagsPresent: ["Pregnancy"],
-    redFlagsToScreen: ["Pregnancy / breastfeeding", "Severe / nodulocystic acne", "Scarring", "Mood impact"],
+    redFlagsToScreen: [
+      "Pregnancy / breastfeeding",
+      "Severe / nodulocystic acne",
+      "Scarring",
+      "Mood impact",
+    ],
   }),
 
   std({
@@ -929,10 +1404,12 @@ const RAW_CASES: OSCECase[] = [
     category: "Women's health",
     caseType: ["Diagnostic uncertainty", "Comorbidity trap"],
     timeMinutes: 10,
-    candidateStem: "Chloe, 27, presents requesting 'the pill'. Take a focused history, perform any relevant examinations and decide your management.",
+    candidateStem:
+      "Chloe, 27, presents requesting 'the pill'. Take a focused history, perform any relevant examinations and decide your management.",
     patientProfile: { name: "Chloe Nguyen", age: 27, gender: "Female" },
     fakePatientScript: {
-      openingLine: "I want to start the pill, I've heard it can also help with my skin and periods.",
+      openingLine:
+        "I want to start the pill, I've heard it can also help with my skin and periods.",
       mainComplaint: "Request for combined OCP",
       socrates: {},
       hiddenAnswers: {
@@ -940,9 +1417,9 @@ const RAW_CASES: OSCECase[] = [
         "Sexual history": "Current male partner 1 year, condoms inconsistently",
         "STI screening": "Never had one",
         "Pregnancy risk": "LMP 3 weeks ago, possible unprotected sex recently",
-        "Migraine": "Migraines with visual aura monthly",
-        "Smoking": "Non-smoker",
-        "BP": "Patient unsure",
+        Migraine: "Migraines with visual aura monthly",
+        Smoking: "Non-smoker",
+        BP: "Patient unsure",
         "PCOS features": "Irregular periods, acne, mild hirsutism",
         "VTE history / FHx": "No personal VTE; aunt had DVT after surgery",
         "Mood / safety": "Stressed at work; relationship safe",
@@ -972,22 +1449,53 @@ const RAW_CASES: OSCECase[] = [
       BMI: "24",
       General: "Mild acne, mild facial hirsutism",
     },
-    expectedDiagnosis: "Contraception request with multiple risk factors: migraine with aura (UKMEC 4 for combined hormonal contraception), possible PCOS, possible pregnancy risk, never had STI screen.",
+    expectedDiagnosis:
+      "Contraception request with multiple risk factors: migraine with aura (UKMEC 4 for combined hormonal contraception), possible PCOS, possible pregnancy risk, never had STI screen.",
     differentials: [],
     scopeDecision: "refer-only",
-    protocolReasoning: "Migraine with aura is UKMEC 4 for combined hormonal contraception: absolute contraindication. Possible PCOS, undocumented STI status and pregnancy risk this cycle all push this case outside pharmacist scope. Refer to GP for full assessment; offer barrier contraception interim.",
-    clinicalReasoning: "I think this is a contraception request with significant medical-eligibility issues: migraine with aura, possible PCOS, and pregnancy risk. Migraine with aura excludes combined methods, so my scope decision is refer to GP.",
-    treatmentPlanClass: ["Barrier contraception (condoms)", "Emergency contraception (class) per protocol if eligible"],
-    treatmentPlanNotes: "Protocol check required: verify any EC supply against current Queensland Health protocol. Do not prescribe combined hormonal contraception in migraine with aura.",
-    nonPharmPlan: ["Condoms in the meantime", "STI screening referral", "Cervical screening reminder", "Pregnancy test offer", "Discuss long-acting reversible contraception options with GP"],
-    safetyNet: ["Return for severe headache, leg swelling, chest pain, possible pregnancy symptoms"],
+    protocolReasoning:
+      "Migraine with aura is UKMEC 4 for combined hormonal contraception: absolute contraindication. Possible PCOS, undocumented STI status and pregnancy risk this cycle all push this case outside pharmacist scope. Refer to GP for full assessment; offer barrier contraception interim.",
+    clinicalReasoning:
+      "I think this is a contraception request with significant medical-eligibility issues: migraine with aura, possible PCOS, and pregnancy risk. Migraine with aura excludes combined methods, so my scope decision is refer to GP.",
+    treatmentPlanClass: [
+      "Barrier contraception (condoms)",
+      "Emergency contraception (class) per protocol if eligible",
+    ],
+    treatmentPlanNotes:
+      "Protocol check required: verify any EC supply against current Queensland Health protocol. Do not prescribe combined hormonal contraception in migraine with aura.",
+    nonPharmPlan: [
+      "Condoms in the meantime",
+      "STI screening referral",
+      "Cervical screening reminder",
+      "Pregnancy test offer",
+      "Discuss long-acting reversible contraception options with GP",
+    ],
+    safetyNet: [
+      "Return for severe headache, leg swelling, chest pain, possible pregnancy symptoms",
+    ],
     reviewTime: "GP within 1:2 weeks; STI/pregnancy testing as appropriate",
-    referralPlan: "GP / sexual health clinic referral with ISBAR letter: request UKMEC assessment, PCOS workup, STI/pregnancy testing.",
+    referralPlan:
+      "GP / sexual health clinic referral with ISBAR letter: request UKMEC assessment, PCOS workup, STI/pregnancy testing.",
     markingRubric: rubricStandard(),
-    criticalFails: ["Prescribing combined contraception in migraine with aura", "Missing PCOS / pregnancy risk / STI risk", "Failing to offer barrier method and STI/cervical screening"],
-    learningPoints: ["Migraine with aura = UKMEC 4 for CHC", "Always ask about aura specifically", "Offer STI/cervical screening as routine"],
+    criticalFails: [
+      "Prescribing combined contraception in migraine with aura",
+      "Missing PCOS / pregnancy risk / STI risk",
+      "Failing to offer barrier method and STI/cervical screening",
+    ],
+    learningPoints: [
+      "Migraine with aura = UKMEC 4 for CHC",
+      "Always ask about aura specifically",
+      "Offer STI/cervical screening as routine",
+    ],
     redFlagsPresent: ["Migraine with aura", "Possible PCOS", "Possible pregnancy risk", "FHx VTE"],
-    redFlagsToScreen: ["Migraine with aura", "VTE history", "Unexplained bleeding", "Breast cancer history", "Severe hypertension", "Smoker ≥35"],
+    redFlagsToScreen: [
+      "Migraine with aura",
+      "VTE history",
+      "Unexplained bleeding",
+      "Breast cancer history",
+      "Severe hypertension",
+      "Smoker ≥35",
+    ],
   }),
 
   std({
@@ -997,7 +1505,8 @@ const RAW_CASES: OSCECase[] = [
     category: "Weight management",
     caseType: ["Treat and refer", "Communication heavy"],
     timeMinutes: 10,
-    candidateStem: "Jess, 28, asks for help losing weight. Take a focused history using the 5As, examine and provide a management plan.",
+    candidateStem:
+      "Jess, 28, asks for help losing weight. Take a focused history using the 5As, examine and provide a management plan.",
     patientProfile: { name: "Jess Taylor", age: 28, gender: "Female" },
     fakePatientScript: {
       openingLine: "I want to lose weight, nothing I try seems to work.",
@@ -1005,12 +1514,12 @@ const RAW_CASES: OSCECase[] = [
       socrates: {},
       hiddenAnswers: {
         "Weight history": "Gained 15 kg over 3 years",
-        "Diet": "Stress eating, takeaway 4x/week",
-        "Activity": "Sedentary desk job, no exercise",
-        "PCOS": "Diagnosed PCOS, irregular periods",
+        Diet: "Stress eating, takeaway 4x/week",
+        Activity: "Sedentary desk job, no exercise",
+        PCOS: "Diagnosed PCOS, irregular periods",
         "Mental health": "Low mood, anxious",
-        "Sleep": "6 h, poor quality",
-        "Alcohol": "Weekend binge: 6:8 drinks",
+        Sleep: "6 h, poor quality",
+        Alcohol: "Weekend binge: 6:8 drinks",
       },
       medicalHistory: "PCOS",
       medications: "Nil regular",
@@ -1031,29 +1540,59 @@ const RAW_CASES: OSCECase[] = [
       onlyIfAsked: ["Mood", "Alcohol", "Sleep"],
       challengePrompts: ["Can you just give me a tablet?"],
     },
-    vitals: { BP: "140/100", HR: "82", BMI: "31", "Waist": "98 cm" },
+    vitals: { BP: "140/100", HR: "82", BMI: "31", Waist: "98 cm" },
     examinationFindings: {
       BMI: "31",
       Waist: "98 cm: increased cardiometabolic risk",
       BP: "140/100 (Stage 2)",
       "Mood screen": "Low mood, irritability",
     },
-    expectedDiagnosis: "Obesity (BMI 31) with stage 2 hypertension, PCOS and possible mood disorder",
+    expectedDiagnosis:
+      "Obesity (BMI 31) with stage 2 hypertension, PCOS and possible mood disorder",
     differentials: [],
     scopeDecision: "treat-and-refer",
-    protocolReasoning: "Lifestyle counselling within scope, but stage 2 hypertension, PCOS and mood concerns require GP review for full cardiometabolic assessment and pharmacotherapy decisions.",
-    clinicalReasoning: "I think this is multifactorial obesity with associated cardiometabolic risk (hypertension, PCOS, family history of T2DM) and mood involvement. I am concerned about BP 140/100 and mood, so my scope decision is treat-and-refer.",
-    treatmentPlanClass: ["Lifestyle counselling (5As)", "Pharmacotherapy only per protocol after GP review"],
-    treatmentPlanNotes: "Protocol check required: any weight-management pharmacotherapy must be verified against current Queensland Health obesity protocol; do not initiate without protocol-confirmed indication and exclusions.",
-    nonPharmPlan: ["5As: Ask, Advise, Assess, Assist, Arrange", "Realistic 5:10% weight-loss goal", "Dietitian referral", "Structured activity plan (start with walking)", "Sleep hygiene", "Reduce alcohol", "Stress / mood support; consider K10 screen and GP referral"],
-    safetyNet: ["Return for chest pain, severe headache, visual disturbance, mood deterioration with self-harm ideation"],
+    protocolReasoning:
+      "Lifestyle counselling within scope, but stage 2 hypertension, PCOS and mood concerns require GP review for full cardiometabolic assessment and pharmacotherapy decisions.",
+    clinicalReasoning:
+      "I think this is multifactorial obesity with associated cardiometabolic risk (hypertension, PCOS, family history of T2DM) and mood involvement. I am concerned about BP 140/100 and mood, so my scope decision is treat-and-refer.",
+    treatmentPlanClass: [
+      "Lifestyle counselling (5As)",
+      "Pharmacotherapy only per protocol after GP review",
+    ],
+    treatmentPlanNotes:
+      "Protocol check required: any weight-management pharmacotherapy must be verified against current Queensland Health obesity protocol; do not initiate without protocol-confirmed indication and exclusions.",
+    nonPharmPlan: [
+      "5As: Ask, Advise, Assess, Assist, Arrange",
+      "Realistic 5:10% weight-loss goal",
+      "Dietitian referral",
+      "Structured activity plan (start with walking)",
+      "Sleep hygiene",
+      "Reduce alcohol",
+      "Stress / mood support; consider K10 screen and GP referral",
+    ],
+    safetyNet: [
+      "Return for chest pain, severe headache, visual disturbance, mood deterioration with self-harm ideation",
+    ],
     reviewTime: "4 weeks",
     referralPlan: "GP for BP/PCOS workup and mood assessment; dietitian referral; ISBAR letter.",
     markingRubric: rubricStandard(),
-    criticalFails: ["Missing BP 140/100", "Missing mood screen", "Prescribing weight-loss pharmacotherapy outside protocol"],
-    learningPoints: ["Use 5As for weight management", "Always check BP, waist, BMI together", "Screen mental health in chronic conditions"],
+    criticalFails: [
+      "Missing BP 140/100",
+      "Missing mood screen",
+      "Prescribing weight-loss pharmacotherapy outside protocol",
+    ],
+    learningPoints: [
+      "Use 5As for weight management",
+      "Always check BP, waist, BMI together",
+      "Screen mental health in chronic conditions",
+    ],
     redFlagsPresent: ["BP 140/100", "Low mood"],
-    redFlagsToScreen: ["BP elevated", "Mood / suicidality", "Eating disorder features", "T2DM symptoms"],
+    redFlagsToScreen: [
+      "BP elevated",
+      "Mood / suicidality",
+      "Eating disorder features",
+      "T2DM symptoms",
+    ],
   }),
 
   std({
@@ -1063,7 +1602,8 @@ const RAW_CASES: OSCECase[] = [
     category: "Smoking cessation",
     caseType: ["Treat and refer", "Marked emotional impact"],
     timeMinutes: 10,
-    candidateStem: "Bill, 64, restarted smoking after his wife died. He's asking about quitting. Take a focused history, assess and provide a management plan.",
+    candidateStem:
+      "Bill, 64, restarted smoking after his wife died. He's asking about quitting. Take a focused history, assess and provide a management plan.",
     patientProfile: { name: "Bill Anderson", age: 64, gender: "Male" },
     fakePatientScript: {
       openingLine: "Wife died last year, I went back to the smokes. I'd like to stop.",
@@ -1073,8 +1613,8 @@ const RAW_CASES: OSCECase[] = [
         "Smoking history": "20/day; first cigarette within 5 minutes of waking",
         "Previous quit attempts": "Quit 10 years ago, restarted after wife's death",
         "Mental health": "Low mood, socially isolated since wife died, no GP for years",
-        "BP": "Not measured recently",
-        "Alcohol": "Increased: 4 beers/night",
+        BP: "Not measured recently",
+        Alcohol: "Increased: 4 beers/night",
       },
       medicalHistory: "Hypertension (no recent review)",
       medications: "Nil current",
@@ -1101,20 +1641,44 @@ const RAW_CASES: OSCECase[] = [
       "Mood screen": "Low mood, social isolation, no active suicidality",
       "Fagerström screen": "High nicotine dependence",
     },
-    expectedDiagnosis: "Tobacco dependence with bereavement-related relapse, low mood, social isolation, hypertension without recent review",
+    expectedDiagnosis:
+      "Tobacco dependence with bereavement-related relapse, low mood, social isolation, hypertension without recent review",
     differentials: [],
     scopeDecision: "treat-and-refer",
-    protocolReasoning: "Smoking cessation support is in scope, but uncontrolled hypertension, mood concerns, social isolation and no recent GP contact warrant treat-and-refer.",
-    clinicalReasoning: "I think this is tobacco dependence with grief-related relapse and significant mental-health and cardiovascular risk. I am concerned about mood, isolation and BP 145/95 so my scope decision is treat-and-refer.",
-    treatmentPlanClass: ["Nicotine replacement therapy (class) per protocol", "Behavioural support / Quitline referral"],
-    treatmentPlanNotes: "Protocol check required: verify any nicotine replacement or smoking-cessation pharmacotherapy against current Queensland Health protocol.",
-    nonPharmPlan: ["5As", "Fagerström assessment", "Identify triggers and coping strategies", "Quitline referral (13 78 48)", "Bereavement and mental-health support", "Address alcohol use", "Vaccination prompts: flu yes, COVID/pneumococcal/RSV per eligibility"],
+    protocolReasoning:
+      "Smoking cessation support is in scope, but uncontrolled hypertension, mood concerns, social isolation and no recent GP contact warrant treat-and-refer.",
+    clinicalReasoning:
+      "I think this is tobacco dependence with grief-related relapse and significant mental-health and cardiovascular risk. I am concerned about mood, isolation and BP 145/95 so my scope decision is treat-and-refer.",
+    treatmentPlanClass: [
+      "Nicotine replacement therapy (class) per protocol",
+      "Behavioural support / Quitline referral",
+    ],
+    treatmentPlanNotes:
+      "Protocol check required: verify any nicotine replacement or smoking-cessation pharmacotherapy against current Queensland Health protocol.",
+    nonPharmPlan: [
+      "5As",
+      "Fagerström assessment",
+      "Identify triggers and coping strategies",
+      "Quitline referral (13 78 48)",
+      "Bereavement and mental-health support",
+      "Address alcohol use",
+      "Vaccination prompts: flu yes, COVID/pneumococcal/RSV per eligibility",
+    ],
     safetyNet: ["Return for chest pain, severe breathlessness, suicidal thoughts, worsening mood"],
     reviewTime: "2:3 weeks after pharmacotherapy",
-    referralPlan: "GP within 1:2 weeks for BP and mental-health review; Quitline / grief counselling.",
+    referralPlan:
+      "GP within 1:2 weeks for BP and mental-health review; Quitline / grief counselling.",
     markingRubric: rubricStandard(),
-    criticalFails: ["Missing mood and bereavement context", "Missing BP measurement / interpretation", "Failing to refer for mental health"],
-    learningPoints: ["5As + Fagerström + SNAP + mood screen", "Quitline 13 78 48", "Vaccination prompts in older adults"],
+    criticalFails: [
+      "Missing mood and bereavement context",
+      "Missing BP measurement / interpretation",
+      "Failing to refer for mental health",
+    ],
+    learningPoints: [
+      "5As + Fagerström + SNAP + mood screen",
+      "Quitline 13 78 48",
+      "Vaccination prompts in older adults",
+    ],
     redFlagsPresent: ["BP 145/95", "Low mood", "Social isolation"],
     redFlagsToScreen: ["Suicidality", "Cardiovascular symptoms", "Severe mood disorder"],
   }),

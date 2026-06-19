@@ -6,35 +6,70 @@ export const EXAMINATION_SKILLS = [
     sections: [
       {
         heading: "Preparation",
-        steps: ["Introduce self, confirm patient, gain consent", "Hand hygiene", "Offer chaperone where appropriate", "Expose appropriate areas with dignity"],
+        steps: [
+          "Introduce self, confirm patient, gain consent",
+          "Hand hygiene",
+          "Offer chaperone where appropriate",
+          "Expose appropriate areas with dignity",
+        ],
       },
       {
         heading: "Screening questions",
-        steps: ["Any pain or stiffness in muscles, joints or back?", "Can you dress yourself without difficulty?", "Can you walk up and down stairs without difficulty?"],
+        steps: [
+          "Any pain or stiffness in muscles, joints or back?",
+          "Can you dress yourself without difficulty?",
+          "Can you walk up and down stairs without difficulty?",
+        ],
       },
       {
         heading: "Gait",
-        steps: ["Observe walking: symmetry, stride length, arm swing, antalgic gait", "Turn 180°: smoothness, balance"],
+        steps: [
+          "Observe walking: symmetry, stride length, arm swing, antalgic gait",
+          "Turn 180°: smoothness, balance",
+        ],
       },
       {
         heading: "Standing observation",
-        steps: ["Front: muscle bulk, symmetry, deformity", "Side: cervical / thoracic / lumbar curves", "Back: scoliosis, muscle bulk, iliac crest level"],
+        steps: [
+          "Front: muscle bulk, symmetry, deformity",
+          "Side: cervical / thoracic / lumbar curves",
+          "Back: scoliosis, muscle bulk, iliac crest level",
+        ],
       },
       {
         heading: "Spine",
-        steps: ["Palpate spinous processes, paraspinal muscles", "Lumbar flexion: touch toes; observe lumbar curve", "Cervical lateral flexion (ear to shoulder)"],
+        steps: [
+          "Palpate spinous processes, paraspinal muscles",
+          "Lumbar flexion: touch toes; observe lumbar curve",
+          "Cervical lateral flexion (ear to shoulder)",
+        ],
       },
       {
         heading: "Arms",
-        steps: ["Hands behind head", "Hands behind back", "Grip strength", "Squeeze MCPs", "Pincer grip"],
+        steps: [
+          "Hands behind head",
+          "Hands behind back",
+          "Grip strength",
+          "Squeeze MCPs",
+          "Pincer grip",
+        ],
       },
       {
         heading: "Legs",
-        steps: ["Internal/external rotation of hips", "Patella tap for effusion", "Crepitus on knee flexion", "Inspect feet: calluses, deformity"],
+        steps: [
+          "Internal/external rotation of hips",
+          "Patella tap for effusion",
+          "Crepitus on knee flexion",
+          "Inspect feet: calluses, deformity",
+        ],
       },
       {
         heading: "Conclude",
-        steps: ["Thank patient", "Document GALS as normal/abnormal per region", "Escalate findings appropriately"],
+        steps: [
+          "Thank patient",
+          "Document GALS as normal/abnormal per region",
+          "Escalate findings appropriately",
+        ],
       },
     ],
   },
@@ -45,7 +80,11 @@ export const EXAMINATION_SKILLS = [
     sections: [
       {
         heading: "End-of-bed-o-gram",
-        steps: ["Tripoding, accessory muscle use, pursed-lip breathing", "Ability to speak in full sentences (CHUPO)", "Cyanosis, pallor, distress"],
+        steps: [
+          "Tripoding, accessory muscle use, pursed-lip breathing",
+          "Ability to speak in full sentences (CHUPO)",
+          "Cyanosis, pallor, distress",
+        ],
       },
       {
         heading: "Vitals",
@@ -61,7 +100,12 @@ export const EXAMINATION_SKILLS = [
       },
       {
         heading: "Chest",
-        steps: ["Chest expansion (symmetry)", "Percussion (anterior + posterior)", "Auscultation: wheeze, crackles, vocal resonance 'would do if time'", "Anterior repeat 'would do if time'"],
+        steps: [
+          "Chest expansion (symmetry)",
+          "Percussion (anterior + posterior)",
+          "Auscultation: wheeze, crackles, vocal resonance 'would do if time'",
+          "Anterior repeat 'would do if time'",
+        ],
       },
       {
         heading: "Feet",
@@ -88,7 +132,11 @@ export const EXAMINATION_SKILLS = [
       },
       {
         heading: "Nose and sinuses",
-        steps: ["Inspect external nose", "Palpate frontal and maxillary sinuses", "Anterior rhinoscopy: turbinates, discharge, polyps"],
+        steps: [
+          "Inspect external nose",
+          "Palpate frontal and maxillary sinuses",
+          "Anterior rhinoscopy: turbinates, discharge, polyps",
+        ],
       },
       {
         heading: "Mouth / throat",
@@ -104,7 +152,11 @@ export const EXAMINATION_SKILLS = [
       },
       {
         heading: "Ears",
-        steps: ["External ear inspection", "Pinna and tragus tenderness (AOE vs AOM)", "Otoscopy: canal, TM colour, bulging/retraction, cone of light, perforation"],
+        steps: [
+          "External ear inspection",
+          "Pinna and tragus tenderness (AOE vs AOM)",
+          "Otoscopy: canal, TM colour, bulging/retraction, cone of light, perforation",
+        ],
       },
     ],
   },
@@ -119,7 +171,11 @@ export const EXAMINATION_SKILLS = [
       },
       {
         heading: "Hands and face",
-        steps: ["Clubbing, leuconychia, palmar erythema", "Eyes: jaundice, pallor", "Mouth: hydration, dentition"],
+        steps: [
+          "Clubbing, leuconychia, palmar erythema",
+          "Eyes: jaundice, pallor",
+          "Mouth: hydration, dentition",
+        ],
       },
       {
         heading: "Hydration",
@@ -127,11 +183,22 @@ export const EXAMINATION_SKILLS = [
       },
       {
         heading: "Abdomen",
-        steps: ["Inspect: distension, scars, masses", "9-region superficial palpation", "9-region deep palpation", "Liver palpation", "Splenic palpation", "Ascites: shifting dullness", "Bowel sounds"],
+        steps: [
+          "Inspect: distension, scars, masses",
+          "9-region superficial palpation",
+          "9-region deep palpation",
+          "Liver palpation",
+          "Splenic palpation",
+          "Ascites: shifting dullness",
+          "Bowel sounds",
+        ],
       },
       {
         heading: "Reasoning",
-        steps: ["Differentiate GORD vs PUD vs gallbladder vs cardiac overlap", "Decide scope and red flags"],
+        steps: [
+          "Differentiate GORD vs PUD vs gallbladder vs cardiac overlap",
+          "Decide scope and red flags",
+        ],
       },
     ],
   },
@@ -142,10 +209,21 @@ export const EXAMINATION_SKILLS = [
     sections: [
       { heading: "End-of-bed-o-gram", steps: ["Distress, breathlessness", "Oedema"] },
       { heading: "Vitals", steps: ["BP both arms (where relevant)", "HR rate and rhythm", "SpO₂"] },
-      { heading: "Hands", steps: ["Diaphoresis", "Temperature", "Colour, capillary refill", "Clubbing, splinter haemorrhages"] },
+      {
+        heading: "Hands",
+        steps: [
+          "Diaphoresis",
+          "Temperature",
+          "Colour, capillary refill",
+          "Clubbing, splinter haemorrhages",
+        ],
+      },
       { heading: "Eyes / mouth", steps: ["Conjunctival pallor", "Central cyanosis"] },
       { heading: "Legs", steps: ["Peripheral oedema"] },
-      { heading: "Auscultation", steps: ["APTM 2245: Aortic 2R, Pulmonary 2L, Tricuspid 4L, Mitral 5L mid-clavicular"] },
+      {
+        heading: "Auscultation",
+        steps: ["APTM 2245: Aortic 2R, Pulmonary 2L, Tricuspid 4L, Mitral 5L mid-clavicular"],
+      },
     ],
   },
 ];

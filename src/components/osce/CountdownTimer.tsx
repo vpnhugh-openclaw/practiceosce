@@ -67,8 +67,8 @@ export function CountdownTimer({
     state === "green"
       ? "bg-emerald-50 text-emerald-900 border-emerald-300"
       : state === "amber"
-      ? "bg-amber-50 text-amber-900 border-amber-300"
-      : "bg-red-50 text-red-900 border-red-300";
+        ? "bg-amber-50 text-amber-900 border-amber-300"
+        : "bg-red-50 text-red-900 border-red-300";
 
   const showTwoMinWarning = seconds > 0 && seconds <= 120 && !completed;
 
@@ -82,10 +82,10 @@ export function CountdownTimer({
         <p className="font-mono text-3xl sm:text-4xl tabular-nums leading-none mt-0.5">
           {mm}:{ss}
         </p>
-        {showTwoMinWarning && (
-          <p className="text-xs font-medium mt-1">⚠ 2 minutes remaining</p>
+        {showTwoMinWarning && <p className="text-xs font-medium mt-1">⚠ 2 minutes remaining</p>}
+        {completed && (
+          <p className="text-sm font-semibold mt-1">Time complete: finalise score and feedback.</p>
         )}
-        {completed && <p className="text-sm font-semibold mt-1">Time complete: finalise score and feedback.</p>}
       </div>
 
       <div className="flex items-center gap-2 flex-wrap">
@@ -113,7 +113,13 @@ export function CountdownTimer({
           className="inline-flex items-center gap-1.5 rounded-md bg-navy text-navy-foreground px-3 py-1.5 text-sm"
         >
           {running ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-          {running ? "Pause" : completed ? "Restart" : seconds === minutes * 60 ? "Start" : "Resume"}
+          {running
+            ? "Pause"
+            : completed
+              ? "Restart"
+              : seconds === minutes * 60
+                ? "Start"
+                : "Resume"}
         </button>
         <button
           onClick={() => {

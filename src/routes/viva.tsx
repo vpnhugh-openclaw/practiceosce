@@ -63,7 +63,6 @@ function VivaPage() {
         </div>
       )}
 
-
       <Section title="Viva questions" defaultOpen>
         <ol className="space-y-3 list-decimal pl-5">
           {viva.map((q, i) => (
@@ -85,7 +84,11 @@ function VivaPage() {
       <PageSourcesDrawer
         sources={c.sourceTags}
         needsVerification={c.needsVerification ?? true}
-        verificationNotes={c.verificationNotes ?? ["Viva model answers must be checked against the current Queensland Health protocol before use as clinical guidance."]}
+        verificationNotes={
+          c.verificationNotes ?? [
+            "Viva model answers must be checked against the current Queensland Health protocol before use as clinical guidance.",
+          ]
+        }
       />
     </div>
   );
