@@ -12,7 +12,7 @@ import { Printer, UserRound, ClipboardCheck, Timer } from "lucide-react";
 export const Route = createFileRoute("/cases/$caseId")({
   head: ({ params }) => {
     const c = CASE_INDEX[params.caseId];
-    return { meta: [{ title: c ? `${c.title} — Case` : "Case" }] };
+    return { meta: [{ title: c ? `${c.title}: Case` : "Case" }] };
   },
   component: CasePage,
   notFoundComponent: () => (
@@ -57,7 +57,7 @@ function CasePage() {
           <ScopeSummary c={c} />
         </div>
 
-        <Section title="Fake patient script — opening & history">
+        <Section title="Fake patient script: opening & history">
           <p className="italic mb-3">"{p.openingLine}"</p>
           <p className="text-sm mb-4"><span className="font-medium">Main complaint:</span> {p.mainComplaint}</p>
           {Object.keys(p.socrates).length > 0 && (
@@ -68,7 +68,7 @@ function CasePage() {
           )}
           <div className="grid sm:grid-cols-2 gap-3 mt-4">
             <div className="space-y-2">
-              <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Hidden — only if asked</p>
+              <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Hidden: only if asked</p>
               {Object.entries(p.hiddenAnswers).map(([k, v]) => (
                 <HiddenReveal key={k} label={k}>{v}</HiddenReveal>
               ))}

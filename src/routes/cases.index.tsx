@@ -4,7 +4,7 @@ import { PageHeader } from "@/components/osce/Primitives";
 import { ScopeDecisionBadge } from "@/components/osce/ScopeBadges";
 
 export const Route = createFileRoute("/cases/")({
-  head: () => ({ meta: [{ title: "Case Bank — Hugh's OSCE Case Generator" }] }),
+  head: () => ({ meta: [{ title: "Case Bank: Hugh's OSCE Case Generator" }] }),
   component: CaseBank,
 });
 

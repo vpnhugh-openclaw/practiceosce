@@ -1,6 +1,6 @@
 import type { ConditionProtocol } from "@/lib/types";
 
-const NEEDS_VERIFY = "Queensland Health — verify against current clinical practice guideline";
+const NEEDS_VERIFY = "Queensland Health: verify against current clinical practice guideline";
 
 export const PROTOCOLS: ConditionProtocol[] = [
   {
@@ -76,7 +76,7 @@ export const PROTOCOLS: ConditionProtocol[] = [
       "Return sooner if vomiting blood, black stools, severe pain, swallowing difficulty, weight loss",
       "GP review if no improvement",
     ],
-    reviewTime: "4–8 weeks",
+    reviewTime: "4:8 weeks",
     vaccinationPrompts: ["Influenza", "COVID-19 (as eligible)"],
     communicationFrameworks: ["SOCRATES", "CANVASSHU red-flag screen", "ISBAR for GP letter"],
     commonTraps: [
@@ -110,10 +110,10 @@ export const PROTOCOLS: ConditionProtocol[] = [
     redFlags: ["Unilateral purulent discharge", "Facial pain/fever (sinusitis)", "Epistaxis recurrent", "Anosmia persistent"],
     relevantVitals: ["Temperature (rule out infection)"],
     relevantExaminations: [
-      "Eyes — allergic shiners, conjunctival injection",
-      "Nose — turbinates, polyps, discharge character",
-      "Throat — cobblestoning",
-      "Ears — clear otorrhoea can occur",
+      "Eyes: allergic shiners, conjunctival injection",
+      "Nose: turbinates, polyps, discharge character",
+      "Throat: cobblestoning",
+      "Ears: clear otorrhoea can occur",
     ],
     differentialDiagnoses: ["Allergic rhinitis", "Non-allergic rhinitis", "Acute viral URTI", "Bacterial sinusitis"],
     pharmacologicalOptions: ["Intranasal corticosteroid (class)", "Non-sedating oral antihistamine (class)", "Saline irrigation"],
@@ -153,7 +153,7 @@ export const PROTOCOLS: ConditionProtocol[] = [
     relevantExaminations: [
       "Pinna / tragus tenderness (AOE vs AOM)",
       "Mastoid tenderness",
-      "Otoscopy — TM colour, bulging, cone of light, perforation",
+      "Otoscopy: TM colour, bulging, cone of light, perforation",
       "Whisper test",
       "Cervical lymph nodes",
     ],
@@ -176,7 +176,7 @@ export const PROTOCOLS: ConditionProtocol[] = [
     protocolSource: NEEDS_VERIFY,
     protocolVersion: "Needs review",
     protocolConfidence: "needs-review",
-    inScopeCriteria: ["Previously diagnosed asthma", "Within age range", "Mild–moderate symptom escalation without red flags"],
+    inScopeCriteria: ["Previously diagnosed asthma", "Within age range", "Mild:moderate symptom escalation without red flags"],
     outOfScopeCriteria: ["New diagnosis of wheeze", "Severe/life-threatening features"],
     treatAndReferCriteria: ["Overuse of SABA", "Sleep disturbance / functional impact", "Frequent exacerbations"],
     emergencyReferralCriteria: ["Silent chest", "Cyanosis", "Inability to speak full sentences", "SpO₂ <92%", "RR markedly elevated", "Drowsiness/exhaustion"],
@@ -193,7 +193,7 @@ export const PROTOCOLS: ConditionProtocol[] = [
       "End-of-bed: tripoding, accessory muscles, full sentences",
       "Hands: tremor (β2 overuse), cyanosis",
       "Chest expansion",
-      "Auscultation — wheeze/crackles",
+      "Auscultation: wheeze/crackles",
     ],
     differentialDiagnoses: ["Asthma exacerbation", "Viral URTI trigger", "Anaphylaxis", "Cardiac wheeze"],
     pharmacologicalOptions: ["Short-acting β2 agonist (class)", "Inhaled corticosteroid (class)", "ICS-LABA combination per protocol"],
@@ -205,10 +205,10 @@ export const PROTOCOLS: ConditionProtocol[] = [
       "Vaccination prompts",
     ],
     safetyNet: [
-      "Worsening despite reliever — seek urgent care",
+      "Worsening despite reliever: seek urgent care",
       "Call 000 if severe breathlessness, blue lips, cannot speak in sentences",
     ],
-    reviewTime: "2–3 months after pharmacotherapy step-up; sooner if flare",
+    reviewTime: "2:3 months after pharmacotherapy step-up; sooner if flare",
     vaccinationPrompts: ["Influenza", "Pneumococcal (as eligible)", "COVID-19"],
     communicationFrameworks: ["Asthma control questions", "Action plan teaching", "ISBAR for GP letter"],
     commonTraps: ["Missing trigger", "Missing SABA overuse", "Failing to escalate when CHUPO present"],
@@ -231,7 +231,7 @@ export const PROTOCOLS: ConditionProtocol[] = [
     relevantExaminations: [
       "End-of-bed observation",
       "Accessory muscle use, pursed-lip breathing",
-      "Chest auscultation — wheeze/crackles",
+      "Chest auscultation: wheeze/crackles",
       "Peripheral oedema (cor pulmonale)",
     ],
     differentialDiagnoses: ["COPD exacerbation", "Pneumonia", "Heart failure", "PE"],
@@ -258,9 +258,9 @@ export const PROTOCOLS: ConditionProtocol[] = [
     focusedQuestions: ["Lesion location, count, duration", "Itch/pain", "Contacts affected", "Recent skin injury", "School/childcare attendance"],
     redFlags: ["Spreading erythema", "Fever / systemic features", "Lymphadenopathy", "Periorbital involvement"],
     relevantVitals: ["Temperature"],
-    relevantExaminations: ["Lesion inspection — honey-coloured crust, vesicles, papules", "Lesion count", "Lymph nodes"],
+    relevantExaminations: ["Lesion inspection: honey-coloured crust, vesicles, papules", "Lesion count", "Lymph nodes"],
     differentialDiagnoses: ["Impetigo", "Herpes simplex", "Contact dermatitis", "Atopic dermatitis with secondary infection"],
-    pharmacologicalOptions: ["Topical antibiotic (class) OR oral antibiotic (class) per protocol — not both"],
+    pharmacologicalOptions: ["Topical antibiotic (class) OR oral antibiotic (class) per protocol: not both"],
     nonPharmacologicalAdvice: [
       "Hand hygiene",
       "Cover lesions",
@@ -306,8 +306,8 @@ export const PROTOCOLS: ConditionProtocol[] = [
     protocolSource: NEEDS_VERIFY,
     protocolVersion: "Needs review",
     protocolConfidence: "needs-review",
-    inScopeCriteria: ["UKMEC 1–2 for chosen method", "No protocol exclusions"],
-    outOfScopeCriteria: ["UKMEC 3–4", "Migraine with aura (for combined methods)", "Smoker ≥35 years (combined)", "PCOS where protocol excludes", "Significant cardiovascular risk"],
+    inScopeCriteria: ["UKMEC 1:2 for chosen method", "No protocol exclusions"],
+    outOfScopeCriteria: ["UKMEC 3:4", "Migraine with aura (for combined methods)", "Smoker ≥35 years (combined)", "PCOS where protocol excludes", "Significant cardiovascular risk"],
     treatAndReferCriteria: ["Borderline UKMEC criteria", "Persistent symptoms / breakthrough bleeding"],
     emergencyReferralCriteria: ["Suspected pregnancy with risk", "Suspected VTE / stroke symptoms"],
     focusedQuestions: [
@@ -326,7 +326,7 @@ export const PROTOCOLS: ConditionProtocol[] = [
     pharmacologicalOptions: ["Combined hormonal contraception (class)", "Progestogen-only methods (class)", "Emergency contraception (class) per protocol"],
     nonPharmacologicalAdvice: ["Barrier contraception for STI protection", "STI screening referral", "Cervical screening reminder", "Pregnancy planning advice"],
     safetyNet: ["Return for missed pills, persistent breakthrough bleeding, severe headache, leg swelling, chest pain"],
-    reviewTime: "3–4 months and check BP",
+    reviewTime: "3:4 months and check BP",
     vaccinationPrompts: ["HPV (if eligible)", "Rubella status"],
     communicationFrameworks: ["UKMEC screen", "HEADSSS for adolescents", "Sensitive history-taking"],
     commonTraps: ["Missing migraine with aura", "Prescribing combined in smoker ≥35", "Missing PCOS exclusion if protocol applies", "Not offering STI/cervical screening"],

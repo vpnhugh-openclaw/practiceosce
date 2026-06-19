@@ -85,7 +85,7 @@ export function CountdownTimer({
         {showTwoMinWarning && (
           <p className="text-xs font-medium mt-1">⚠ 2 minutes remaining</p>
         )}
-        {completed && <p className="text-sm font-semibold mt-1">Time complete — finalise score and feedback.</p>}
+        {completed && <p className="text-sm font-semibold mt-1">Time complete: finalise score and feedback.</p>}
       </div>
 
       <div className="flex items-center gap-2 flex-wrap">

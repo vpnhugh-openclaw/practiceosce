@@ -16,7 +16,7 @@ import { logAttempt } from "@/lib/performance";
 import { Printer, Save, Check } from "lucide-react";
 
 export const Route = createFileRoute("/examiner")({
-  head: () => ({ meta: [{ title: "Examiner Mode — 20-minute Real OSCE — Hugh's OSCE Case Generator" }] }),
+  head: () => ({ meta: [{ title: "Examiner Mode: 20-minute Real OSCE: Hugh's OSCE Case Generator" }] }),
   component: ExaminerPage,
 });
 
@@ -95,7 +95,7 @@ function ExaminerPage() {
 
       {finalised && (
         <div className="handbook-card mt-3 p-4 bg-amber-50 border-amber-300 text-amber-900">
-          <p className="font-medium text-sm">Time complete — finalise your score and written feedback below before submitting.</p>
+          <p className="font-medium text-sm">Time complete: finalise your score and written feedback below before submitting.</p>
         </div>
       )}
 
@@ -105,7 +105,7 @@ function ExaminerPage() {
 
         <div className="print-foldline" />
         <p className="text-center text-xs uppercase tracking-widest text-muted-foreground -mt-2 mb-2">
-          ……………… FOLD HERE — EXAMINATION FINDINGS ………………
+          ……………… FOLD HERE: EXAMINATION FINDINGS ………………
         </p>
 
         <ScopeSummary c={c} />

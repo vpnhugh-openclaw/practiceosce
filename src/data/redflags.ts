@@ -107,7 +107,7 @@ export const ACRONYMS = [
 
 export const RED_FLAGS: RedFlagEntry[] = [
   // Respiratory
-  { acronym: "CHUPO", flag: "SpO₂ < 92%", appliesTo: ["Respiratory", "Asthma", "COPD"], suggests: "Severe hypoxia / life-threatening exacerbation", action: "Emergency referral — call 000", oscePhrase: "Your oxygen level is concerning — I'm going to arrange urgent transfer to hospital." },
+  { acronym: "CHUPO", flag: "SpO₂ < 92%", appliesTo: ["Respiratory", "Asthma", "COPD"], suggests: "Severe hypoxia / life-threatening exacerbation", action: "Emergency referral: call 000", oscePhrase: "Your oxygen level is concerning: I'm going to arrange urgent transfer to hospital." },
   { acronym: "CHUPO", flag: "Unable to speak in full sentences", appliesTo: ["Respiratory", "Asthma", "COPD"], suggests: "Severe respiratory distress", action: "Emergency referral" },
   { acronym: "CHUPO", flag: "Silent chest", appliesTo: ["Asthma"], suggests: "Life-threatening asthma", action: "Emergency referral" },
   { flag: "Haemoptysis", appliesTo: ["Respiratory"], suggests: "PE, malignancy, TB, severe infection", action: "Same-day GP / ED" },
@@ -129,7 +129,7 @@ export const RED_FLAGS: RedFlagEntry[] = [
   { flag: "Jaundice", appliesTo: ["GI"], suggests: "Hepatobiliary disease", action: "Urgent GP / ED" },
   { flag: "Reduced urine output / dry mucous membranes", appliesTo: ["GI"], suggests: "Significant dehydration / AKI", action: "GP / ED if severe" },
   { flag: "Possible pregnancy complication (epigastric pain, headache, visual change)", appliesTo: ["GI", "Pregnancy"], suggests: "Pre-eclampsia / HELLP", action: "Urgent obstetric review" },
-  { flag: "Chest pain / exertional epigastric pain in middle-aged adult", appliesTo: ["GI", "Cardiac"], suggests: "ACS masquerade", action: "Emergency referral — call 000" },
+  { flag: "Chest pain / exertional epigastric pain in middle-aged adult", appliesTo: ["GI", "Cardiac"], suggests: "ACS masquerade", action: "Emergency referral: call 000" },
   { flag: "Older adult with new/progressive dyspepsia", appliesTo: ["GI"], suggests: "Malignancy until proven otherwise", action: "Urgent GP referral (endoscopy)" },
 
   // ENT
@@ -146,7 +146,7 @@ export const RED_FLAGS: RedFlagEntry[] = [
   // Other
   { acronym: "SIP", flag: "Periorbital lesions / spreading erythema", appliesTo: ["Dermatology", "Impetigo", "Cellulitis"], suggests: "Periorbital cellulitis risk", action: "Same-day GP / ED" },
   { flag: "Ophthalmic involvement (Hutchinson sign)", appliesTo: ["Dermatology", "Shingles"], suggests: "Herpes zoster ophthalmicus", action: "Same-day ophthalmology" },
-  { flag: "Migraine with aura on combined contraception request", appliesTo: ["Women's health", "Contraception"], suggests: "UKMEC 4 — absolute contraindication", action: "Refer to GP; offer barrier method" },
+  { flag: "Migraine with aura on combined contraception request", appliesTo: ["Women's health", "Contraception"], suggests: "UKMEC 4: absolute contraindication", action: "Refer to GP; offer barrier method" },
   { flag: "Cauda equina symptoms (bladder/bowel, saddle)", appliesTo: ["MSK", "Back pain"], suggests: "Cauda equina syndrome", action: "Emergency referral" },
   { flag: "Paediatric patient with discharge or grommets", appliesTo: ["Paediatric", "ENT"], suggests: "Out of pharmacist scope", action: "GP/ENT referral" },
 ];

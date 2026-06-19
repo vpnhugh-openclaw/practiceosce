@@ -1,4 +1,4 @@
-// Hugh's OSCE Case Generator — core types
+// Hugh's OSCE Case Generator: core types
 
 export type ScopeStatus =
   | "in-scope"
@@ -158,7 +158,7 @@ export interface OSCECase {
   redFlagsToScreen: string[];
   protocolConfidence: ProtocolConfidence;
   sourceNotes: string;
-  // ---- v2 additive fields (optional — old cases continue to render) ----
+  // ---- v2 additive fields (optional: old cases continue to render) ----
   ice?: { ideas?: string; concerns?: string; expectations?: string };
   hiddenFromBrief?: string[];
   referralClassification?: ReferralClassification;

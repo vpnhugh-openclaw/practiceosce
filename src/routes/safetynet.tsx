@@ -4,7 +4,7 @@ import { PROTOCOLS } from "@/data/protocols";
 import { PageHeader, Section } from "@/components/osce/Primitives";
 
 export const Route = createFileRoute("/safetynet")({
-  head: () => ({ meta: [{ title: "Safety-Net Builder — Hugh's OSCE Case Generator" }] }),
+  head: () => ({ meta: [{ title: "Safety-Net Builder: Hugh's OSCE Case Generator" }] }),
   component: SafetyNetPage,
 });
 
@@ -18,7 +18,7 @@ function SafetyNetPage() {
     const flags = p.redFlags.slice(0, 4).join(", ");
     return `Thank you, ${patientName}. To summarise the plan: I've started treatment for ${p.conditionName.toLowerCase()} and given you advice on lifestyle measures.
 
-Please come back sooner — or seek urgent medical care — if you develop any of the following: ${flags}, or any other symptom that concerns you.
+Please come back sooner: or seek urgent medical care: if you develop any of the following: ${flags}, or any other symptom that concerns you.
 
 I'd like to review you again in ${p.reviewTime.toLowerCase()}.${refer ? ` I'm also going to write to your GP today so they can follow up, because of the features we discussed.` : ""}
 

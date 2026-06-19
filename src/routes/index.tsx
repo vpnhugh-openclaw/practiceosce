@@ -6,7 +6,7 @@ import { ScopeDecisionBadge } from "@/components/osce/ScopeBadges";
 import { Timer, Flag, ShieldCheck, AlertTriangle, Shuffle, BookOpenCheck, Wand2, MessageCircleQuestion } from "lucide-react";
 
 export const Route = createFileRoute("/")({
-  head: () => ({ meta: [{ title: "Dashboard — Hugh's OSCE Case Generator" }] }),
+  head: () => ({ meta: [{ title: "Dashboard: Hugh's OSCE Case Generator" }] }),
   component: Dashboard,
 });
 

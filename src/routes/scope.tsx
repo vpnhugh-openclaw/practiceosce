@@ -6,7 +6,7 @@ import { ScopeDecisionBadge, ProtocolCheckWarning } from "@/components/osce/Scop
 import type { ScopeStatus } from "@/lib/types";
 
 export const Route = createFileRoute("/scope")({
-  head: () => ({ meta: [{ title: "Scope Checker — Hugh's OSCE Case Generator" }] }),
+  head: () => ({ meta: [{ title: "Scope Checker: Hugh's OSCE Case Generator" }] }),
   component: ScopePage,
 });
 
@@ -22,14 +22,14 @@ function ScopePage() {
   const p = PROTOCOLS.find((x) => x.id === conditionId)!;
 
   const result = useMemo<{ status: ScopeStatus; reason: string; phrase: string }>(() => {
-    if (redFlag) return { status: "emergency", reason: "A red flag for this condition is present — refer urgently per Queensland Health protocol.", phrase: "I'm concerned about a red flag and I'd like to arrange urgent referral." };
-    if (p.minimumAge && age < p.minimumAge) return { status: "refer-only", reason: `Below protocol minimum age (${p.minimumAge}).`, phrase: "This is outside what I can manage as a pharmacist prescriber — let's arrange a GP review." };
+    if (redFlag) return { status: "emergency", reason: "A red flag for this condition is present: refer urgently per Queensland Health protocol.", phrase: "I'm concerned about a red flag and I'd like to arrange urgent referral." };
+    if (p.minimumAge && age < p.minimumAge) return { status: "refer-only", reason: `Below protocol minimum age (${p.minimumAge}).`, phrase: "This is outside what I can manage as a pharmacist prescriber: let's arrange a GP review." };
     if (p.maximumAge && age > p.maximumAge) return { status: "refer-only", reason: `Above protocol maximum age (${p.maximumAge}).`, phrase: "I'll arrange a GP review as this is outside my prescribing scope." };
-    if (pregnancy && !p.id.includes("contracept")) return { status: "refer-only", reason: "Pregnancy / breastfeeding — refer for a pregnancy-compatible plan unless protocol explicitly covers.", phrase: "Because you're pregnant I'd like your GP to choose the safest treatment." };
+    if (pregnancy && !p.id.includes("contracept")) return { status: "refer-only", reason: "Pregnancy / breastfeeding: refer for a pregnancy-compatible plan unless protocol explicitly covers.", phrase: "Because you're pregnant I'd like your GP to choose the safest treatment." };
     if (immunocompromised) return { status: "refer-only", reason: "Immunocompromise typically excludes pharmacist prescribing scope.", phrase: "Given your immune system needs extra care, GP review is the safest plan." };
     if (p.previousDiagnosisRequired && !previousDx) return { status: "refer-only", reason: "Previous diagnosis required for this protocol; refer for assessment.", phrase: "Because this is a new diagnosis, your GP needs to assess first." };
     if (emotionalImpact) return { status: "treat-and-refer", reason: "Marked emotional / functional impact triggers treat-and-refer per protocol.", phrase: "I'll start treatment today and also refer you to your GP because this is really affecting you." };
-    return { status: "in-scope", reason: "Within scope based on inputs — proceed with protocol-consistent management and safety-net.", phrase: "This is within what I can manage today. Let me explain the plan." };
+    return { status: "in-scope", reason: "Within scope based on inputs: proceed with protocol-consistent management and safety-net.", phrase: "This is within what I can manage today. Let me explain the plan." };
   }, [age, pregnancy, immunocompromised, redFlag, emotionalImpact, previousDx, p]);
 
   return (
@@ -62,7 +62,7 @@ function ScopePage() {
             <p className="mt-3 text-sm italic bg-parchment rounded-md px-3 py-2">"{result.phrase}"</p>
           </div>
           <ProtocolCheckWarning />
-          <Section title="Protocol summary — key criteria">
+          <Section title="Protocol summary: key criteria">
             <div className="text-sm space-y-2">
               <p><strong>Treat-and-refer triggers:</strong> {p.treatAndReferCriteria.join("; ")}</p>
               <p><strong>Emergency:</strong> {p.emergencyReferralCriteria.join("; ")}</p>

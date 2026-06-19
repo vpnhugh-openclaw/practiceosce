@@ -134,7 +134,7 @@ export function TreatmentPlanCard({ c }: { c: OSCECase }) {
     <Section title="Pharmacological plan (class level)">
       <ul className="text-sm space-y-1 mb-4">
         {c.treatmentPlanClass.length === 0 && (
-          <li className="text-muted-foreground italic">No pharmacological therapy — referral pathway only.</li>
+          <li className="text-muted-foreground italic">No pharmacological therapy: referral pathway only.</li>
         )}
         {c.treatmentPlanClass.map((t) => (
           <li key={t}>• {t}</li>

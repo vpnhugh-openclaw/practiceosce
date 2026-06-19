@@ -2,9 +2,9 @@ import type { ScopeStatus, ProtocolConfidence } from "@/lib/types";
 import { AlertTriangle, CheckCircle2, ArrowRight, Siren, HelpCircle } from "lucide-react";
 
 const SCOPE_META: Record<ScopeStatus, { label: string; className: string; Icon: typeof CheckCircle2 }> = {
-  "in-scope": { label: "In scope — treat", className: "scope-pill-green", Icon: CheckCircle2 },
-  "treat-and-refer": { label: "In scope — treat and refer", className: "scope-pill-amber", Icon: ArrowRight },
-  "refer-only": { label: "Out of scope — refer", className: "scope-pill-red", Icon: AlertTriangle },
+  "in-scope": { label: "In scope: treat", className: "scope-pill-green", Icon: CheckCircle2 },
+  "treat-and-refer": { label: "In scope: treat and refer", className: "scope-pill-amber", Icon: ArrowRight },
+  "refer-only": { label: "Out of scope: refer", className: "scope-pill-red", Icon: AlertTriangle },
   "emergency": { label: "Emergency / hospital", className: "scope-pill-black", Icon: Siren },
   "needs-protocol-check": { label: "Needs protocol check", className: "scope-pill-amber", Icon: HelpCircle },
 };
@@ -22,8 +22,8 @@ export function ScopeDecisionBadge({ status, size = "md" }: { status: ScopeStatu
 
 const CONF_META: Record<ProtocolConfidence, { label: string; className: string }> = {
   high: { label: "Protocol verified", className: "bg-emerald-100 text-emerald-800" },
-  medium: { label: "Protocol — medium confidence", className: "bg-amber-100 text-amber-800" },
-  low: { label: "Protocol — low confidence", className: "bg-orange-100 text-orange-800" },
+  medium: { label: "Protocol: medium confidence", className: "bg-amber-100 text-amber-800" },
+  low: { label: "Protocol: low confidence", className: "bg-orange-100 text-orange-800" },
   "needs-review": { label: "Needs protocol review", className: "bg-rose-100 text-rose-800" },
 };
 

@@ -5,7 +5,7 @@ import { PageHeader, Section, KV, HiddenReveal } from "@/components/osce/Primiti
 import { PatientProfileCard } from "@/components/osce/CaseParts";
 
 export const Route = createFileRoute("/patient")({
-  head: () => ({ meta: [{ title: "Fake Patient Mode — Hugh's OSCE Case Generator" }] }),
+  head: () => ({ meta: [{ title: "Fake Patient Mode: Hugh's OSCE Case Generator" }] }),
   component: PatientPage,
 });
 
@@ -33,7 +33,7 @@ function PatientPage() {
           </Section>
           <Section title="Only if asked">
             <div className="space-y-2">
-              {p.onlyIfAsked.map((v) => <HiddenReveal key={v} label={v}>—</HiddenReveal>)}
+              {p.onlyIfAsked.map((v) => <HiddenReveal key={v} label={v}>:</HiddenReveal>)}
               {Object.entries(p.hiddenAnswers).map(([k, v]) => <HiddenReveal key={k} label={k}>{v}</HiddenReveal>)}
             </div>
           </Section>

@@ -7,7 +7,7 @@ import { Shuffle, ArrowRight } from "lucide-react";
 import type { ConditionCategory, Difficulty, CaseType } from "@/lib/types";
 
 export const Route = createFileRoute("/generate")({
-  head: () => ({ meta: [{ title: "Generate Case — Hugh's OSCE Case Generator" }] }),
+  head: () => ({ meta: [{ title: "Generate Case: Hugh's OSCE Case Generator" }] }),
   component: GeneratePage,
 });
 
@@ -86,7 +86,7 @@ function GeneratePage() {
             <p className="text-xs text-muted-foreground mt-1">{c.caseType.join(" · ")}</p>
           </Link>
         ))}
-        {matches.length === 0 && <p className="text-muted-foreground text-sm">No cases match — try widening the filters.</p>}
+        {matches.length === 0 && <p className="text-muted-foreground text-sm">No cases match: try widening the filters.</p>}
       </div>
     </div>
   );

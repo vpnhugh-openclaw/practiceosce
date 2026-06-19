@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { PageHeader, Section } from "@/components/osce/Primitives";
 
 export const Route = createFileRoute("/letter")({
-  head: () => ({ meta: [{ title: "GP Letter Generator — Hugh's OSCE Case Generator" }] }),
+  head: () => ({ meta: [{ title: "GP Letter Generator: Hugh's OSCE Case Generator" }] }),
   component: LetterPage,
 });
 

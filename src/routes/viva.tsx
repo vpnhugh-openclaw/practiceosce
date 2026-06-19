@@ -6,7 +6,7 @@ import { getViva } from "@/lib/viva";
 import { Printer } from "lucide-react";
 
 export const Route = createFileRoute("/viva")({
-  head: () => ({ meta: [{ title: "Viva Mode — Hugh's OSCE Case Generator" }] }),
+  head: () => ({ meta: [{ title: "Viva Mode: Hugh's OSCE Case Generator" }] }),
   component: VivaPage,
 });
 
@@ -65,7 +65,7 @@ function VivaPage() {
       </Section>
 
       <p className="text-xs text-muted-foreground italic mt-5">
-        Model answers are training scaffolds — verify any prescribing detail against the current
+        Model answers are training scaffolds: verify any prescribing detail against the current
         Queensland Health pharmacist prescribing protocol.
       </p>
     </div>
