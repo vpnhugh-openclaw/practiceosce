@@ -64,6 +64,14 @@ function ExaminerPage() {
         eyebrow="Examiner Mode"
         title="Mark a 20-minute OSCE station."
         subtitle="Sticky 20-minute countdown above the rubric. Score and comment live; the timer prompts you to finalise at 0:00."
+        actions={
+          <button
+            onClick={() => window.print()}
+            className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-sm no-print"
+          >
+            <Printer className="h-4 w-4" /> Print / Save PDF
+          </button>
+        }
       />
 
       <select
