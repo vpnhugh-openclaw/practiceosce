@@ -15,8 +15,7 @@ export const Route = createFileRoute("/practice/")({
 
 function PracticeModePage() {
   const { caseId: searchCaseId } = Route.useSearch();
-  const initialCaseId =
-    searchCaseId && CASE_INDEX[searchCaseId] ? searchCaseId : CASES[0].id;
+  const initialCaseId = searchCaseId && CASE_INDEX[searchCaseId] ? searchCaseId : CASES[0].id;
   const [caseId, setCaseId] = useState(initialCaseId);
   const c = CASE_INDEX[caseId];
 

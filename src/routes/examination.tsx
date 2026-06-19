@@ -30,9 +30,18 @@ function ExaminationPage() {
             <p className="text-sm text-muted-foreground mb-3">{s.intro}</p>
             <div className="grid md:grid-cols-2 gap-3">
               {s.sections.map((sec) => (
-                <div key={sec.heading} className="rounded-md border border-border bg-parchment/50 p-3">
-                  <p className="text-[11px] uppercase tracking-wide text-navy mb-1.5">{sec.heading}</p>
-                  <ul className="text-sm space-y-1">{sec.steps.map((st, i) => <li key={i}>• {st}</li>)}</ul>
+                <div
+                  key={sec.heading}
+                  className="rounded-md border border-border bg-parchment/50 p-3"
+                >
+                  <p className="text-[11px] uppercase tracking-wide text-navy mb-1.5">
+                    {sec.heading}
+                  </p>
+                  <ul className="text-sm space-y-1">
+                    {sec.steps.map((st, i) => (
+                      <li key={i}>• {st}</li>
+                    ))}
+                  </ul>
                 </div>
               ))}
             </div>

@@ -26,32 +26,66 @@ import type {
 
 const HYPOXIA_RE = /(spo|sat|oxygen)[^0-9]*([0-8]\d|9[01])\b/i;
 const URGENT_TERMS = [
-  "severe dehydration", "haematemes", "hematemes", "melaena", "melena",
-  "haemoptys", "hemoptys", "stridor", "cyanos", "silent chest",
-  "anaphylax", "drowsy", "unconscious", "uncons",
-  "suspected mastoiditis", "mastoiditis", "facial nerve",
-  "septic", "sepsis", "rigid abdomen", "peritonit",
+  "severe dehydration",
+  "haematemes",
+  "hematemes",
+  "melaena",
+  "melena",
+  "haemoptys",
+  "hemoptys",
+  "stridor",
+  "cyanos",
+  "silent chest",
+  "anaphylax",
+  "drowsy",
+  "unconscious",
+  "uncons",
+  "suspected mastoiditis",
+  "mastoiditis",
+  "facial nerve",
+  "septic",
+  "sepsis",
+  "rigid abdomen",
+  "peritonit",
 ];
 const EMERGENCY_TERMS = [
-  "chest pain", "crushing", "acs", "myocardial",
-  "anaphylax", "silent chest", "cyanos", "stridor at rest",
-  "unconscious", "uncons", "rigid abdomen", "peritonit",
-  "haematemes", "hematemes", "massive bleed",
+  "chest pain",
+  "crushing",
+  "acs",
+  "myocardial",
+  "anaphylax",
+  "silent chest",
+  "cyanos",
+  "stridor at rest",
+  "unconscious",
+  "uncons",
+  "rigid abdomen",
+  "peritonit",
+  "haematemes",
+  "hematemes",
+  "massive bleed",
 ];
 
 function corpusOf(c: OSCECase): string {
   const fps = c.fakePatientScript;
   return [
-    c.candidateStem, c.condition, c.expectedDiagnosis,
-    c.clinicalReasoning, c.protocolReasoning, c.referralPlan,
-    fps?.mainComplaint, fps?.openingLine,
+    c.candidateStem,
+    c.condition,
+    c.expectedDiagnosis,
+    c.clinicalReasoning,
+    c.protocolReasoning,
+    c.referralPlan,
+    fps?.mainComplaint,
+    fps?.openingLine,
     ...(fps ? Object.values(fps.socrates ?? {}) : []),
     ...(fps?.volunteer ?? []),
     ...(c.redFlagsPresent ?? []),
     ...(c.criticalFails ?? []),
     ...Object.values(c.vitals ?? {}),
     ...Object.values(c.examinationFindings ?? {}),
-  ].join(" ").toLowerCase();
+  ]
+    .join(" ")
+    .toLowerCase();
 }
 
 function deriveReferralClassification(c: OSCECase): ReferralClassification {
@@ -59,16 +93,19 @@ function deriveReferralClassification(c: OSCECase): ReferralClassification {
   const corpus = corpusOf(c);
   const presentRF = (c.redFlagsPresent ?? []).join(" ").toLowerCase();
   const hypoxic = HYPOXIA_RE.test(corpus);
-  const hasEmergency = hypoxic
-    || EMERGENCY_TERMS.some((t) => corpus.includes(t))
-    || EMERGENCY_TERMS.some((t) => presentRF.includes(t));
-  const hasUrgent = URGENT_TERMS.some((t) => corpus.includes(t))
-    || URGENT_TERMS.some((t) => presentRF.includes(t))
-    || (c.scopeDecision === "refer-only" && (c.redFlagsPresent ?? []).length > 0);
+  const hasEmergency =
+    hypoxic ||
+    EMERGENCY_TERMS.some((t) => corpus.includes(t)) ||
+    EMERGENCY_TERMS.some((t) => presentRF.includes(t));
+  const hasUrgent =
+    URGENT_TERMS.some((t) => corpus.includes(t)) ||
+    URGENT_TERMS.some((t) => presentRF.includes(t)) ||
+    (c.scopeDecision === "refer-only" && (c.redFlagsPresent ?? []).length > 0);
 
   if (c.scopeDecision === "emergency" || hasEmergency) return "emergency-referral";
   if (c.scopeDecision === "refer-only") return hasUrgent ? "urgent-referral" : "refer-only";
-  if (c.scopeDecision === "treat-and-refer") return hasUrgent ? "urgent-referral" : "treat-and-refer";
+  if (c.scopeDecision === "treat-and-refer")
+    return hasUrgent ? "urgent-referral" : "treat-and-refer";
   if (c.scopeDecision === "in-scope") return "pharmacist-manageable";
   return "treat-and-refer";
 }
@@ -85,18 +122,24 @@ function deriveViva(c: OSCECase, rc: ReferralClassification): VivaQA[] {
   const diffs = c.differentials.length ? c.differentials.join(", ") : "broader category review";
   const present = (c.redFlagsPresent ?? []).join("; ") || "none identified";
   const screen = (c.redFlagsToScreen ?? []).join("; ") || "condition-specific alarms";
-  const tx = c.treatmentPlanClass.length ? c.treatmentPlanClass.join("; ") : "no autonomous prescribing in this case";
+  const tx = c.treatmentPlanClass.length
+    ? c.treatmentPlanClass.join("; ")
+    : "no autonomous prescribing in this case";
   const nonPharm = (c.nonPharmPlan ?? []).join("; ") || "tailored lifestyle and trigger advice";
   const sn = (c.safetyNet ?? []).join("; ") || "return if symptoms worsen or new red flags develop";
   const pregBF = c.fakePatientScript?.pregnancyBreastfeeding || "not relevant in this case";
   const allergies = c.fakePatientScript?.allergies || "NKDA";
 
   const referralLine =
-    rc === "emergency-referral" ? "Emergency referral: ED or ambulance depending on severity."
-    : rc === "urgent-referral" ? "Urgent referral: same-day GP or ED."
-    : rc === "refer-only" ? "Refer only: no autonomous prescribing in this scope."
-    : rc === "treat-and-refer" ? "Treat the in-scope component and refer the remainder."
-    : "Pharmacist-manageable under the relevant Queensland Health protocol.";
+    rc === "emergency-referral"
+      ? "Emergency referral: ED or ambulance depending on severity."
+      : rc === "urgent-referral"
+        ? "Urgent referral: same-day GP or ED."
+        : rc === "refer-only"
+          ? "Refer only: no autonomous prescribing in this scope."
+          : rc === "treat-and-refer"
+            ? "Treat the in-scope component and refer the remainder."
+            : "Pharmacist-manageable under the relevant Queensland Health protocol.";
 
   const custom: VivaQA[] = [
     {
@@ -137,7 +180,8 @@ function deriveSbar(c: OSCECase, rc: ReferralClassification): OSCECase["sbar"] {
   if (!isReferralClass(rc)) return c.sbar;
   const pt = c.patientProfile;
   const pregBF = c.fakePatientScript?.pregnancyBreastfeeding;
-  const pregNote = pregBF && /pregnan|breastfeed|lactat|trimester/i.test(pregBF) ? ` ${pregBF}.` : "";
+  const pregNote =
+    pregBF && /pregnan|breastfeed|lactat|trimester/i.test(pregBF) ? ` ${pregBF}.` : "";
   const urgencyLine =
     rc === "emergency-referral"
       ? "Emergency referral required. Advise immediate ED review or ambulance depending on severity."
@@ -150,7 +194,15 @@ function deriveSbar(c: OSCECase, rc: ReferralClassification): OSCECase["sbar"] {
   return {
     situation: `${pt.name || "Patient"}, ${pt.age}${pt.gender ? "y " + pt.gender : "y"}, presents with ${c.condition}. Reason for referral: ${c.referralPlan || urgencyLine}`,
     background: `PMHx: ${c.fakePatientScript?.medicalHistory || "nil significant"}. Medicines: ${c.fakePatientScript?.medications || "nil regular"}. Allergies: ${c.fakePatientScript?.allergies || "NKDA"}.${pregNote} Social: ${c.fakePatientScript?.socialContext || "n/a"}.`,
-    assessment: `Findings: ${Object.entries(c.examinationFindings ?? {}).map(([k, v]) => `${k}: ${v}`).join("; ") || "see notes"}. Vitals: ${Object.entries(c.vitals ?? {}).map(([k, v]) => `${k} ${v}`).join(", ") || "not recorded"}. Red flags present: ${(c.redFlagsPresent ?? []).join("; ") || "none"}. Likely: ${c.expectedDiagnosis}. Differentials: ${c.differentials.join(", ") || "see case"}.`,
+    assessment: `Findings: ${
+      Object.entries(c.examinationFindings ?? {})
+        .map(([k, v]) => `${k}: ${v}`)
+        .join("; ") || "see notes"
+    }. Vitals: ${
+      Object.entries(c.vitals ?? {})
+        .map(([k, v]) => `${k} ${v}`)
+        .join(", ") || "not recorded"
+    }. Red flags present: ${(c.redFlagsPresent ?? []).join("; ") || "none"}. Likely: ${c.expectedDiagnosis}. Differentials: ${c.differentials.join(", ") || "see case"}.`,
     recommendation: urgencyLine,
   };
 }
@@ -159,52 +211,110 @@ function deriveSbar(c: OSCECase, rc: ReferralClassification): OSCECase["sbar"] {
 
 const DEFAULT_SOURCE_BY_CATEGORY: Record<ConditionCategory, SourceTag[]> = {
   Respiratory: [
-    { id: "qh-resp", title: "Queensland Health pharmacist prescribing protocol (respiratory)", reliability: "government-protocol", locator: "Source imported, page reference pending." },
+    {
+      id: "qh-resp",
+      title: "Queensland Health pharmacist prescribing protocol (respiratory)",
+      reliability: "government-protocol",
+      locator: "Source imported, page reference pending.",
+    },
     { id: "aah", title: "Australian Asthma Handbook", reliability: "clinical-guideline" },
     { id: "copdx", title: "COPD-X Guidelines", reliability: "clinical-guideline" },
   ],
   ENT: [
-    { id: "qh-ent", title: "Queensland Health pharmacist prescribing protocol (ENT)", reliability: "government-protocol", locator: "Source imported, page reference pending." },
+    {
+      id: "qh-ent",
+      title: "Queensland Health pharmacist prescribing protocol (ENT)",
+      reliability: "government-protocol",
+      locator: "Source imported, page reference pending.",
+    },
     { id: "tg-ent", title: "Therapeutic Guidelines: ENT", reliability: "clinical-guideline" },
   ],
   Gastrointestinal: [
-    { id: "qh-gi", title: "Queensland Health pharmacist prescribing protocol (GI)", reliability: "government-protocol", locator: "Source imported, page reference pending." },
-    { id: "tg-gi", title: "Therapeutic Guidelines: Gastrointestinal", reliability: "clinical-guideline" },
+    {
+      id: "qh-gi",
+      title: "Queensland Health pharmacist prescribing protocol (GI)",
+      reliability: "government-protocol",
+      locator: "Source imported, page reference pending.",
+    },
+    {
+      id: "tg-gi",
+      title: "Therapeutic Guidelines: Gastrointestinal",
+      reliability: "clinical-guideline",
+    },
   ],
   Dermatology: [
-    { id: "qh-derm", title: "Queensland Health pharmacist prescribing protocol (skin)", reliability: "government-protocol", locator: "Source imported, page reference pending." },
-    { id: "tg-derm", title: "Therapeutic Guidelines: Dermatology", reliability: "clinical-guideline" },
+    {
+      id: "qh-derm",
+      title: "Queensland Health pharmacist prescribing protocol (skin)",
+      reliability: "government-protocol",
+      locator: "Source imported, page reference pending.",
+    },
+    {
+      id: "tg-derm",
+      title: "Therapeutic Guidelines: Dermatology",
+      reliability: "clinical-guideline",
+    },
   ],
   Cardiovascular: [
     { id: "racgp-cv", title: "RACGP cardiovascular guidance", reliability: "clinical-guideline" },
   ],
   "Women's health": [
-    { id: "qh-uti", title: "Queensland Health pharmacist prescribing protocol (UTI)", reliability: "government-protocol", locator: "Source imported, page reference pending." },
-    { id: "tg-wh", title: "Therapeutic Guidelines: Women's health", reliability: "clinical-guideline" },
+    {
+      id: "qh-uti",
+      title: "Queensland Health pharmacist prescribing protocol (UTI)",
+      reliability: "government-protocol",
+      locator: "Source imported, page reference pending.",
+    },
+    {
+      id: "tg-wh",
+      title: "Therapeutic Guidelines: Women's health",
+      reliability: "clinical-guideline",
+    },
   ],
   Musculoskeletal: [
-    { id: "tg-msk", title: "Therapeutic Guidelines: Musculoskeletal", reliability: "clinical-guideline" },
+    {
+      id: "tg-msk",
+      title: "Therapeutic Guidelines: Musculoskeletal",
+      reliability: "clinical-guideline",
+    },
   ],
   "Weight management": [
     { id: "racgp-obesity", title: "RACGP obesity management", reliability: "clinical-guideline" },
   ],
   "Smoking cessation": [
-    { id: "racgp-smoking", title: "RACGP smoking cessation guidelines", reliability: "clinical-guideline" },
+    {
+      id: "racgp-smoking",
+      title: "RACGP smoking cessation guidelines",
+      reliability: "clinical-guideline",
+    },
     { id: "quitline", title: "Quitline / Department of Health", reliability: "patient-education" },
   ],
   "Oral health": [
-    { id: "tg-oral", title: "Therapeutic Guidelines: Oral and dental", reliability: "clinical-guideline" },
+    {
+      id: "tg-oral",
+      title: "Therapeutic Guidelines: Oral and dental",
+      reliability: "clinical-guideline",
+    },
   ],
   "Travel health": [
     { id: "tg-travel", title: "Therapeutic Guidelines: Travel", reliability: "clinical-guideline" },
   ],
   "Wound management": [
-    { id: "tg-wound", title: "Therapeutic Guidelines: Wound management", reliability: "clinical-guideline" },
+    {
+      id: "tg-wound",
+      title: "Therapeutic Guidelines: Wound management",
+      reliability: "clinical-guideline",
+    },
   ],
 };
 
 const COMMON_SOURCES: SourceTag[] = [
-  { id: "monash-osce", title: "Monash OSCE Prep info", reliability: "osce-training", locator: "Case structure, examination flow, OSCE timing." },
+  {
+    id: "monash-osce",
+    title: "Monash OSCE Prep info",
+    reliability: "osce-training",
+    locator: "Case structure, examination flow, OSCE timing.",
+  },
   { id: "amh", title: "Australian Medicines Handbook", reliability: "medicines-reference" },
 ];
 
@@ -241,7 +351,10 @@ function deriveVitals(c: OSCECase): Record<string, string> {
 
 // ---------- Treatment plan ----------
 
-function deriveTreatmentPlan(c: OSCECase, rc: ReferralClassification): { cls: string[]; notes: string } {
+function deriveTreatmentPlan(
+  c: OSCECase,
+  rc: ReferralClassification,
+): { cls: string[]; notes: string } {
   if (c.treatmentPlanClass && c.treatmentPlanClass.length > 0) {
     return { cls: c.treatmentPlanClass, notes: c.treatmentPlanNotes };
   }
@@ -253,12 +366,16 @@ function deriveTreatmentPlan(c: OSCECase, rc: ReferralClassification): { cls: st
         "Urgent referral and SBAR handover",
         "Document advice, refusal, and safety-net",
       ],
-      notes: c.treatmentPlanNotes || "Dose and eligibility must be verified against the current pharmacist prescribing protocol before clinical use.",
+      notes:
+        c.treatmentPlanNotes ||
+        "Dose and eligibility must be verified against the current pharmacist prescribing protocol before clinical use.",
     };
   }
   return {
     cls: ["Class-level option per protocol (dose pending verification)"],
-    notes: c.treatmentPlanNotes || "Dose and eligibility must be verified against the current pharmacist prescribing protocol before clinical use.",
+    notes:
+      c.treatmentPlanNotes ||
+      "Dose and eligibility must be verified against the current pharmacist prescribing protocol before clinical use.",
   };
 }
 
@@ -266,7 +383,8 @@ function deriveTreatmentPlan(c: OSCECase, rc: ReferralClassification): { cls: st
 
 function deriveVerificationNotes(c: OSCECase): string[] | undefined {
   const existing = c.verificationNotes ?? [];
-  const note = "Dose and eligibility must be verified against the current pharmacist prescribing protocol before clinical use.";
+  const note =
+    "Dose and eligibility must be verified against the current pharmacist prescribing protocol before clinical use.";
   if (existing.includes(note)) return existing;
   if (c.protocolConfidence === "high") return existing.length ? existing : undefined;
   return [...existing, note];
@@ -274,15 +392,21 @@ function deriveVerificationNotes(c: OSCECase): string[] | undefined {
 
 // ---------- Auto-documented reasoning ----------
 
-const CARDIAC_TRIGGER_RE = /chest pain|retrosternal|epigastr|chest tight|tight chest|chest heav|radiat|left arm|jaw|diaphor|exertion|heartburn|indigestion/i;
+const CARDIAC_TRIGGER_RE =
+  /chest pain|retrosternal|epigastr|chest tight|tight chest|chest heav|radiat|left arm|jaw|diaphor|exertion|heartburn|indigestion/i;
 
 function deriveRedFlagsToScreen(c: OSCECase): string[] {
   const existing = c.redFlagsToScreen ?? [];
   const corpus = corpusOf(c);
   const triggersCardiac = CARDIAC_TRIGGER_RE.test(corpus);
-  const alreadyMentions = existing.some((r) => /cardiac|acs|angina|ischaem|ischem|myocard/i.test(r));
+  const alreadyMentions = existing.some((r) =>
+    /cardiac|acs|angina|ischaem|ischem|myocard/i.test(r),
+  );
   if (triggersCardiac && !alreadyMentions) {
-    return [...existing, "Cardiac mimics (ACS, angina): screened and excluded based on age, risk factors, and pain character"];
+    return [
+      ...existing,
+      "Cardiac mimics (ACS, angina): screened and excluded based on age, risk factors, and pain character",
+    ];
   }
   return existing;
 }
@@ -291,7 +415,9 @@ function derivePregnancyAwareReasoning(c: OSCECase): string {
   const pt = c.fakePatientScript?.pregnancyBreastfeeding ?? "";
   const isPregBF = /pregnan|breastfeed|lactat|trimester/i.test(pt);
   if (!isPregBF) return c.protocolReasoning;
-  const mentions = /pregnan|breastfeed|lactat/i.test(c.protocolReasoning + " " + c.clinicalReasoning + " " + c.treatmentPlanNotes);
+  const mentions = /pregnan|breastfeed|lactat/i.test(
+    c.protocolReasoning + " " + c.clinicalReasoning + " " + c.treatmentPlanNotes,
+  );
   if (mentions) return c.protocolReasoning;
   return `${c.protocolReasoning} Pregnancy/breastfeeding status (${pt.trim()}) directly affects medicine selection, dose, and the threshold for referral: verify each option against the relevant pregnancy/lactation reference before prescribing.`;
 }

@@ -44,7 +44,9 @@ export function SourcesDrawer({
             </span>
           )}
         </span>
-        <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`} />
+        <ChevronDown
+          className={`h-4 w-4 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`}
+        />
       </button>
       {open && (
         <div className="px-3 pb-3 space-y-2">
@@ -54,7 +56,9 @@ export function SourcesDrawer({
                 <li key={s.id} className="text-xs leading-snug">
                   <span className="font-medium text-foreground">{s.title}</span>
                   {s.locator && <span className="text-muted-foreground">, {s.locator}</span>}
-                  <span className="ml-1 text-muted-foreground">[{RELIABILITY_LABEL[s.reliability]}]</span>
+                  <span className="ml-1 text-muted-foreground">
+                    [{RELIABILITY_LABEL[s.reliability]}]
+                  </span>
                   {s.url && (
                     <a
                       href={s.url}

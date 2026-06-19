@@ -51,9 +51,18 @@ function QAPage() {
         <span className="text-muted-foreground">Filter:</span>
         <FilterChip label="All" active={filter === "all"} onClick={() => setFilter("all")} />
         {LEVELS.map((l) => (
-          <FilterChip key={l} label={LEVEL_LABEL[l]} active={filter === l} onClick={() => setFilter(l)} />
+          <FilterChip
+            key={l}
+            label={LEVEL_LABEL[l]}
+            active={filter === l}
+            onClick={() => setFilter(l)}
+          />
         ))}
-        <FilterChip label="Unsafe only" active={filter === "unsafe"} onClick={() => setFilter("unsafe")} />
+        <FilterChip
+          label="Unsafe only"
+          active={filter === "unsafe"}
+          onClick={() => setFilter("unsafe")}
+        />
         <span className="ml-auto text-xs text-muted-foreground">{filtered.length} shown</span>
       </div>
 
@@ -63,7 +72,11 @@ function QAPage() {
             <div key={c.id} className="handbook-card p-3">
               <div className="flex items-center justify-between gap-3 flex-wrap">
                 <div className="min-w-0">
-                  <Link to="/cases/$caseId" params={{ caseId: c.id }} className="font-medium text-navy hover:underline">
+                  <Link
+                    to="/cases/$caseId"
+                    params={{ caseId: c.id }}
+                    className="font-medium text-navy hover:underline"
+                  >
                     {c.title}
                   </Link>
                   <p className="text-xs text-muted-foreground">
@@ -76,10 +89,16 @@ function QAPage() {
                       <ShieldAlert className="h-3 w-3" /> Unsafe
                     </span>
                   )}
-                  <span className={`inline-flex items-center gap-1 rounded border text-[11px] px-2 py-0.5 ${LEVEL_CLASS[r.overall]}`}>
-                    {r.overall === "fail" ? <ShieldAlert className="h-3 w-3" /> :
-                      r.overall === "pass" ? <ShieldCheck className="h-3 w-3" /> :
-                      <AlertTriangle className="h-3 w-3" />}
+                  <span
+                    className={`inline-flex items-center gap-1 rounded border text-[11px] px-2 py-0.5 ${LEVEL_CLASS[r.overall]}`}
+                  >
+                    {r.overall === "fail" ? (
+                      <ShieldAlert className="h-3 w-3" />
+                    ) : r.overall === "pass" ? (
+                      <ShieldCheck className="h-3 w-3" />
+                    ) : (
+                      <AlertTriangle className="h-3 w-3" />
+                    )}
                     {LEVEL_LABEL[r.overall]}
                   </span>
                   <span className="text-[11px] text-muted-foreground font-mono">
@@ -93,7 +112,10 @@ function QAPage() {
                   {r.results
                     .filter((x) => x.level !== "pass")
                     .map((x) => (
-                      <li key={x.id} className={`text-[11px] rounded border px-2 py-1 ${LEVEL_CLASS[x.level]}`}>
+                      <li
+                        key={x.id}
+                        className={`text-[11px] rounded border px-2 py-1 ${LEVEL_CLASS[x.level]}`}
+                      >
                         <span className="font-medium">[{LEVEL_LABEL[x.level]}]</span> {x.label}
                         {x.detail && <span className="opacity-80">: {x.detail}</span>}
                       </li>
@@ -108,12 +130,23 @@ function QAPage() {
   );
 }
 
-function Stat({ label, value, tone }: { label: string; value: number; tone?: "pass" | "warning" | "fail" }) {
+function Stat({
+  label,
+  value,
+  tone,
+}: {
+  label: string;
+  value: number;
+  tone?: "pass" | "warning" | "fail";
+}) {
   const cls =
-    tone === "pass" ? "text-emerald-700" :
-    tone === "warning" ? "text-amber-700" :
-    tone === "fail" ? "text-red-700" :
-    "text-navy";
+    tone === "pass"
+      ? "text-emerald-700"
+      : tone === "warning"
+        ? "text-amber-700"
+        : tone === "fail"
+          ? "text-red-700"
+          : "text-navy";
   return (
     <div className="handbook-card p-4">
       <p className="text-xs text-muted-foreground">{label}</p>
@@ -122,7 +155,15 @@ function Stat({ label, value, tone }: { label: string; value: number; tone?: "pa
   );
 }
 
-function FilterChip({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
+function FilterChip({
+  label,
+  active,
+  onClick,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+}) {
   return (
     <button
       onClick={onClick}

@@ -173,14 +173,18 @@
     border-color: var(--color-border);
   }
 
-  html, body {
+  html,
+  body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     font-feature-settings: "ss01", "cv11";
   }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-display);
     letter-spacing: -0.015em;
   }
@@ -190,7 +194,9 @@
   background: var(--color-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  box-shadow: 0 1px 0 oklch(0 0 0 / 3%), 0 1px 2px oklch(0 0 0 / 4%);
+  box-shadow:
+    0 1px 0 oklch(0 0 0 / 3%),
+    0 1px 2px oklch(0 0 0 / 4%);
 }
 
 @utility scope-pill-green {
@@ -211,16 +217,38 @@
 }
 
 @media print {
-  @page { margin: 14mm; }
-  .no-print { display: none !important; }
-  aside, header, footer { display: none !important; }
-  main { padding: 0 !important; max-width: none !important; }
-  body, html { background: white !important; }
-  .handbook-card { box-shadow: none !important; border-color: #ccc !important; break-inside: avoid; }
+  @page {
+    margin: 14mm;
+  }
+  .no-print {
+    display: none !important;
+  }
+  aside,
+  header,
+  footer {
+    display: none !important;
+  }
+  main {
+    padding: 0 !important;
+    max-width: none !important;
+  }
+  body,
+  html {
+    background: white !important;
+  }
+  .handbook-card {
+    box-shadow: none !important;
+    border-color: #ccc !important;
+    break-inside: avoid;
+  }
   .print-foldline {
     border-top: 2px dashed #888;
     margin: 2rem 0;
     page-break-after: always;
   }
-  h1, h2, h3 { color: #000 !important; }
+  h1,
+  h2,
+  h3 {
+    color: #000 !important;
+  }
 }

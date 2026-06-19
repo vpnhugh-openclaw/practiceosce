@@ -29,9 +29,7 @@ function genericViva(c: OSCECase): VivaQA[] {
 export function getViva(c: OSCECase): VivaQA[] {
   const base = c.viva ?? [];
   if (base.length >= 5) return base.slice(0, 5);
-  const filler = genericViva(c).filter(
-    (q) => !base.find((b) => b.question === q.question)
-  );
+  const filler = genericViva(c).filter((q) => !base.find((b) => b.question === q.question));
   return [...base, ...filler].slice(0, 5);
 }
 
@@ -42,4 +40,3 @@ export function getViva(c: OSCECase): VivaQA[] {
 export function hasCustomViva(c: OSCECase): boolean {
   return (c.viva?.length ?? 0) >= 5;
 }
-

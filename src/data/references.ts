@@ -26,10 +26,12 @@ export const REFERENCES: ReferenceEntry[] = [
     year: "2024",
     url: "https://www.health.qld.gov.au/clinical-practice/guidelines-procedures/medicines/queensland-pharmacist-scope-of-practice-pilot",
     areas: ["Protocol", "ENT", "GI", "Respiratory", "Skin", "MSK", "Women's health"],
-    usedFor: "Highest-authority source for prescribing eligibility, exclusions, dose class, duration, red flags, and referral thresholds across all in-scope conditions.",
+    usedFor:
+      "Highest-authority source for prescribing eligibility, exclusions, dose class, duration, red flags, and referral thresholds across all in-scope conditions.",
     lastChecked: "2026-06-01",
     reliability: "government-protocol",
-    notes: "Pharmacists must follow the relevant Queensland Health protocol when prescribing under the pilot. Where any other source disagrees with the current QH protocol, QH overrides.",
+    notes:
+      "Pharmacists must follow the relevant Queensland Health protocol when prescribing under the pilot. Where any other source disagrees with the current QH protocol, QH overrides.",
   },
   {
     id: "tg-respiratory",
@@ -57,7 +59,8 @@ export const REFERENCES: ReferenceEntry[] = [
     organisation: "AMH Pty Ltd",
     url: "https://amhonline.amh.net.au",
     areas: ["Medicines"],
-    usedFor: "Drug-level dose, contraindications, pregnancy/breastfeeding categories, interactions.",
+    usedFor:
+      "Drug-level dose, contraindications, pregnancy/breastfeeding categories, interactions.",
     lastChecked: "2026-06-01",
     reliability: "medicines-reference",
   },
@@ -106,7 +109,8 @@ export const REFERENCES: ReferenceEntry[] = [
     title: "OSCE Prep Info: June 2026 (Monash)",
     organisation: "Monash University: imported PDF",
     areas: ["OSCE structure", "Examination", "ENT", "GI", "Respiratory"],
-    usedFor: "Case structure, roleplayer cues, examination flow, examiner key layout and viva style. Not used as a prescribing source.",
+    usedFor:
+      "Case structure, roleplayer cues, examination flow, examiner key layout and viva style. Not used as a prescribing source.",
     lastChecked: "2026-06-01",
     reliability: "osce-training",
     notes: "Treatment and dosing claims are not taken from this PDF.",
@@ -119,7 +123,8 @@ export const REFERENCES: ReferenceEntry[] = [
     usedFor: "Case structure, FSOP framework prompts, communication scaffolds.",
     lastChecked: "2026-06-01",
     reliability: "osce-training",
-    notes: "Not used as a prescribing source. Treatment cross-checked against Queensland Health protocol.",
+    notes:
+      "Not used as a prescribing source. Treatment cross-checked against Queensland Health protocol.",
   },
 ];
 

@@ -1,19 +1,43 @@
 import type { ScopeStatus, ProtocolConfidence } from "@/lib/types";
 import { AlertTriangle, CheckCircle2, ArrowRight, Siren, HelpCircle } from "lucide-react";
 
-const SCOPE_META: Record<ScopeStatus, { label: string; className: string; Icon: typeof CheckCircle2 }> = {
+const SCOPE_META: Record<
+  ScopeStatus,
+  { label: string; className: string; Icon: typeof CheckCircle2 }
+> = {
   "in-scope": { label: "In scope: treat", className: "scope-pill-green", Icon: CheckCircle2 },
-  "treat-and-refer": { label: "In scope: treat and refer", className: "scope-pill-amber", Icon: ArrowRight },
+  "treat-and-refer": {
+    label: "In scope: treat and refer",
+    className: "scope-pill-amber",
+    Icon: ArrowRight,
+  },
   "refer-only": { label: "Out of scope: refer", className: "scope-pill-red", Icon: AlertTriangle },
-  "emergency": { label: "Emergency / hospital", className: "scope-pill-black", Icon: Siren },
-  "needs-protocol-check": { label: "Needs protocol check", className: "scope-pill-amber", Icon: HelpCircle },
+  emergency: { label: "Emergency / hospital", className: "scope-pill-black", Icon: Siren },
+  "needs-protocol-check": {
+    label: "Needs protocol check",
+    className: "scope-pill-amber",
+    Icon: HelpCircle,
+  },
 };
 
-export function ScopeDecisionBadge({ status, size = "md" }: { status: ScopeStatus; size?: "sm" | "md" | "lg" }) {
+export function ScopeDecisionBadge({
+  status,
+  size = "md",
+}: {
+  status: ScopeStatus;
+  size?: "sm" | "md" | "lg";
+}) {
   const { label, className, Icon } = SCOPE_META[status];
-  const sizing = size === "lg" ? "px-4 py-2 text-sm" : size === "sm" ? "px-2 py-1 text-[11px]" : "px-3 py-1.5 text-xs";
+  const sizing =
+    size === "lg"
+      ? "px-4 py-2 text-sm"
+      : size === "sm"
+        ? "px-2 py-1 text-[11px]"
+        : "px-3 py-1.5 text-xs";
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full font-medium ${sizing} ${className}`}>
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-full font-medium ${sizing} ${className}`}
+    >
       <Icon className="h-3.5 w-3.5" />
       {label}
     </span>
@@ -30,7 +54,9 @@ const CONF_META: Record<ProtocolConfidence, { label: string; className: string }
 export function ProtocolConfidenceBadge({ confidence }: { confidence: ProtocolConfidence }) {
   const m = CONF_META[confidence];
   return (
-    <span className={`inline-flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-medium ${m.className}`}>
+    <span
+      className={`inline-flex items-center gap-1 rounded-md px-2 py-1 text-[11px] font-medium ${m.className}`}
+    >
       {m.label}
     </span>
   );
@@ -61,7 +87,9 @@ export function RedFlagBox({ items, title = "Red flags" }: { items: string[]; ti
       </p>
       <ul className="mt-2 space-y-1 text-sm">
         {items.map((i) => (
-          <li key={i} className="text-destructive/90">• {i}</li>
+          <li key={i} className="text-destructive/90">
+            • {i}
+          </li>
         ))}
       </ul>
     </div>
