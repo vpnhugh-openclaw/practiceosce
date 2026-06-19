@@ -143,6 +143,138 @@ function ActorExaminerModePage() {
           </Link>
         </div>
       </Section>
+
+      <FullCaseInformation caseId={caseId} />
     </div>
+  );
+}
+
+function FullCaseInformation({ caseId }: { caseId: string }) {
+  const c = CASE_INDEX[caseId];
+  if (!c) return null;
+  const p = c.fakePatientScript;
+
+  return (
+    <Section title="Full case information (setup & review only)" defaultOpen={false}>
+      <div className="space-y-5">
+        <CandidateStemCard c={c} />
+        <ReadingTimeSkeleton c={c} />
+
+        <div className="grid lg:grid-cols-2 gap-5">
+          <PatientProfileCard c={c} />
+          <ScopeSummary c={c} />
+        </div>
+
+        <Section title="Fake patient script: opening & history">
+          <p className="italic mb-3">"{p.openingLine}"</p>
+          <p className="text-sm mb-4">
+            <span className="font-medium">Main complaint:</span> {p.mainComplaint}
+          </p>
+          {Object.keys(p.socrates).length > 0 && (
+            <div className="mb-4">
+              <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-1">
+                SOCRATES
+              </p>
+              {Object.entries(p.socrates).map(([k, v]) => (
+                <KV key={k} k={k} v={v} />
+              ))}
+            </div>
+          )}
+          <div className="grid sm:grid-cols-2 gap-3 mt-4">
+            <div className="space-y-2">
+              <p className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                Hidden: only if asked
+              </p>
+              {Object.entries(p.hiddenAnswers).map(([k, v]) => (
+                <HiddenReveal key={k} label={k}>
+                  {v}
+                </HiddenReveal>
+              ))}
+            </div>
+            <div>
+              <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-2">
+                Background
+              </p>
+              <KV k="PMHx" v={p.medicalHistory} />
+              <KV k="Medications" v={p.medications} />
+              <KV k="Allergies" v={p.allergies} />
+              <KV k="Preg/BF" v={p.pregnancyBreastfeeding} />
+              <KV k="Family" v={p.familyHistory} />
+              <KV k="Vaccinations" v={p.vaccinationHistory} />
+              <KV k="Smoking" v={p.smoking} />
+              <KV k="Alcohol" v={p.alcohol} />
+              <KV k="Activity" v={p.physicalActivity} />
+              <KV k="Sleep/mood" v={p.sleepMood} />
+              <KV k="Emotional impact" v={p.emotionalImpact} />
+              <KV k="Day-to-day impact" v={p.dayToDayImpact} />
+            </div>
+          </div>
+        </Section>
+
+        <div className="grid lg:grid-cols-2 gap-5">
+          <Section title="Vitals (reveal when requested)">
+            <VitalsRevealPanel vitals={c.vitals} />
+          </Section>
+          <Section title="Examination findings (reveal when performed)">
+            <ExaminationRevealPanel findings={c.examinationFindings} />
+          </Section>
+        </div>
+
+        <CaseRedFlags c={c} />
+        <ClinicalReasoningPanel c={c} />
+        <TreatmentPlanCard c={c} />
+        <NonPharmCard c={c} />
+        <SafetyNetCard c={c} />
+
+        <Section title="Examiner marking rubric">
+          <div className="space-y-1.5">
+            {c.markingRubric.map((r, i) => (
+              <div
+                key={i}
+                className={`grid grid-cols-[1fr_auto] gap-3 px-3 py-2 rounded-md text-sm ${r.critical ? "bg-destructive/10" : "bg-muted/40"}`}
+              >
+                <div>
+                  <p className="font-medium">
+                    {r.domain}{" "}
+                    {r.critical && (
+                      <span className="text-[10px] uppercase text-destructive ml-1">critical</span>
+                    )}
+                  </p>
+                  <p className="text-xs text-muted-foreground">{r.item}</p>
+                </div>
+                <p className="text-xs font-mono self-center">/{r.maxMarks}</p>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+        <Section title="Critical fails & learning points">
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <p className="text-[11px] uppercase tracking-wide text-destructive mb-1">
+                Critical fails
+              </p>
+              <ul className="text-sm space-y-1">
+                {c.criticalFails.map((f) => (
+                  <li key={f}>• {f}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-1">
+                Learning points
+              </p>
+              <ul className="text-sm space-y-1">
+                {c.learningPoints.map((f) => (
+                  <li key={f}>• {f}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </Section>
+
+        <p className="text-xs text-muted-foreground italic">{c.sourceNotes}</p>
+      </div>
+    </Section>
   );
 }
