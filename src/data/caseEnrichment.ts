@@ -263,6 +263,30 @@ function deriveVerificationNotes(c: OSCECase): string[] | undefined {
   return [...existing, note];
 }
 
+// ---------- Auto-documented reasoning ----------
+
+const CARDIAC_TRIGGER_RE = /chest pain|retrosternal|epigastr|chest tight|chest heav|radiat|left arm|jaw|diaphor|heartburn|indigestion/i;
+
+function deriveRedFlagsToScreen(c: OSCECase): string[] {
+  const existing = c.redFlagsToScreen ?? [];
+  const corpus = corpusOf(c);
+  const triggersCardiac = CARDIAC_TRIGGER_RE.test(corpus);
+  const alreadyMentions = existing.some((r) => /cardiac|acs|angina|ischaem|ischem|myocard/i.test(r));
+  if (triggersCardiac && !alreadyMentions) {
+    return [...existing, "Cardiac mimics (ACS, angina): screened and excluded based on age, risk factors, and pain character"];
+  }
+  return existing;
+}
+
+function derivePregnancyAwareReasoning(c: OSCECase): string {
+  const pt = c.fakePatientScript?.pregnancyBreastfeeding ?? "";
+  const isPregBF = /pregnan|breastfeed|lactat|trimester/i.test(pt);
+  if (!isPregBF) return c.protocolReasoning;
+  const mentions = /pregnan|breastfeed|lactat/i.test(c.protocolReasoning + " " + c.clinicalReasoning + " " + c.treatmentPlanNotes);
+  if (mentions) return c.protocolReasoning;
+  return `${c.protocolReasoning} Pregnancy/breastfeeding status (${pt.trim()}) directly affects medicine selection, dose, and the threshold for referral: verify each option against the relevant pregnancy/lactation reference before prescribing.`;
+}
+
 // ---------- Public API ----------
 
 export function enrichCase(c: OSCECase): OSCECase {
@@ -273,6 +297,8 @@ export function enrichCase(c: OSCECase): OSCECase {
   const vitals = deriveVitals(c);
   const { cls, notes } = deriveTreatmentPlan(c, rc);
   const verificationNotes = deriveVerificationNotes(c);
+  const redFlagsToScreen = deriveRedFlagsToScreen(c);
+  const protocolReasoning = derivePregnancyAwareReasoning(c);
 
   return {
     ...c,
@@ -284,6 +310,8 @@ export function enrichCase(c: OSCECase): OSCECase {
     treatmentPlanClass: cls,
     treatmentPlanNotes: notes,
     verificationNotes,
+    redFlagsToScreen,
+    protocolReasoning,
   };
 }
 
