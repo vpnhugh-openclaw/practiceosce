@@ -16,6 +16,7 @@ import {
   Library,
   BookMarked,
   MessageCircleQuestion,
+  ShieldAlert,
   Menu,
   X,
 } from "lucide-react";
@@ -36,6 +37,7 @@ const NAV = [
   { to: "/performance", label: "My Performance", icon: BarChart3 },
   { to: "/cases", label: "Case Bank", icon: Library },
   { to: "/references", label: "References", icon: BookMarked },
+  { to: "/qa", label: "Content QA (admin)", icon: ShieldAlert },
 ] as const;
 
 export function AppShell({ children }: { children: React.ReactNode }) {

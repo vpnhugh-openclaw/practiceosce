@@ -14,6 +14,7 @@ import { Route as ScopeRouteImport } from './routes/scope'
 import { Route as SafetynetRouteImport } from './routes/safetynet'
 import { Route as ReferencesRouteImport } from './routes/references'
 import { Route as RedflagsRouteImport } from './routes/redflags'
+import { Route as QaRouteImport } from './routes/qa'
 import { Route as ProtocolsRouteImport } from './routes/protocols'
 import { Route as PracticeRouteImport } from './routes/practice'
 import { Route as PerformanceRouteImport } from './routes/performance'
@@ -50,6 +51,11 @@ const ReferencesRoute = ReferencesRouteImport.update({
 const RedflagsRoute = RedflagsRouteImport.update({
   id: '/redflags',
   path: '/redflags',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QaRoute = QaRouteImport.update({
+  id: '/qa',
+  path: '/qa',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProtocolsRoute = ProtocolsRouteImport.update({
@@ -124,6 +130,7 @@ export interface FileRoutesByFullPath {
   '/performance': typeof PerformanceRoute
   '/practice': typeof PracticeRoute
   '/protocols': typeof ProtocolsRoute
+  '/qa': typeof QaRoute
   '/redflags': typeof RedflagsRoute
   '/references': typeof ReferencesRoute
   '/safetynet': typeof SafetynetRoute
@@ -142,6 +149,7 @@ export interface FileRoutesByTo {
   '/performance': typeof PerformanceRoute
   '/practice': typeof PracticeRoute
   '/protocols': typeof ProtocolsRoute
+  '/qa': typeof QaRoute
   '/redflags': typeof RedflagsRoute
   '/references': typeof ReferencesRoute
   '/safetynet': typeof SafetynetRoute
@@ -162,6 +170,7 @@ export interface FileRoutesById {
   '/performance': typeof PerformanceRoute
   '/practice': typeof PracticeRoute
   '/protocols': typeof ProtocolsRoute
+  '/qa': typeof QaRoute
   '/redflags': typeof RedflagsRoute
   '/references': typeof ReferencesRoute
   '/safetynet': typeof SafetynetRoute
@@ -183,6 +192,7 @@ export interface FileRouteTypes {
     | '/performance'
     | '/practice'
     | '/protocols'
+    | '/qa'
     | '/redflags'
     | '/references'
     | '/safetynet'
@@ -201,6 +211,7 @@ export interface FileRouteTypes {
     | '/performance'
     | '/practice'
     | '/protocols'
+    | '/qa'
     | '/redflags'
     | '/references'
     | '/safetynet'
@@ -220,6 +231,7 @@ export interface FileRouteTypes {
     | '/performance'
     | '/practice'
     | '/protocols'
+    | '/qa'
     | '/redflags'
     | '/references'
     | '/safetynet'
@@ -240,6 +252,7 @@ export interface RootRouteChildren {
   PerformanceRoute: typeof PerformanceRoute
   PracticeRoute: typeof PracticeRoute
   ProtocolsRoute: typeof ProtocolsRoute
+  QaRoute: typeof QaRoute
   RedflagsRoute: typeof RedflagsRoute
   ReferencesRoute: typeof ReferencesRoute
   SafetynetRoute: typeof SafetynetRoute
@@ -282,6 +295,13 @@ declare module '@tanstack/react-router' {
       path: '/redflags'
       fullPath: '/redflags'
       preLoaderRoute: typeof RedflagsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/qa': {
+      id: '/qa'
+      path: '/qa'
+      fullPath: '/qa'
+      preLoaderRoute: typeof QaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/protocols': {
@@ -394,6 +414,7 @@ const rootRouteChildren: RootRouteChildren = {
   PerformanceRoute: PerformanceRoute,
   PracticeRoute: PracticeRoute,
   ProtocolsRoute: ProtocolsRoute,
+  QaRoute: QaRoute,
   RedflagsRoute: RedflagsRoute,
   ReferencesRoute: ReferencesRoute,
   SafetynetRoute: SafetynetRoute,

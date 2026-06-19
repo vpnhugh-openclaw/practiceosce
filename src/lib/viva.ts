@@ -34,3 +34,12 @@ export function getViva(c: OSCECase): VivaQA[] {
   );
   return [...base, ...filler].slice(0, 5);
 }
+
+/**
+ * Returns whether the viva block for this case is the case's own custom
+ * content (true) or relies on generic fallback questions (false).
+ */
+export function hasCustomViva(c: OSCECase): boolean {
+  return (c.viva?.length ?? 0) >= 5;
+}
+
