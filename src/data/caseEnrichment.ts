@@ -274,7 +274,7 @@ function deriveVerificationNotes(c: OSCECase): string[] | undefined {
 
 // ---------- Auto-documented reasoning ----------
 
-const CARDIAC_TRIGGER_RE = /chest pain|retrosternal|epigastr|chest tight|chest heav|radiat|left arm|jaw|diaphor|heartburn|indigestion/i;
+const CARDIAC_TRIGGER_RE = /chest pain|retrosternal|epigastr|chest tight|tight chest|chest heav|radiat|left arm|jaw|diaphor|exertion|heartburn|indigestion/i;
 
 function deriveRedFlagsToScreen(c: OSCECase): string[] {
   const existing = c.redFlagsToScreen ?? [];
