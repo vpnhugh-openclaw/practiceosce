@@ -11,37 +11,49 @@ export const Route = createFileRoute("/generate")({
   component: GeneratePage,
 });
 
+const SUBJECTS = ["Random", "ENT", "Gastrointestinal", "Respiratory"] as const;
+type Subject = typeof SUBJECTS[number];
+
 const CATEGORIES: ConditionCategory[] = [
   "Respiratory","ENT","Dermatology","Gastrointestinal","Cardiovascular",
   "Women's health","Musculoskeletal","Weight management","Smoking cessation","Oral health","Travel health","Wound management",
 ];
 const DIFFS: Difficulty[] = ["Beginner", "Standard OSCE", "Difficult", "Brutal"];
-const TIMES = [5, 8, 10, 12];
+const TIMES = [10, 15, 20, 25, 30];
 const TYPES: CaseType[] = [
   "In-scope routine","Treat and refer","Refer only","Emergency referral","Diagnostic uncertainty","Protocol trap",
   "Communication heavy","Examination heavy","Safety-netting heavy","Marked emotional impact","Paediatric","Pregnancy/breastfeeding trap","Comorbidity trap","Medication contraindication trap",
 ];
+const ROLES = ["Student brief","Fake patient script","Examiner key","Full OSCE station","Viva mode","Timed practice"] as const;
 
 function GeneratePage() {
+  const [subject, setSubject] = useState<Subject>("Random");
   const [category, setCategory] = useState<ConditionCategory | "All">("All");
   const [difficulty, setDifficulty] = useState<Difficulty | "All">("All");
   const [time, setTime] = useState<number | "All">("All");
   const [type, setType] = useState<CaseType | "All">("All");
+  const [role, setRole] = useState<typeof ROLES[number]>("Full OSCE station");
+
+  const subjectCat: ConditionCategory | "All" =
+    subject === "ENT" ? "ENT" : subject === "Gastrointestinal" ? "Gastrointestinal" : subject === "Respiratory" ? "Respiratory" : "All";
 
   const matches = useMemo(() => CASES.filter((c) =>
+    (subjectCat === "All" || c.category === subjectCat) &&
     (category === "All" || c.category === category) &&
     (difficulty === "All" || c.difficulty === difficulty) &&
     (time === "All" || c.timeMinutes === time) &&
     (type === "All" || c.caseType.includes(type))
-  ), [category, difficulty, time, type]);
+  ), [subjectCat, category, difficulty, time, type]);
 
   const random = matches[Math.floor(Math.random() * Math.max(matches.length, 1))];
 
   return (
     <div>
-      <PageHeader eyebrow="Generate Case" title="Build your station." subtitle="Filter the case bank by condition, type, difficulty and time, then open the case in study, fake patient or examiner view." />
+      <PageHeader eyebrow="Generate Case" title="Build your station." subtitle="Filter by subject, condition, type, difficulty and role. Default station time is 20 minutes." />
 
-      <div className="handbook-card p-5 mb-6 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="handbook-card p-5 mb-6 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <Select label="Subject" value={subject} onChange={(v) => setSubject(v as Subject)} options={[...SUBJECTS]} />
+        <Select label="Role / view" value={role} onChange={(v) => setRole(v as typeof ROLES[number])} options={[...ROLES]} />
         <Select label="Condition category" value={category} onChange={(v) => setCategory(v as ConditionCategory | "All")} options={["All", ...CATEGORIES]} />
         <Select label="Case type" value={type} onChange={(v) => setType(v as CaseType | "All")} options={["All", ...TYPES]} />
         <Select label="Difficulty" value={difficulty} onChange={(v) => setDifficulty(v as Difficulty | "All")} options={["All", ...DIFFS]} />
