@@ -114,6 +114,18 @@ export interface MarkingRubricItem {
   feedbackIfMissed: string;
 }
 
+export interface VivaQA {
+  question: string;
+  modelAnswer: string;
+}
+
+export type ReferralClassification =
+  | "pharmacist-manageable"
+  | "treat-and-refer"
+  | "refer-only"
+  | "urgent-referral"
+  | "emergency-referral";
+
 export interface OSCECase {
   id: string;
   title: string;
@@ -132,7 +144,7 @@ export interface OSCECase {
   scopeDecision: ScopeStatus;
   protocolReasoning: string;
   clinicalReasoning: string;
-  treatmentPlanClass: string[]; // medication classes only
+  treatmentPlanClass: string[];
   treatmentPlanNotes: string;
   nonPharmPlan: string[];
   safetyNet: string[];
@@ -146,4 +158,11 @@ export interface OSCECase {
   redFlagsToScreen: string[];
   protocolConfidence: ProtocolConfidence;
   sourceNotes: string;
+  // ---- v2 additive fields (optional — old cases continue to render) ----
+  ice?: { ideas?: string; concerns?: string; expectations?: string };
+  hiddenFromBrief?: string[];
+  referralClassification?: ReferralClassification;
+  viva?: VivaQA[];
+  sbar?: { situation?: string; background?: string; assessment?: string; recommendation?: string };
+  defaultTimeMinutes?: number;
 }
