@@ -12,6 +12,7 @@ import {
   CaseRedFlags,
 } from "@/components/osce/CaseParts";
 import { CountdownTimer } from "@/components/osce/CountdownTimer";
+import { PageSourcesDrawer } from "@/components/osce/PageSourcesDrawer";
 import { logAttempt } from "@/lib/performance";
 import { Printer, Save, Check } from "lucide-react";
 
@@ -224,6 +225,12 @@ function ExaminerPage() {
             </Link>
           </div>
         </div>
+
+        <PageSourcesDrawer
+          sources={c.sourceTags}
+          needsVerification={c.needsVerification}
+          verificationNotes={c.verificationNotes}
+        />
       </div>
     </div>
   );

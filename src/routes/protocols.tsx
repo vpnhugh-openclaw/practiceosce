@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PROTOCOLS } from "@/data/protocols";
 import { PageHeader, Section, KV } from "@/components/osce/Primitives";
 import { ProtocolConfidenceBadge } from "@/components/osce/ScopeBadges";
+import { PageSourcesDrawer } from "@/components/osce/PageSourcesDrawer";
 
 export const Route = createFileRoute("/protocols")({
   head: () => ({ meta: [{ title: "Condition Protocol Cards: Hugh's OSCE Case Generator" }] }),

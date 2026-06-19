@@ -3,6 +3,7 @@ import { useState } from "react";
 import { CASES, CASE_INDEX } from "@/data/cases";
 import { PageHeader, Section, KV, HiddenReveal } from "@/components/osce/Primitives";
 import { PatientProfileCard } from "@/components/osce/CaseParts";
+import { PageSourcesDrawer } from "@/components/osce/PageSourcesDrawer";
 
 export const Route = createFileRoute("/patient")({
   head: () => ({ meta: [{ title: "Fake Patient Mode: Hugh's OSCE Case Generator" }] }),
@@ -58,6 +59,12 @@ function PatientPage() {
               <ul className="text-sm space-y-1">{p.challengePrompts.map((v) => <li key={v}>• "{v}"</li>)}</ul>
             </Section>
           )}
+          <PageSourcesDrawer
+            sources={c.sourceTags}
+            needsVerification={c.needsVerification}
+            verificationNotes={c.verificationNotes}
+            label="Where this script came from"
+          />
         </div>
       </div>
     </div>

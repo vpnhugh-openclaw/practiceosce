@@ -13,6 +13,7 @@ import {
   SafetyNetCard,
 } from "@/components/osce/CaseParts";
 import { CountdownTimer } from "@/components/osce/CountdownTimer";
+import { PageSourcesDrawer } from "@/components/osce/PageSourcesDrawer";
 
 export const Route = createFileRoute("/practice")({
   head: () => ({ meta: [{ title: "20-minute Real OSCE Practice: Hugh's OSCE Case Generator" }] }),
@@ -103,6 +104,11 @@ function PracticePage() {
           <Link to="/cases/$caseId" params={{ caseId: c.id }} className="inline-block text-sm underline">
             Open full case →
           </Link>
+          <PageSourcesDrawer
+            sources={c.sourceTags}
+            needsVerification={c.needsVerification}
+            verificationNotes={c.verificationNotes}
+          />
         </div>
       )}
     </div>
