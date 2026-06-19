@@ -1,5 +1,6 @@
 import type { OSCECase } from "@/lib/types";
 import { EXPANSION_CASES } from "./casesExpansion";
+import { enrichAll } from "./caseEnrichment";
 
 export const std = (overrides: Partial<OSCECase>): OSCECase => ({
   id: "",
