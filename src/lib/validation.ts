@@ -59,12 +59,15 @@ const joinLC = (...parts: Array<string | string[] | undefined | Record<string, s
 const anyOf = (hay: string, needles: string[]) => needles.some((n) => hay.includes(n));
 
 const AI_FILLER = [
-  "empower", "streamline", "seamless", "leverage", "elevate",
+  "empower", "streamline", "seamless", "leverage",
   "cutting-edge", "holistic", "game-changing", "delve into",
   "in today's fast-paced", "navigate the complex",
   "real-world scenario", "robust solution",
-  "not only", // used with "but also"
+  // NOTE: "elevate" intentionally NOT included: clinical usage ("elevate the
+  // head of the bed", "elevate the limb") is legitimate. We only flag the
+  // marketing phrase "elevate your".
 ];
+const AI_FILLER_PHRASES = ["elevate your", "unlock your potential", "take it to the next level"];
 
 // ---------- Per-check implementations ----------
 
