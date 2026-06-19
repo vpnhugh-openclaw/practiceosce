@@ -1,7 +1,20 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { CASES, CASE_INDEX } from "@/data/cases";
-import { PageHeader, Section } from "@/components/osce/Primitives";
+import { PageHeader, Section, KV, HiddenReveal } from "@/components/osce/Primitives";
+import {
+  CandidateStemCard,
+  ReadingTimeSkeleton,
+  VitalsRevealPanel,
+  ExaminationRevealPanel,
+  PatientProfileCard,
+  ClinicalReasoningPanel,
+  ScopeSummary,
+  TreatmentPlanCard,
+  NonPharmCard,
+  SafetyNetCard,
+  CaseRedFlags,
+} from "@/components/osce/CaseParts";
 import { ClipboardCheck, Monitor, UserRound } from "lucide-react";
 import { z } from "zod";
 
