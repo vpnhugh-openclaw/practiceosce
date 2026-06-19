@@ -114,10 +114,33 @@ function ExaminerPage() {
         <CandidateStemCard c={c} />
         <CaseRedFlags c={c} />
 
-        <div className="print-foldline" />
-        <p className="text-center text-xs uppercase tracking-widest text-muted-foreground -mt-2 mb-2">
-          ……………… FOLD HERE: EXAMINATION FINDINGS ………………
-        </p>
+        <div className="handbook-card p-3 bg-muted/30 border-dashed">
+          <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-1">Examiner Mode: full reveal</p>
+          <p className="text-xs text-muted-foreground">All hidden findings, vitals, and the patient script are visible to you. Tick items as the candidate asks for or performs them; ticks roll live into the score below.</p>
+        </div>
+
+        {redFlagList.length > 0 && (
+          <Section title="Red flag screening (tick when candidate asks / excludes)" defaultOpen>
+            <ul className="space-y-1.5">
+              {redFlagList.map((rf, i) => (
+                <li key={i} className="flex items-start gap-2 text-sm px-2 py-1 rounded bg-muted/20">
+                  <input
+                    type="checkbox"
+                    checked={rfTicks[i] ?? false}
+                    onChange={(e) => setRfTicks((s) => ({ ...s, [i]: e.target.checked }))}
+                    className="mt-1"
+                  />
+                  <span>{rf}</span>
+                </li>
+              ))}
+            </ul>
+            {finalised && missedRedFlags.length > 0 && (
+              <p className="mt-2 text-xs text-destructive font-medium">
+                Missed red flags: {missedRedFlags.length} of {redFlagList.length}
+              </p>
+            )}
+          </Section>
+        )}
 
         <ScopeSummary c={c} />
         <ClinicalReasoningPanel c={c} />
