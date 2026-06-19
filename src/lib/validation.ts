@@ -225,10 +225,10 @@ function checkRedFlagReferral(c: OSCECase): CheckResult {
   }
   const emergencyKeywords = ["chest pain", "cyanos", "stroke", "spo₂ <", "spo2 <", "silent chest", "anaphylax", "haemoptys", "hematemes", "melaena", "stridor", "drowsy", "uncons"];
   const hasEmergencyPresent = present.some((p) => anyOf(p, emergencyKeywords));
-  if (hasEmergencyPresent && c.scopeDecision !== "emergency" && c.referralClassification !== "emergency-referral") {
+  if (hasEmergencyPresent && c.scopeDecision !== "emergency" && c.referralClassification !== "emergency-referral" && c.referralClassification !== "urgent-referral") {
     return {
       id: "redflag-coverage", label: "Red flags are checked", level: "fail", critical: true,
-      detail: `Emergency-level red flag present but scope is "${c.scopeDecision}".`,
+      detail: `Emergency-level red flag present but scope is "${c.scopeDecision}" / referral "${c.referralClassification}".`,
     };
   }
   if (present.length > 0 && c.scopeDecision === "in-scope") {
