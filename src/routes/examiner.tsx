@@ -34,7 +34,7 @@ function ExaminerPage() {
   const [finalised, setFinalised] = useState(false);
   const [logged, setLogged] = useState(false);
 
-  const redFlagList: string[] = (c.redFlagsToScreen?.length ? c.redFlagsToScreen : c.redFlags) ?? [];
+  const redFlagList: string[] = (c.redFlagsToScreen?.length ? c.redFlagsToScreen : c.redFlagsPresent) ?? [];
   const criticalFailList: string[] = c.criticalFails ?? [];
   const missedRedFlags = redFlagList.filter((_, i) => !rfTicks[i]);
   const missedCriticalChecks = criticalFailList.filter((_, i) => !crit[i] && !rfTicks[i]);
