@@ -70,18 +70,53 @@ function PracticePage() {
         </select>
       </div>
 
-      <CountdownTimer defaultMinutes={defaultMins} />
-
-      <div className="grid lg:grid-cols-[1fr_360px] gap-5 mt-5">
-        <div className="space-y-4">
-          <CandidateStemCard c={c} />
-          <Section title="Vitals: request and interpret">
-            <VitalsRevealPanel vitals={c.vitals} />
-          </Section>
-          <Section title="Examination: verbalise and reveal">
-            <ExaminationRevealPanel findings={c.examinationFindings} />
-          </Section>
+      {blocked ? (
+        <div className="handbook-card p-5 mt-2 border-red-300 bg-red-50">
+          <p className="inline-flex items-center gap-2 font-display text-lg text-red-900">
+            <ShieldAlert className="h-5 w-5" /> Unsafe for timed practice
+          </p>
+          <p className="text-sm text-red-900 mt-1">
+            The Content QA validator flagged a critical issue on this case. It is blocked from timed
+            practice to avoid teaching unsafe patterns.
+          </p>
+          <ul className="text-xs text-red-900 mt-2 list-disc pl-5 space-y-0.5">
+            {report.results
+              .filter((r) => r.level === "fail" && r.critical)
+              .map((r) => (
+                <li key={r.id}>{r.label}{r.detail ? `: ${r.detail}` : ""}</li>
+              ))}
+          </ul>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button
+              onClick={() => setUseAnyway(true)}
+              className="rounded-md bg-red-700 text-white px-3 py-2 text-sm"
+            >
+              Use anyway (editing / debugging only)
+            </button>
+            <Link to="/qa" className="rounded-md border border-border bg-card px-3 py-2 text-sm">
+              Open Content QA
+            </Link>
+          </div>
         </div>
+      ) : (
+        <>
+          {useAnyway && (
+            <div className="text-xs text-red-900 bg-red-50 border border-red-200 rounded px-3 py-2 mt-2">
+              Override active: this case has a critical QA failure. Do not use the model answer as clinical guidance.
+            </div>
+          )}
+          <CountdownTimer defaultMinutes={defaultMins} />
+
+          <div className="grid lg:grid-cols-[1fr_360px] gap-5 mt-5">
+            <div className="space-y-4">
+              <CandidateStemCard c={c} />
+              <Section title="Vitals: request and interpret">
+                <VitalsRevealPanel vitals={c.vitals} />
+              </Section>
+              <Section title="Examination: verbalise and reveal">
+                <ExaminationRevealPanel findings={c.examinationFindings} />
+              </Section>
+            </div>
         <div>
           <Section title="Notes pad" defaultOpen>
             <textarea
