@@ -29,6 +29,7 @@ function ExaminerPage() {
   const [crit, setCrit] = useState<Record<number, boolean>>({});
   const [feedback, setFeedback] = useState("");
   const [finalised, setFinalised] = useState(false);
+  const [logged, setLogged] = useState(false);
 
   const score = useMemo(() => {
     let earned = 0;
