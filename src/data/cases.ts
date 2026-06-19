@@ -1,13 +1,14 @@
 import type { OSCECase } from "@/lib/types";
+import { EXPANSION_CASES } from "./casesExpansion";
 
-const std = (overrides: Partial<OSCECase>): OSCECase => ({
+export const std = (overrides: Partial<OSCECase>): OSCECase => ({
   id: "",
   title: "",
   condition: "",
   category: "Gastrointestinal",
   difficulty: "Standard OSCE",
   caseType: ["In-scope routine"],
-  timeMinutes: 8,
+  timeMinutes: 20,
   candidateStem: "",
   patientProfile: { name: "", age: 0, gender: "" },
   fakePatientScript: {
@@ -57,7 +58,7 @@ const std = (overrides: Partial<OSCECase>): OSCECase => ({
   ...overrides,
 });
 
-const rubricStandard = (extra: Partial<{ critical: string[] }> = {}) => [
+export const rubricStandard = (_extra: Partial<{ critical: string[] }> = {}) => [
   { domain: "Opening", item: "Introduces self, role, consent, hand hygiene", maxMarks: 2, feedbackIfMissed: "Always introduce yourself, confirm patient, gain consent." },
   { domain: "Information gathering", item: "Takes focused presenting history (SOCRATES where pain)", maxMarks: 4, feedbackIfMissed: "Use SOCRATES for any pain/symptom." },
   { domain: "Red flags", item: "Screens for condition-specific red flags", maxMarks: 4, critical: true, feedbackIfMissed: "Missing red flags is a critical fail." },
@@ -1116,6 +1117,7 @@ export const CASES: OSCECase[] = [
     redFlagsPresent: ["BP 145/95", "Low mood", "Social isolation"],
     redFlagsToScreen: ["Suicidality", "Cardiovascular symptoms", "Severe mood disorder"],
   }),
+  ...EXPANSION_CASES,
 ];
 
 export const CASE_INDEX = Object.fromEntries(CASES.map((c) => [c.id, c]));

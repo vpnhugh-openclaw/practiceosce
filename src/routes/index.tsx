@@ -19,7 +19,7 @@ function Dashboard() {
   }, {});
 
   const quick = [
-    { to: "/practice", label: "8-minute OSCE", icon: Timer, hint: "Standard timed station" },
+    { to: "/practice", label: "20-minute Real OSCE Practice", icon: Timer, hint: "Default timed station" },
     { to: "/practice", label: "Red flag sprint", icon: Flag, hint: "Identify alarms fast" },
     { to: "/scope", label: "Scope decision drill", icon: ShieldCheck, hint: "Treat / refer / escalate" },
     { to: "/generate", label: "Queensland protocol trap", icon: AlertTriangle, hint: "Catch the protocol gotchas" },
