@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { CASES, CASE_INDEX } from "@/data/cases";
 import { PageHeader, Section, HiddenReveal } from "@/components/osce/Primitives";
-import { getViva } from "@/lib/viva";
+import { getViva, hasCustomViva } from "@/lib/viva";
 import { PageSourcesDrawer } from "@/components/osce/PageSourcesDrawer";
-import { Printer } from "lucide-react";
+import { Printer, AlertTriangle } from "lucide-react";
 
 export const Route = createFileRoute("/viva")({
   head: () => ({ meta: [{ title: "Viva Mode: Hugh's OSCE Case Generator" }] }),
@@ -51,6 +51,18 @@ function VivaPage() {
           {c.category} · {c.condition} · Scope: {c.scopeDecision}
         </p>
       </div>
+
+      {!hasCustomViva(c) && (
+        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 text-amber-900 px-3 py-2 text-sm inline-flex items-start gap-2">
+          <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
+          <span>
+            <strong>Missing custom viva block.</strong> Some questions below are generic fillers
+            generated from the case's reasoning and red flags, not authored examiner questions.
+            Treat as a scaffold and check against examiner guidance.
+          </span>
+        </div>
+      )}
+
 
       <Section title="Viva questions" defaultOpen>
         <ol className="space-y-3 list-decimal pl-5">

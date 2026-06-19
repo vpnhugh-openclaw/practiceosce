@@ -7,6 +7,7 @@ import {
   PatientProfileCard, ClinicalReasoningPanel, ScopeSummary, TreatmentPlanCard,
   NonPharmCard, SafetyNetCard, CaseRedFlags,
 } from "@/components/osce/CaseParts";
+import { QAChecklist } from "@/components/osce/QAChecklist";
 import { Printer, UserRound, ClipboardCheck, Timer } from "lucide-react";
 
 export const Route = createFileRoute("/cases/$caseId")({
@@ -49,6 +50,7 @@ function CasePage() {
       />
 
       <div className="space-y-5">
+        <QAChecklist case={c} />
         <CandidateStemCard c={c} />
         <ReadingTimeSkeleton c={c} />
 

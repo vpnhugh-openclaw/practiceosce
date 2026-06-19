@@ -13,6 +13,7 @@ import {
 } from "@/components/osce/CaseParts";
 import { CountdownTimer } from "@/components/osce/CountdownTimer";
 import { PageSourcesDrawer } from "@/components/osce/PageSourcesDrawer";
+import { QAChecklist } from "@/components/osce/QAChecklist";
 import { logAttempt } from "@/lib/performance";
 import { Printer, Save, Check } from "lucide-react";
 
@@ -93,6 +94,9 @@ function ExaminerPage() {
       </select>
 
       <CountdownTimer defaultMinutes={defaultMins} onComplete={handleTimeUp} />
+
+      <div className="mt-3"><QAChecklist case={c} /></div>
+
 
       {finalised && (
         <div className="handbook-card mt-3 p-4 bg-amber-50 border-amber-300 text-amber-900">
