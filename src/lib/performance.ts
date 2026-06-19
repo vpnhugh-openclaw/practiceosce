@@ -1,10 +1,12 @@
 // Local-first OSCE attempt tracking via localStorage.
 import { useCallback, useEffect, useState } from "react";
+import type { AttemptMode } from "./types";
 
 const KEY = "osce.attempts.v1";
 
 export interface AttemptRecord {
   id: string;
+  mode: AttemptMode;
   caseId: string;
   caseTitle: string;
   category: string;

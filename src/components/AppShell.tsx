@@ -3,7 +3,6 @@ import { useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   LayoutDashboard,
-  Wand2,
   Timer,
   UserRound,
   ClipboardCheck,
@@ -11,13 +10,14 @@ import {
   Flag,
   Stethoscope,
   BookOpenCheck,
+  BookOpen,
   LifeBuoy,
   Mail,
-  BarChart3,
   Library,
   BookMarked,
   MessageCircleQuestion,
   ShieldAlert,
+  BarChart3,
   Menu,
   X,
 } from "lucide-react";
@@ -31,7 +31,6 @@ type NavItem = {
 
 const NAV: NavItem[] = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/generate", label: "Generate Case", icon: Wand2 },
   {
     to: "/practice",
     label: "Practice Exam Mode",
@@ -41,15 +40,23 @@ const NAV: NavItem[] = [
       { to: "/practice/solo", label: "Solo Mode", icon: UserRound },
     ],
   },
-  { to: "/viva", label: "Viva Mode", icon: MessageCircleQuestion },
-  { to: "/scope", label: "Scope Checker", icon: ShieldCheck },
-  { to: "/redflags", label: "Red Flag Library", icon: Flag },
-  { to: "/examination", label: "Examination Skills", icon: Stethoscope },
-  { to: "/protocols", label: "Condition Protocol Cards", icon: BookOpenCheck },
-  { to: "/safetynet", label: "Safety-Net Builder", icon: LifeBuoy },
-  { to: "/letter", label: "GP Letter Generator", icon: Mail },
-  { to: "/cases", label: "Case Bank", icon: Library },
-  { to: "/references", label: "References", icon: BookMarked },
+  { to: "/cases", label: "Cases", icon: Library },
+  {
+    to: "/learn",
+    label: "Learn / Reference",
+    icon: BookOpen,
+    children: [
+      { to: "/viva", label: "Viva Mode", icon: MessageCircleQuestion },
+      { to: "/scope", label: "Scope Checker", icon: ShieldCheck },
+      { to: "/redflags", label: "Red Flag Library", icon: Flag },
+      { to: "/examination", label: "Examination Skills", icon: Stethoscope },
+      { to: "/protocols", label: "Condition Protocol Cards", icon: BookOpenCheck },
+      { to: "/safetynet", label: "Safety-Net Builder", icon: LifeBuoy },
+      { to: "/letter", label: "GP Letter Generator", icon: Mail },
+      { to: "/references", label: "References", icon: BookMarked },
+    ],
+  },
+  { to: "/performance", label: "Performance", icon: BarChart3 },
   { to: "/qa", label: "Content QA (admin)", icon: ShieldAlert },
 ] as const;
 
@@ -74,7 +81,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
         <nav className="flex-1 overflow-y-auto py-3 px-3">
           {NAV.map(({ to, label, icon: Icon, children }) => {
-            const active = to === "/" ? pathname === "/" : pathname === to || pathname.startsWith(to + "/");
+            const active =
+              to === "/" ? pathname === "/" : pathname === to || pathname.startsWith(to + "/");
             return (
               <div key={to} className="mb-1">
                 <Link

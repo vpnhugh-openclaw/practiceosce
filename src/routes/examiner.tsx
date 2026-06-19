@@ -22,7 +22,9 @@ export const Route = createFileRoute("/examiner")({
   validateSearch: z.object({
     caseId: z.string().optional(),
   }),
-  head: () => ({ meta: [{ title: "Examiner Mode: 20-minute Real OSCE: Hugh's OSCE Case Generator" }] }),
+  head: () => ({
+    meta: [{ title: "Examiner Mode: 20-minute Real OSCE: Hugh's OSCE Case Generator" }],
+  }),
   component: ExaminerPage,
 });
 
@@ -30,8 +32,7 @@ type Mark = "not" | "partial" | "done";
 
 function ExaminerPage() {
   const { caseId: searchCaseId } = Route.useSearch();
-  const initialCaseId =
-    searchCaseId && CASE_INDEX[searchCaseId] ? searchCaseId : CASES[0].id;
+  const initialCaseId = searchCaseId && CASE_INDEX[searchCaseId] ? searchCaseId : CASES[0].id;
   const [caseId, setCaseId] = useState(initialCaseId);
   const c = CASE_INDEX[caseId];
   const [marks, setMarks] = useState<Record<number, Mark>>({});
@@ -41,7 +42,8 @@ function ExaminerPage() {
   const [finalised, setFinalised] = useState(false);
   const [logged, setLogged] = useState(false);
 
-  const redFlagList: string[] = (c.redFlagsToScreen?.length ? c.redFlagsToScreen : c.redFlagsPresent) ?? [];
+  const redFlagList: string[] =
+    (c.redFlagsToScreen?.length ? c.redFlagsToScreen : c.redFlagsPresent) ?? [];
   const criticalFailList: string[] = c.criticalFails ?? [];
   const missedRedFlags = redFlagList.filter((_, i) => !rfTicks[i]);
   void criticalFailList;
@@ -62,10 +64,10 @@ function ExaminerPage() {
   const result = anyCrit
     ? "Fail (critical fail triggered)"
     : pct >= 70
-    ? "Pass"
-    : pct >= 55
-    ? "Borderline"
-    : "Fail";
+      ? "Pass"
+      : pct >= 55
+        ? "Borderline"
+        : "Fail";
 
   const handleTimeUp = () => {
     setFinalised(true);
@@ -120,12 +122,15 @@ function ExaminerPage() {
 
       <CountdownTimer defaultMinutes={defaultMins} onComplete={handleTimeUp} />
 
-      <div className="mt-3"><QAChecklist case={c} /></div>
-
+      <div className="mt-3">
+        <QAChecklist case={c} />
+      </div>
 
       {finalised && (
         <div className="handbook-card mt-3 p-4 bg-amber-50 border-amber-300 text-amber-900">
-          <p className="font-medium text-sm">Time complete: finalise your score and written feedback below before submitting.</p>
+          <p className="font-medium text-sm">
+            Time complete: finalise your score and written feedback below before submitting.
+          </p>
         </div>
       )}
 
@@ -134,15 +139,23 @@ function ExaminerPage() {
         <CaseRedFlags c={c} />
 
         <div className="handbook-card p-3 bg-muted/30 border-dashed">
-          <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-1">Examiner Mode: full reveal</p>
-          <p className="text-xs text-muted-foreground">All hidden findings, vitals, and the patient script are visible to you. Tick items as the candidate asks for or performs them; ticks roll live into the score below.</p>
+          <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-1">
+            Examiner Mode: full reveal
+          </p>
+          <p className="text-xs text-muted-foreground">
+            All hidden findings, vitals, and the patient script are visible to you. Tick items as
+            the candidate asks for or performs them; ticks roll live into the score below.
+          </p>
         </div>
 
         {redFlagList.length > 0 && (
           <Section title="Red flag screening (tick when candidate asks / excludes)" defaultOpen>
             <ul className="space-y-1.5">
               {redFlagList.map((rf, i) => (
-                <li key={i} className="flex items-start gap-2 text-sm px-2 py-1 rounded bg-muted/20">
+                <li
+                  key={i}
+                  className="flex items-start gap-2 text-sm px-2 py-1 rounded bg-muted/20"
+                >
                   <input
                     type="checkbox"
                     checked={rfTicks[i] ?? false}
@@ -179,7 +192,9 @@ function ExaminerPage() {
                     <p className="font-medium text-sm">
                       {r.domain}{" "}
                       {r.critical && (
-                        <span className="text-[10px] uppercase text-destructive ml-1">critical</span>
+                        <span className="text-[10px] uppercase text-destructive ml-1">
+                          critical
+                        </span>
                       )}
                     </p>
                     <p className="text-xs text-muted-foreground">{r.item}</p>
@@ -247,8 +262,11 @@ function ExaminerPage() {
                   .map((r, i) => ({ r, m: marks[i] ?? "not" }))
                   .filter(({ m }) => m !== "done")
                   .map(({ r }) => `${r.domain}: ${r.item}`);
-                const missedRedFlagNotes = missedRedFlags.map((rf) => `Red flag not screened: ${rf}`);
+                const missedRedFlagNotes = missedRedFlags.map(
+                  (rf) => `Red flag not screened: ${rf}`,
+                );
                 logAttempt({
+                  mode: "actor-examiner",
                   caseId: c.id,
                   caseTitle: c.title,
                   category: c.category,
@@ -257,7 +275,11 @@ function ExaminerPage() {
                   earned: score.earned,
                   max: score.max,
                   pct,
-                  result: result as "Pass" | "Borderline" | "Fail" | "Fail (critical fail triggered)",
+                  result: result as
+                    | "Pass"
+                    | "Borderline"
+                    | "Fail"
+                    | "Fail (critical fail triggered)",
                   criticalFail: anyCrit,
                   missedRubric: [...missedRubric, ...missedRedFlagNotes],
                   notes: feedback,
@@ -270,10 +292,7 @@ function ExaminerPage() {
               {logged ? <Check className="h-4 w-4" /> : <Save className="h-4 w-4" />}
               {logged ? "Logged" : "Log attempt"}
             </button>
-            <Link
-              to="/performance"
-              className="text-xs underline opacity-90 hover:opacity-100"
-            >
+            <Link to="/performance" className="text-xs underline opacity-90 hover:opacity-100">
               View history →
             </Link>
             <Link

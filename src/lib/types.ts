@@ -43,6 +43,8 @@ export type CaseType =
 
 export type Difficulty = "Beginner" | "Standard OSCE" | "Difficult" | "Brutal";
 
+export type AttemptMode = "solo" | "actor-examiner";
+
 export interface ConditionProtocol {
   id: string;
   conditionName: string;
@@ -180,9 +182,18 @@ export type ReferenceReliability =
   | "background";
 
 export type ReferenceArea =
-  | "ENT" | "GI" | "Respiratory" | "MSK" | "Skin" | "Women's health"
-  | "Protocol" | "Red flags" | "Examination" | "Medicines"
-  | "Patient counselling" | "OSCE structure";
+  | "ENT"
+  | "GI"
+  | "Respiratory"
+  | "MSK"
+  | "Skin"
+  | "Women's health"
+  | "Protocol"
+  | "Red flags"
+  | "Examination"
+  | "Medicines"
+  | "Patient counselling"
+  | "OSCE structure";
 
 export interface SourceTag {
   id: string;
@@ -191,4 +202,3 @@ export interface SourceTag {
   reliability: ReferenceReliability;
   url?: string;
 }
-

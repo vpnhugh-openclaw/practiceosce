@@ -20,6 +20,7 @@ import { Route as PracticeRouteImport } from './routes/practice'
 import { Route as PerformanceRouteImport } from './routes/performance'
 import { Route as PatientRouteImport } from './routes/patient'
 import { Route as LetterRouteImport } from './routes/letter'
+import { Route as LearnRouteImport } from './routes/learn'
 import { Route as GenerateRouteImport } from './routes/generate'
 import { Route as ExaminerRouteImport } from './routes/examiner'
 import { Route as ExaminationRouteImport } from './routes/examination'
@@ -86,6 +87,11 @@ const LetterRoute = LetterRouteImport.update({
   path: '/letter',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LearnRoute = LearnRouteImport.update({
+  id: '/learn',
+  path: '/learn',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GenerateRoute = GenerateRouteImport.update({
   id: '/generate',
   path: '/generate',
@@ -143,6 +149,7 @@ export interface FileRoutesByFullPath {
   '/examination': typeof ExaminationRoute
   '/examiner': typeof ExaminerRoute
   '/generate': typeof GenerateRoute
+  '/learn': typeof LearnRoute
   '/letter': typeof LetterRoute
   '/patient': typeof PatientRoute
   '/performance': typeof PerformanceRoute
@@ -165,6 +172,7 @@ export interface FileRoutesByTo {
   '/examination': typeof ExaminationRoute
   '/examiner': typeof ExaminerRoute
   '/generate': typeof GenerateRoute
+  '/learn': typeof LearnRoute
   '/letter': typeof LetterRoute
   '/patient': typeof PatientRoute
   '/performance': typeof PerformanceRoute
@@ -188,6 +196,7 @@ export interface FileRoutesById {
   '/examination': typeof ExaminationRoute
   '/examiner': typeof ExaminerRoute
   '/generate': typeof GenerateRoute
+  '/learn': typeof LearnRoute
   '/letter': typeof LetterRoute
   '/patient': typeof PatientRoute
   '/performance': typeof PerformanceRoute
@@ -213,6 +222,7 @@ export interface FileRouteTypes {
     | '/examination'
     | '/examiner'
     | '/generate'
+    | '/learn'
     | '/letter'
     | '/patient'
     | '/performance'
@@ -235,6 +245,7 @@ export interface FileRouteTypes {
     | '/examination'
     | '/examiner'
     | '/generate'
+    | '/learn'
     | '/letter'
     | '/patient'
     | '/performance'
@@ -257,6 +268,7 @@ export interface FileRouteTypes {
     | '/examination'
     | '/examiner'
     | '/generate'
+    | '/learn'
     | '/letter'
     | '/patient'
     | '/performance'
@@ -281,6 +293,7 @@ export interface RootRouteChildren {
   ExaminationRoute: typeof ExaminationRoute
   ExaminerRoute: typeof ExaminerRoute
   GenerateRoute: typeof GenerateRoute
+  LearnRoute: typeof LearnRoute
   LetterRoute: typeof LetterRoute
   PatientRoute: typeof PatientRoute
   PerformanceRoute: typeof PerformanceRoute
@@ -371,6 +384,13 @@ declare module '@tanstack/react-router' {
       path: '/letter'
       fullPath: '/letter'
       preLoaderRoute: typeof LetterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learn': {
+      id: '/learn'
+      path: '/learn'
+      fullPath: '/learn'
+      preLoaderRoute: typeof LearnRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/generate': {
@@ -480,6 +500,7 @@ const rootRouteChildren: RootRouteChildren = {
   ExaminationRoute: ExaminationRoute,
   ExaminerRoute: ExaminerRoute,
   GenerateRoute: GenerateRoute,
+  LearnRoute: LearnRoute,
   LetterRoute: LetterRoute,
   PatientRoute: PatientRoute,
   PerformanceRoute: PerformanceRoute,
