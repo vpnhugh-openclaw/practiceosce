@@ -29,9 +29,15 @@ function ExaminerPage() {
   const c = CASE_INDEX[caseId];
   const [marks, setMarks] = useState<Record<number, Mark>>({});
   const [crit, setCrit] = useState<Record<number, boolean>>({});
+  const [rfTicks, setRfTicks] = useState<Record<number, boolean>>({});
   const [feedback, setFeedback] = useState("");
   const [finalised, setFinalised] = useState(false);
   const [logged, setLogged] = useState(false);
+
+  const redFlagList: string[] = (c.redFlagsToScreen?.length ? c.redFlagsToScreen : c.redFlags) ?? [];
+  const criticalFailList: string[] = c.criticalFails ?? [];
+  const missedRedFlags = redFlagList.filter((_, i) => !rfTicks[i]);
+  const missedCriticalChecks = criticalFailList.filter((_, i) => !crit[i] && !rfTicks[i]);
 
   const score = useMemo(() => {
     let earned = 0;
