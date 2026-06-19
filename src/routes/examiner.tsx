@@ -37,7 +37,7 @@ function ExaminerPage() {
   const redFlagList: string[] = (c.redFlagsToScreen?.length ? c.redFlagsToScreen : c.redFlagsPresent) ?? [];
   const criticalFailList: string[] = c.criticalFails ?? [];
   const missedRedFlags = redFlagList.filter((_, i) => !rfTicks[i]);
-  const missedCriticalChecks = criticalFailList.filter((_, i) => !crit[i] && !rfTicks[i]);
+  void criticalFailList;
 
   const score = useMemo(() => {
     let earned = 0;
