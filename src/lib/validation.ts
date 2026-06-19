@@ -410,7 +410,10 @@ function checkEmDashes(c: OSCECase): CheckResult {
 
 function checkAIFiller(c: OSCECase): CheckResult {
   const corpus = JSON.stringify(c).toLowerCase();
-  const hits = AI_FILLER.filter((w) => corpus.includes(w));
+  const hits = [
+    ...AI_FILLER.filter((w) => corpus.includes(w)),
+    ...AI_FILLER_PHRASES.filter((w) => corpus.includes(w)),
+  ];
   if (hits.length === 0) return { id: "ai-filler", label: "No AI-sounding filler", level: "pass" };
   return { id: "ai-filler", label: "No AI-sounding filler", level: "warning", detail: `Found: ${hits.join(", ")}` };
 }
