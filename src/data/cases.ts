@@ -1,5 +1,6 @@
 import type { OSCECase } from "@/lib/types";
 import { EXPANSION_CASES } from "./casesExpansion";
+import { enrichAll } from "./caseEnrichment";
 
 export const std = (overrides: Partial<OSCECase>): OSCECase => ({
   id: "",
@@ -76,7 +77,7 @@ export const rubricStandard = (_extra: Partial<{ critical: string[] }> = {}) => 
   { domain: "Professional close", item: "Summarises plan, invites questions, closes professionally", maxMarks: 1, feedbackIfMissed: "Close with a clear summary." },
 ];
 
-export const CASES: OSCECase[] = [
+const RAW_CASES: OSCECase[] = [
   std({
     id: "abdo-1-gastro",
     title: "ABDO 1: Nausea and diarrhoea, suspected food poisoning",
@@ -1119,5 +1120,7 @@ export const CASES: OSCECase[] = [
   }),
   ...EXPANSION_CASES,
 ];
+
+export const CASES: OSCECase[] = enrichAll(RAW_CASES);
 
 export const CASE_INDEX = Object.fromEntries(CASES.map((c) => [c.id, c]));
