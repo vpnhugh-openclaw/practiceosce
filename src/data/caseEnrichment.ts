@@ -53,9 +53,14 @@ function corpusOf(c: OSCECase): string {
 function deriveReferralClassification(c: OSCECase): ReferralClassification {
   if (c.referralClassification) return c.referralClassification;
   const corpus = corpusOf(c);
+  const presentRF = (c.redFlagsPresent ?? []).join(" ").toLowerCase();
   const hypoxic = HYPOXIA_RE.test(corpus);
-  const hasEmergency = hypoxic || EMERGENCY_TERMS.some((t) => corpus.includes(t));
-  const hasUrgent = URGENT_TERMS.some((t) => corpus.includes(t));
+  const hasEmergency = hypoxic
+    || EMERGENCY_TERMS.some((t) => corpus.includes(t))
+    || EMERGENCY_TERMS.some((t) => presentRF.includes(t));
+  const hasUrgent = URGENT_TERMS.some((t) => corpus.includes(t))
+    || URGENT_TERMS.some((t) => presentRF.includes(t))
+    || (c.scopeDecision === "refer-only" && (c.redFlagsPresent ?? []).length > 0);
 
   if (c.scopeDecision === "emergency" || hasEmergency) return "emergency-referral";
   if (c.scopeDecision === "refer-only") return hasUrgent ? "urgent-referral" : "refer-only";
