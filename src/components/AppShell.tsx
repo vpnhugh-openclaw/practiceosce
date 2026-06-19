@@ -1,8 +1,8 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useState } from "react";
+import type { LucideIcon } from "lucide-react";
 import {
   LayoutDashboard,
-  Wand2,
   Timer,
   UserRound,
   ClipboardCheck,
@@ -10,33 +10,53 @@ import {
   Flag,
   Stethoscope,
   BookOpenCheck,
+  BookOpen,
   LifeBuoy,
   Mail,
-  BarChart3,
   Library,
   BookMarked,
   MessageCircleQuestion,
   ShieldAlert,
+  BarChart3,
   Menu,
   X,
 } from "lucide-react";
 
-const NAV = [
+type NavItem = {
+  to: string;
+  label: string;
+  icon: LucideIcon;
+  children?: NavItem[];
+};
+
+const NAV: NavItem[] = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/generate", label: "Generate Case", icon: Wand2 },
-  { to: "/practice", label: "Practice Exam Mode", icon: Timer },
-  { to: "/patient", label: "Fake Patient Mode", icon: UserRound },
-  { to: "/examiner", label: "Examiner Mode", icon: ClipboardCheck },
-  { to: "/viva", label: "Viva Mode", icon: MessageCircleQuestion },
-  { to: "/scope", label: "Scope Checker", icon: ShieldCheck },
-  { to: "/redflags", label: "Red Flag Library", icon: Flag },
-  { to: "/examination", label: "Examination Skills", icon: Stethoscope },
-  { to: "/protocols", label: "Condition Protocol Cards", icon: BookOpenCheck },
-  { to: "/safetynet", label: "Safety-Net Builder", icon: LifeBuoy },
-  { to: "/letter", label: "GP Letter Generator", icon: Mail },
-  { to: "/performance", label: "My Performance", icon: BarChart3 },
-  { to: "/cases", label: "Case Bank", icon: Library },
-  { to: "/references", label: "References", icon: BookMarked },
+  {
+    to: "/practice",
+    label: "Practice Exam Mode",
+    icon: Timer,
+    children: [
+      { to: "/practice/actor-examiner", label: "Actor / Examiner Mode", icon: ClipboardCheck },
+      { to: "/practice/solo", label: "Solo Mode", icon: UserRound },
+    ],
+  },
+  { to: "/cases", label: "Cases", icon: Library },
+  {
+    to: "/learn",
+    label: "Learn / Reference",
+    icon: BookOpen,
+    children: [
+      { to: "/viva", label: "Viva Mode", icon: MessageCircleQuestion },
+      { to: "/scope", label: "Scope Checker", icon: ShieldCheck },
+      { to: "/redflags", label: "Red Flag Library", icon: Flag },
+      { to: "/examination", label: "Examination Skills", icon: Stethoscope },
+      { to: "/protocols", label: "Condition Protocol Cards", icon: BookOpenCheck },
+      { to: "/safetynet", label: "Safety-Net Builder", icon: LifeBuoy },
+      { to: "/letter", label: "GP Letter Generator", icon: Mail },
+      { to: "/references", label: "References", icon: BookMarked },
+    ],
+  },
+  { to: "/performance", label: "Performance", icon: BarChart3 },
   { to: "/qa", label: "Content QA (admin)", icon: ShieldAlert },
 ] as const;
 
@@ -60,23 +80,48 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </p>
         </div>
         <nav className="flex-1 overflow-y-auto py-3 px-3">
-          {NAV.map(({ to, label, icon: Icon }) => {
+          {NAV.map(({ to, label, icon: Icon, children }) => {
             const active =
               to === "/" ? pathname === "/" : pathname === to || pathname.startsWith(to + "/");
             return (
-              <Link
-                key={to}
-                to={to}
-                onClick={() => setOpen(false)}
-                className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors mb-0.5 ${
-                  active
-                    ? "bg-sidebar-accent text-sidebar-accent-foreground border-l-2 border-sidebar-primary pl-[10px]"
-                    : "hover:bg-sidebar-accent/40 text-sidebar-foreground/85"
-                }`}
-              >
-                <Icon className="h-4 w-4 shrink-0" />
-                <span>{label}</span>
-              </Link>
+              <div key={to} className="mb-1">
+                <Link
+                  to={to}
+                  onClick={() => setOpen(false)}
+                  className={`flex min-h-11 items-center gap-3 rounded-md px-3 py-3 text-sm transition-colors ${
+                    active
+                      ? "bg-sidebar-accent text-sidebar-accent-foreground border-l-2 border-sidebar-primary pl-[10px]"
+                      : "hover:bg-sidebar-accent/40 text-sidebar-foreground/85"
+                  }`}
+                >
+                  <Icon className="h-4 w-4 shrink-0" />
+                  <span>{label}</span>
+                </Link>
+
+                {children && (
+                  <div className="mt-1 ml-6 space-y-1 border-l border-sidebar-border/60 pl-3">
+                    {children.map(({ to: childTo, label: childLabel, icon: ChildIcon }) => {
+                      const childActive =
+                        pathname === childTo || pathname.startsWith(childTo + "/");
+                      return (
+                        <Link
+                          key={childTo}
+                          to={childTo}
+                          onClick={() => setOpen(false)}
+                          className={`flex min-h-11 items-center gap-2 rounded-md px-3 py-2.5 text-sm transition-colors ${
+                            childActive
+                              ? "bg-sidebar-accent/90 text-sidebar-accent-foreground"
+                              : "text-sidebar-foreground/75 hover:bg-sidebar-accent/30"
+                          }`}
+                        >
+                          <ChildIcon className="h-3.5 w-3.5 shrink-0" />
+                          <span>{childLabel}</span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             );
           })}
         </nav>
