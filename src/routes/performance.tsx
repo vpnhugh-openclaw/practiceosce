@@ -65,10 +65,10 @@ function PerformancePage() {
             Go to Examiner Mode, mark a case, then press <em>Log attempt</em>.
           </p>
           <Link
-            to="/examiner"
+            to="/practice/solo"
             className="inline-flex items-center gap-2 rounded-md bg-navy text-navy-foreground px-4 py-2 text-sm"
           >
-            <Timer className="h-4 w-4" /> Open Examiner Mode
+            <Timer className="h-4 w-4" /> Open Solo Mode
           </Link>
         </div>
       )}

@@ -3,7 +3,15 @@ import { CASES } from "@/data/cases";
 import { PROTOCOLS } from "@/data/protocols";
 import { PageHeader } from "@/components/osce/Primitives";
 import { ScopeDecisionBadge } from "@/components/osce/ScopeBadges";
-import { Timer, Flag, ShieldCheck, AlertTriangle, Shuffle, BookOpenCheck, Wand2, MessageCircleQuestion } from "lucide-react";
+import {
+  Timer,
+  Flag,
+  ShieldCheck,
+  ClipboardCheck,
+  BookOpenCheck,
+  Wand2,
+  MessageCircleQuestion,
+} from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [{ title: "Dashboard: Hugh's OSCE Case Generator" }] }),
@@ -19,11 +27,11 @@ function Dashboard() {
   }, {});
 
   const quick = [
-    { to: "/practice", label: "20-minute Real OSCE Practice", icon: Timer, hint: "Default timed station" },
+    { to: "/practice/solo", label: "Solo Mode", icon: Timer, hint: "Timed station on one device" },
+    { to: "/practice/actor-examiner", label: "Actor / Examiner Mode", icon: ClipboardCheck, hint: "Two people, two devices" },
     { to: "/viva", label: "Viva sprint", icon: MessageCircleQuestion, hint: "Five examiner Qs per case" },
     { to: "/scope", label: "Scope decision drill", icon: ShieldCheck, hint: "Treat / refer / escalate" },
-    { to: "/generate", label: "Queensland protocol trap", icon: AlertTriangle, hint: "Catch the protocol gotchas" },
-    { to: "/generate", label: "Random mixed case", icon: Shuffle, hint: "Surprise me" },
+    { to: "/generate", label: "Case launcher", icon: Wand2, hint: "Filter the seeded stations" },
     { to: "/protocols", label: "Condition protocol cards", icon: BookOpenCheck, hint: "Quick reference" },
     { to: "/redflags", label: "Red flag library", icon: Flag, hint: "Searchable alarms" },
   ] as const;

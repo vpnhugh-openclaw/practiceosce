@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CASES, CASE_INDEX } from "@/data/cases";
 import { PageHeader, Section } from "@/components/osce/Primitives";
 import {
@@ -16,8 +16,12 @@ import { PageSourcesDrawer } from "@/components/osce/PageSourcesDrawer";
 import { QAChecklist } from "@/components/osce/QAChecklist";
 import { logAttempt } from "@/lib/performance";
 import { Printer, Save, Check } from "lucide-react";
+import { z } from "zod";
 
 export const Route = createFileRoute("/examiner")({
+  validateSearch: z.object({
+    caseId: z.string().optional(),
+  }),
   head: () => ({ meta: [{ title: "Examiner Mode: 20-minute Real OSCE: Hugh's OSCE Case Generator" }] }),
   component: ExaminerPage,
 });
@@ -25,7 +29,10 @@ export const Route = createFileRoute("/examiner")({
 type Mark = "not" | "partial" | "done";
 
 function ExaminerPage() {
-  const [caseId, setCaseId] = useState(CASES[0].id);
+  const { caseId: searchCaseId } = Route.useSearch();
+  const initialCaseId =
+    searchCaseId && CASE_INDEX[searchCaseId] ? searchCaseId : CASES[0].id;
+  const [caseId, setCaseId] = useState(initialCaseId);
   const c = CASE_INDEX[caseId];
   const [marks, setMarks] = useState<Record<number, Mark>>({});
   const [crit, setCrit] = useState<Record<number, boolean>>({});
@@ -65,6 +72,18 @@ function ExaminerPage() {
   };
 
   const defaultMins = c.defaultTimeMinutes ?? c.timeMinutes ?? 20;
+
+  useEffect(() => {
+    if (searchCaseId && CASE_INDEX[searchCaseId]) {
+      setCaseId(searchCaseId);
+      setMarks({});
+      setCrit({});
+      setRfTicks({});
+      setFeedback("");
+      setFinalised(false);
+      setLogged(false);
+    }
+  }, [searchCaseId]);
 
   return (
     <div>
@@ -256,6 +275,13 @@ function ExaminerPage() {
               className="text-xs underline opacity-90 hover:opacity-100"
             >
               View history →
+            </Link>
+            <Link
+              to="/practice/actor-examiner"
+              search={{ caseId: c.id }}
+              className="text-xs underline opacity-90 hover:opacity-100"
+            >
+              Back to setup →
             </Link>
           </div>
         </div>

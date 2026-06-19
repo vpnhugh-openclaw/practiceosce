@@ -22,6 +22,7 @@ function LetterPage() {
   const [reason, setReason] = useState("Reason for referral");
   const [followUp, setFollowUp] = useState("Requested follow-up timeframe");
   const [pharmacist, setPharmacist] = useState("Pharmacist name, AHPRA, pharmacy details");
+  const [copyStatus, setCopyStatus] = useState<"idle" | "done" | "error">("idle");
 
   const letter = useMemo(() => `Dear GP,
 
@@ -72,7 +73,27 @@ ${pharmacist}`, [type, name, presenting, history, vitals, exam, dx, tx, reason, 
         </div>
         <Section title="Generated letter">
           <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed">{letter}</pre>
-          <button onClick={() => navigator.clipboard.writeText(letter)} className="mt-3 rounded-md bg-navy text-navy-foreground px-3 py-2 text-sm">Copy to clipboard</button>
+          <button
+            onClick={async () => {
+              try {
+                await navigator.clipboard.writeText(letter);
+                setCopyStatus("done");
+              } catch {
+                setCopyStatus("error");
+              }
+            }}
+            className="mt-3 rounded-md bg-navy text-navy-foreground px-3 py-2 text-sm"
+          >
+            Copy to clipboard
+          </button>
+          {copyStatus === "done" && (
+            <p className="mt-2 text-xs text-emerald-700">Copied.</p>
+          )}
+          {copyStatus === "error" && (
+            <p className="mt-2 text-xs text-destructive">
+              Clipboard access was blocked. Select and copy the letter manually.
+            </p>
+          )}
         </Section>
       </div>
       <PageSourcesDrawer

@@ -1,17 +1,31 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CASES, CASE_INDEX } from "@/data/cases";
 import { PageHeader, Section, KV, HiddenReveal } from "@/components/osce/Primitives";
 import { PatientProfileCard } from "@/components/osce/CaseParts";
 import { PageSourcesDrawer } from "@/components/osce/PageSourcesDrawer";
+import { z } from "zod";
 
 export const Route = createFileRoute("/patient")({
+  validateSearch: z.object({
+    caseId: z.string().optional(),
+  }),
   head: () => ({ meta: [{ title: "Fake Patient Mode: Hugh's OSCE Case Generator" }] }),
   component: PatientPage,
 });
 
 function PatientPage() {
-  const [caseId, setCaseId] = useState(CASES[0].id);
+  const { caseId: searchCaseId } = Route.useSearch();
+  const initialCaseId =
+    searchCaseId && CASE_INDEX[searchCaseId] ? searchCaseId : CASES[0].id;
+  const [caseId, setCaseId] = useState(initialCaseId);
+
+  useEffect(() => {
+    if (searchCaseId && CASE_INDEX[searchCaseId]) {
+      setCaseId(searchCaseId);
+    }
+  }, [searchCaseId]);
+
   const c = CASE_INDEX[caseId];
   const p = c.fakePatientScript;
 

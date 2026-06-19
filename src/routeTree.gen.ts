@@ -25,7 +25,10 @@ import { Route as ExaminerRouteImport } from './routes/examiner'
 import { Route as ExaminationRouteImport } from './routes/examination'
 import { Route as CasesRouteImport } from './routes/cases'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PracticeIndexRouteImport } from './routes/practice.index'
 import { Route as CasesIndexRouteImport } from './routes/cases.index'
+import { Route as PracticeSoloRouteImport } from './routes/practice.solo'
+import { Route as PracticeActorExaminerRouteImport } from './routes/practice.actor-examiner'
 import { Route as CasesCaseIdRouteImport } from './routes/cases.$caseId'
 
 const VivaRoute = VivaRouteImport.update({
@@ -108,10 +111,25 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PracticeIndexRoute = PracticeIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PracticeRoute,
+} as any)
 const CasesIndexRoute = CasesIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => CasesRoute,
+} as any)
+const PracticeSoloRoute = PracticeSoloRouteImport.update({
+  id: '/solo',
+  path: '/solo',
+  getParentRoute: () => PracticeRoute,
+} as any)
+const PracticeActorExaminerRoute = PracticeActorExaminerRouteImport.update({
+  id: '/actor-examiner',
+  path: '/actor-examiner',
+  getParentRoute: () => PracticeRoute,
 } as any)
 const CasesCaseIdRoute = CasesCaseIdRouteImport.update({
   id: '/$caseId',
@@ -128,7 +146,7 @@ export interface FileRoutesByFullPath {
   '/letter': typeof LetterRoute
   '/patient': typeof PatientRoute
   '/performance': typeof PerformanceRoute
-  '/practice': typeof PracticeRoute
+  '/practice': typeof PracticeRouteWithChildren
   '/protocols': typeof ProtocolsRoute
   '/qa': typeof QaRoute
   '/redflags': typeof RedflagsRoute
@@ -137,7 +155,10 @@ export interface FileRoutesByFullPath {
   '/scope': typeof ScopeRoute
   '/viva': typeof VivaRoute
   '/cases/$caseId': typeof CasesCaseIdRoute
+  '/practice/actor-examiner': typeof PracticeActorExaminerRoute
+  '/practice/solo': typeof PracticeSoloRoute
   '/cases/': typeof CasesIndexRoute
+  '/practice/': typeof PracticeIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -147,7 +168,6 @@ export interface FileRoutesByTo {
   '/letter': typeof LetterRoute
   '/patient': typeof PatientRoute
   '/performance': typeof PerformanceRoute
-  '/practice': typeof PracticeRoute
   '/protocols': typeof ProtocolsRoute
   '/qa': typeof QaRoute
   '/redflags': typeof RedflagsRoute
@@ -156,7 +176,10 @@ export interface FileRoutesByTo {
   '/scope': typeof ScopeRoute
   '/viva': typeof VivaRoute
   '/cases/$caseId': typeof CasesCaseIdRoute
+  '/practice/actor-examiner': typeof PracticeActorExaminerRoute
+  '/practice/solo': typeof PracticeSoloRoute
   '/cases': typeof CasesIndexRoute
+  '/practice': typeof PracticeIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -168,7 +191,7 @@ export interface FileRoutesById {
   '/letter': typeof LetterRoute
   '/patient': typeof PatientRoute
   '/performance': typeof PerformanceRoute
-  '/practice': typeof PracticeRoute
+  '/practice': typeof PracticeRouteWithChildren
   '/protocols': typeof ProtocolsRoute
   '/qa': typeof QaRoute
   '/redflags': typeof RedflagsRoute
@@ -177,7 +200,10 @@ export interface FileRoutesById {
   '/scope': typeof ScopeRoute
   '/viva': typeof VivaRoute
   '/cases/$caseId': typeof CasesCaseIdRoute
+  '/practice/actor-examiner': typeof PracticeActorExaminerRoute
+  '/practice/solo': typeof PracticeSoloRoute
   '/cases/': typeof CasesIndexRoute
+  '/practice/': typeof PracticeIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -199,7 +225,10 @@ export interface FileRouteTypes {
     | '/scope'
     | '/viva'
     | '/cases/$caseId'
+    | '/practice/actor-examiner'
+    | '/practice/solo'
     | '/cases/'
+    | '/practice/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -209,7 +238,6 @@ export interface FileRouteTypes {
     | '/letter'
     | '/patient'
     | '/performance'
-    | '/practice'
     | '/protocols'
     | '/qa'
     | '/redflags'
@@ -218,7 +246,10 @@ export interface FileRouteTypes {
     | '/scope'
     | '/viva'
     | '/cases/$caseId'
+    | '/practice/actor-examiner'
+    | '/practice/solo'
     | '/cases'
+    | '/practice'
   id:
     | '__root__'
     | '/'
@@ -238,7 +269,10 @@ export interface FileRouteTypes {
     | '/scope'
     | '/viva'
     | '/cases/$caseId'
+    | '/practice/actor-examiner'
+    | '/practice/solo'
     | '/cases/'
+    | '/practice/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -250,7 +284,7 @@ export interface RootRouteChildren {
   LetterRoute: typeof LetterRoute
   PatientRoute: typeof PatientRoute
   PerformanceRoute: typeof PerformanceRoute
-  PracticeRoute: typeof PracticeRoute
+  PracticeRoute: typeof PracticeRouteWithChildren
   ProtocolsRoute: typeof ProtocolsRoute
   QaRoute: typeof QaRoute
   RedflagsRoute: typeof RedflagsRoute
@@ -374,12 +408,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/practice/': {
+      id: '/practice/'
+      path: '/'
+      fullPath: '/practice/'
+      preLoaderRoute: typeof PracticeIndexRouteImport
+      parentRoute: typeof PracticeRoute
+    }
     '/cases/': {
       id: '/cases/'
       path: '/'
       fullPath: '/cases/'
       preLoaderRoute: typeof CasesIndexRouteImport
       parentRoute: typeof CasesRoute
+    }
+    '/practice/solo': {
+      id: '/practice/solo'
+      path: '/solo'
+      fullPath: '/practice/solo'
+      preLoaderRoute: typeof PracticeSoloRouteImport
+      parentRoute: typeof PracticeRoute
+    }
+    '/practice/actor-examiner': {
+      id: '/practice/actor-examiner'
+      path: '/actor-examiner'
+      fullPath: '/practice/actor-examiner'
+      preLoaderRoute: typeof PracticeActorExaminerRouteImport
+      parentRoute: typeof PracticeRoute
     }
     '/cases/$caseId': {
       id: '/cases/$caseId'
@@ -403,6 +458,22 @@ const CasesRouteChildren: CasesRouteChildren = {
 
 const CasesRouteWithChildren = CasesRoute._addFileChildren(CasesRouteChildren)
 
+interface PracticeRouteChildren {
+  PracticeActorExaminerRoute: typeof PracticeActorExaminerRoute
+  PracticeSoloRoute: typeof PracticeSoloRoute
+  PracticeIndexRoute: typeof PracticeIndexRoute
+}
+
+const PracticeRouteChildren: PracticeRouteChildren = {
+  PracticeActorExaminerRoute: PracticeActorExaminerRoute,
+  PracticeSoloRoute: PracticeSoloRoute,
+  PracticeIndexRoute: PracticeIndexRoute,
+}
+
+const PracticeRouteWithChildren = PracticeRoute._addFileChildren(
+  PracticeRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CasesRoute: CasesRouteWithChildren,
@@ -412,7 +483,7 @@ const rootRouteChildren: RootRouteChildren = {
   LetterRoute: LetterRoute,
   PatientRoute: PatientRoute,
   PerformanceRoute: PerformanceRoute,
-  PracticeRoute: PracticeRoute,
+  PracticeRoute: PracticeRouteWithChildren,
   ProtocolsRoute: ProtocolsRoute,
   QaRoute: QaRoute,
   RedflagsRoute: RedflagsRoute,
@@ -424,3 +495,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

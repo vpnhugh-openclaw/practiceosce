@@ -8,7 +8,7 @@ import {
   NonPharmCard, SafetyNetCard, CaseRedFlags,
 } from "@/components/osce/CaseParts";
 import { QAChecklist } from "@/components/osce/QAChecklist";
-import { Printer, UserRound, ClipboardCheck, Timer } from "lucide-react";
+import { Printer, ClipboardCheck, Timer } from "lucide-react";
 
 export const Route = createFileRoute("/cases/$caseId")({
   head: ({ params }) => {
@@ -41,9 +41,20 @@ function CasePage() {
         subtitle={`${c.timeMinutes}-minute station · ${c.difficulty} · ${c.caseType.join(" · ")}`}
         actions={
           <>
-            <Link to="/practice" className="inline-flex items-center gap-2 rounded-md bg-navy text-navy-foreground px-3 py-2 text-sm"><Timer className="h-4 w-4" /> Practice</Link>
-            <Link to="/patient" className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-sm"><UserRound className="h-4 w-4" /> Patient view</Link>
-            <Link to="/examiner" className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-sm"><ClipboardCheck className="h-4 w-4" /> Examiner</Link>
+            <Link
+              to="/practice/solo"
+              search={{ caseId: c.id }}
+              className="inline-flex items-center gap-2 rounded-md bg-navy text-navy-foreground px-3 py-2 text-sm"
+            >
+              <Timer className="h-4 w-4" /> Solo Mode
+            </Link>
+            <Link
+              to="/practice/actor-examiner"
+              search={{ caseId: c.id }}
+              className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-sm"
+            >
+              <ClipboardCheck className="h-4 w-4" /> Actor / Examiner Mode
+            </Link>
             <button onClick={() => window.print()} className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-sm no-print"><Printer className="h-4 w-4" /> Print</button>
           </>
         }
