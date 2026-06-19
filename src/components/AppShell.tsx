@@ -40,7 +40,10 @@ const NAV: NavItem[] = [
       { to: "/practice/solo", label: "Solo Mode", icon: UserRound },
     ],
   },
-  { to: "/cases", label: "Cases", icon: Library },
+  { to: "/cases", label: "Case Bank", icon: Library },
+  { to: "/protocols", label: "Condition Protocol Cards", icon: BookOpenCheck },
+  { to: "/redflags", label: "Red Flag Library", icon: Flag },
+  { to: "/examination", label: "OSCE-ready examination checklists", icon: Stethoscope },
   {
     to: "/learn",
     label: "Learn / Reference",
