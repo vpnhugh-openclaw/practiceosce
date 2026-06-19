@@ -3,7 +3,7 @@ import { CASES } from "@/data/cases";
 import { PROTOCOLS } from "@/data/protocols";
 import { PageHeader } from "@/components/osce/Primitives";
 import { ScopeDecisionBadge } from "@/components/osce/ScopeBadges";
-import { Timer, Flag, ShieldCheck, AlertTriangle, Shuffle, BookOpenCheck, Wand2 } from "lucide-react";
+import { Timer, Flag, ShieldCheck, AlertTriangle, Shuffle, BookOpenCheck, Wand2, MessageCircleQuestion } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({ meta: [{ title: "Dashboard — Hugh's OSCE Case Generator" }] }),
