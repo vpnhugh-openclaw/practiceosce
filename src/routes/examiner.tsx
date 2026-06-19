@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { CASES, CASE_INDEX } from "@/data/cases";
 import { PageHeader, Section } from "@/components/osce/Primitives";
@@ -12,6 +12,8 @@ import {
   CaseRedFlags,
 } from "@/components/osce/CaseParts";
 import { CountdownTimer } from "@/components/osce/CountdownTimer";
+import { logAttempt } from "@/lib/performance";
+import { Printer, Save, Check } from "lucide-react";
 
 export const Route = createFileRoute("/examiner")({
   head: () => ({ meta: [{ title: "Examiner Mode — 20-minute Real OSCE — Hugh's OSCE Case Generator" }] }),
