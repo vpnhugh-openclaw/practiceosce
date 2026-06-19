@@ -228,6 +228,7 @@ function ExaminerPage() {
                   .map((r, i) => ({ r, m: marks[i] ?? "not" }))
                   .filter(({ m }) => m !== "done")
                   .map(({ r }) => `${r.domain}: ${r.item}`);
+                const missedRedFlagNotes = missedRedFlags.map((rf) => `Red flag not screened: ${rf}`);
                 logAttempt({
                   caseId: c.id,
                   caseTitle: c.title,
@@ -239,7 +240,7 @@ function ExaminerPage() {
                   pct,
                   result: result as "Pass" | "Borderline" | "Fail" | "Fail (critical fail triggered)",
                   criticalFail: anyCrit,
-                  missedRubric,
+                  missedRubric: [...missedRubric, ...missedRedFlagNotes],
                   notes: feedback,
                 });
                 setLogged(true);
