@@ -401,7 +401,9 @@ const BRIEF_LEAK_ALLOWLIST = new Set([
   "history", "request", "review", "asks", "asking", "asked", "wants", "needs",
   "presents", "patient", "today", "yesterday", "morning", "evening",
   // conditions named in opening complaint (not the diagnostic answer)
-  "asthma", "reflux", "hayfever", "cold", "flu",
+  "asthma", "reflux", "hayfever", "cold", "flu", "psoriasis", "eczema",
+  "dermatitis", "rhinitis", "acne", "migraine", "constipation",
+  "haemorrhoids", "hemorrhoids", "thrush",
   // device/anatomy commonly named upfront
   "grommet", "grommets", "tube", "tubes",
   // medications the patient may name themselves
