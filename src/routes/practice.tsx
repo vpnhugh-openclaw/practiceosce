@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CASES, CASE_INDEX } from "@/data/cases";
 import { PageHeader, Section } from "@/components/osce/Primitives";
 import {
@@ -14,6 +14,9 @@ import {
 } from "@/components/osce/CaseParts";
 import { CountdownTimer } from "@/components/osce/CountdownTimer";
 import { PageSourcesDrawer } from "@/components/osce/PageSourcesDrawer";
+import { QAChecklist } from "@/components/osce/QAChecklist";
+import { validateCase } from "@/lib/validation";
+import { ShieldAlert } from "lucide-react";
 
 export const Route = createFileRoute("/practice")({
   head: () => ({ meta: [{ title: "20-minute Real OSCE Practice: Hugh's OSCE Case Generator" }] }),
@@ -25,12 +28,17 @@ function PracticePage() {
   const c = CASE_INDEX[caseId];
   const [reveal, setReveal] = useState(false);
   const [notes, setNotes] = useState("");
+  const [useAnyway, setUseAnyway] = useState(false);
 
   useEffect(() => {
     setReveal(false);
+    setUseAnyway(false);
   }, [caseId]);
 
   const defaultMins = c.defaultTimeMinutes ?? c.timeMinutes ?? 20;
+  const report = useMemo(() => validateCase(c), [c]);
+  const blocked = report.unsafeForTimedPractice && !useAnyway;
+
 
   return (
     <div>
