@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { ACRONYMS, RED_FLAGS } from "@/data/redflags";
 import { PageHeader, Section } from "@/components/osce/Primitives";
+import { PageSourcesDrawer } from "@/components/osce/PageSourcesDrawer";
 
 export const Route = createFileRoute("/redflags")({
   head: () => ({ meta: [{ title: "Red Flag Library: Hugh's OSCE Case Generator" }] }),
@@ -53,6 +54,13 @@ function RedFlagsPage() {
           </div>
         ))}
       </div>
+
+      <PageSourcesDrawer
+        needsVerification
+        verificationNotes={[
+          "Red flags here are training prompts compiled from Queensland Health protocols and the imported OSCE study PDFs. Always cross-check against the current protocol for the specific presentation.",
+        ]}
+      />
     </div>
   );
 }

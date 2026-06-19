@@ -53,6 +53,14 @@ function ProtocolsPage() {
               </div>
             </div>
             <p className="text-xs text-muted-foreground italic mt-3">Source: {p.protocolSource} · Version: {p.protocolVersion}</p>
+            <PageSourcesDrawer
+              needsVerification={p.protocolConfidence !== "current"}
+              verificationNotes={
+                p.protocolConfidence !== "current"
+                  ? ["Confirm dose, eligibility and exclusion criteria against the current Queensland Health pharmacist prescribing protocol before clinical use."]
+                  : undefined
+              }
+            />
           </Section>
         ))}
       </div>

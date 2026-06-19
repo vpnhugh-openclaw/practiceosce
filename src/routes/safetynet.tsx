@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
 import { PROTOCOLS } from "@/data/protocols";
 import { PageHeader, Section } from "@/components/osce/Primitives";
+import { PageSourcesDrawer } from "@/components/osce/PageSourcesDrawer";
 
 export const Route = createFileRoute("/safetynet")({
   head: () => ({ meta: [{ title: "Safety-Net Builder: Hugh's OSCE Case Generator" }] }),
@@ -55,6 +56,11 @@ Do you have any questions? Can you tell me back in your own words what you'll wa
           <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed">{gpParagraph}</pre>
         </Section>
       </div>
+
+      <PageSourcesDrawer
+        needsVerification
+        verificationNotes={["Red-flag lists and review times are derived from the seeded protocol cards. Confirm against the current Queensland Health pharmacist prescribing protocol for the specific condition before giving the script to a patient."]}
+      />
     </div>
   );
 }
